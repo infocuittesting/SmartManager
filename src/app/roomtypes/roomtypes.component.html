@@ -282,7 +282,7 @@
         </div>
         <div class="col-sm-2">
         <div class="input-group">
-        <input type="text" class="form-control" name="extra_adult" id="" style="border: 1px solid gray;padding-left:15px;max-width: 13.2em;"[(ngModel)]="extra_adult_rate" #extra ="ngModel" [disabled]=disvar required>
+        <input type="text" class="form-control" name="extra_adult" id="" style="border: 1px solid gray;padding-left:15px;max-width: 13.2em;"[(ngModel)]="extra_adult_rate" [disabled]=disvar #extra ="ngModel"  required>
         </div>
         </div> 
          
@@ -344,7 +344,7 @@
         <div class="row">
         <div class="col-md-4">
         <div class="input-group">
-        <select class="form-control" name="mini_stay" id="" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;height: 36px;max-width:16em" [(ngModel)]="dropdownvalue" (change)="showhiderestriction(dropdownvalue)">
+        <select class="form-control" name="mini_stay" id="" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;height: 36px;max-width:16em" [(ngModel)]="dropdownvalue" (change)="showhiderestriction(dropdownvalue) "  #mini_stay ="ngModel"  required >
         <option value="Minimum Stay">Minimum Stay</option>
         <option value="Maximum Stay">Maximum Stay</option>
         <option value="Open For Arrival">Open For Arrival </option>
@@ -355,6 +355,16 @@
         </select>
         </div> 
         </div>
+        </div>
+        <div class="row">
+         
+            <div class="md-errors-spacer" [hidden]="mini_stay.valid || mini_stay.untouched">
+                <div *ngIf="mini_stay.errors && mini_stay.errors.required" style="color: red;margin-left:35px;margin-right: 60px;
+                 text-align: left;font-size:12px; margin-top: -3px">
+                *Rate Restriction is required
+               </div>
+           </div> 
+        
         </div>
         <br>
         <div >
@@ -367,7 +377,7 @@
         <div class="col-sm-3">
         
         <div class="input-group">
-        <input type="text" class="form-control" name="mini_stay" id="" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width:11.9em;height: 36px;"[(ngModel)]="min_stay">
+        <input type="number" class="form-control" name="mini_stay" id="" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width:11.9em;height: 36px;"[(ngModel)]="min_stay">
         </div> 
         </div> 
         </div>
@@ -393,7 +403,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input type="text" class="form-control" name="maximum" id="" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width:11.9em;height: 36px;" [(ngModel)]="max_stay">
+        <input type="number" class="form-control" name="maximum" id="" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width:11.9em;height: 36px;" [(ngModel)]="max_stay">
         </div> 
         </div> 
         </div>
@@ -543,6 +553,7 @@
         </div>
         <div class="col-md-5"></div>
         </div> 
+   
         </div>
         
         <!-- restriction End -->
