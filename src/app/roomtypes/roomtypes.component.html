@@ -42,26 +42,15 @@
                 <div class="row" >
                     <div class="col-sm-4">
                 <div class="input-group">
-                       <input class="" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 10em; "
-                        name="dp" [(ngModel)]="fromdate" [minDate]="fromMinDate" ngbDatepicker #g="ngbDatepicker">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
-                     style="border-radius: 0px;">
-                    <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                   </button>
-                </div>
+                       <input class="form-control" type="date" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em; "
+                        name="dp" [(ngModel)]="fromdate">
+
                 </div>
                 </div>
                 <div class="col-sm-4">
                 <div class="input-group">
-                <input class="" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 10em;"
-                name="dp" [(ngModel)]="todate3" [minDate]="fromdate" ngbDatepicker #g1="ngbDatepicker">
-                <div class="input-group-append">
-                <button class="btn btn-outline-secondary" (click)="g1.toggle()" type="button"
-                style="border-radius: 0px;">
-                <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                </button>
-                </div>
+                <input class="" class="form-control" type="date" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em;"
+                name="dp" [(ngModel)]="todate3" >
                 </div>
                 </div>
                
@@ -202,28 +191,16 @@
         <div class="row" >
         <div class="col-sm-4">
         <div class="input-group" [class.has-error]="form.touched && form.invalid">
-        <input class=" form-control" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 10em; "
-        name="form" id="form" [(ngModel)]="rangefrom" [minDate]="rangefromMin" ngbDatepicker #dr="ngbDatepicker"  #form="ngModel"  required>
+        <input class=" form-control" type="date" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em; "
+        name="form" id="form" [(ngModel)]="rangefrom"  #form="ngModel"  required>
         <div *ngIf="form.touched && !form.valid && form.errors?.required " ngClass="{ 'has-error' : !form.valid && submitAttempt }">
-        </div>
-        <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)="dr.toggle()" type="button"
-        style="border-radius: 0px;">
-        <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-        </button>
         </div>
         </div>
         </div>
         <div class="col-sm-4">
         <div class="input-group">
-        <input class="form-control" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 10em;"
-        name="dp" [(ngModel)]="todate2" [minDate]="rangefrom" ngbDatepicker #dr1="ngbDatepicker" (ngModelChange)="enablinputs()">
-        <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)="dr1.toggle()" type="button"
-        style="border-radius: 0px;">
-        <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-        </button>
-        </div>
+        <input class="form-control" type="date" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em;"
+        name="dp" [(ngModel)]="todate2" (ngModelChange)="enablinputs()">
         </div>
         </div>
         
