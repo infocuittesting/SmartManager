@@ -231,17 +231,32 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-      <input type="text" name="" id="" style="width: 13.0em; height: 2.4em;" [(ngModel)]="rate_plan_id">
+      <input type="text" name="rate_plan" id="rate_plan" style="width: 13.0em; height: 2.4em;" [(ngModel)]="rate_plan_id"  #rate_plan ="ngModel"  required >
     <!-- <select class="form-control" name="roomsizeid" style="height: 2.4em;" [(ngModel)]="rate_plan_id">
       <option *ngFor="let list of rateplan" [ngValue] = "list.rate_plan_id"> {{list.rate_plan}}</option> 
 >
     </select> -->
   </div>
   <div class="col-md-4">
-    <select class="form-control" name="roomsizeid" style="width: 13.0em;height: 2.4em;" [(ngModel)]="policy_id">
+    <select class="form-control" name="roomsizeid" style="width: 13.0em;height: 2.4em;" [(ngModel)]="policy_id" #Cancellation ="ngModel"  required>
       <option *ngFor="let list of cancelpolicy" [ngValue] = "list.policy_id"> {{list.policy_name}}</option> 
       </select>
     </div>
+</div>
+<div class="row">
+    <div class="md-errors-spacer" [hidden]="rate_plan.valid || rate_plan.untouched">
+        <div *ngIf="rate_plan.errors && rate_plan.errors.required" style="color: red;margin-left:35px;margin-right: 60px;
+         text-align: left;font-size:12px; margin-top: -3px">
+        *Rate plan is required
+       </div>
+   </div>
+   
+   <div class="md-errors-spacer" [hidden]="Cancellation.valid || Cancellation.untouched">
+      <div *ngIf="Cancellation.errors && rate_plan.errors.required" style="color: red;margin-left:364px;margin-right: 60px;
+       text-align: left;font-size:12px; margin-top: -3px">
+      *Canceleton policy is required
+     </div>
+ </div>
 </div>
 <br>
 <div class="row">
@@ -254,12 +269,29 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-      <input type="date" name="" id="" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate">
+      <input type="date" name="Fromdate" id="Fromdate" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate" #Fromdate ="ngModel"  required>
 
     </div>
    <div class="col-md-4">
-    <input type="date" name="" id="" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" >
+    <input type="date" name="date1" id="date1" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" #date1 ="ngModel" required >
   </div>
+</div>
+<div class="row">
+
+    <div class="md-errors-spacer" [hidden]="Fromdate.valid || Fromdate.untouched">
+        <div *ngIf="Fromdate.errors && rate_plan.errors.required" style="color: red;margin-left:25px;margin-right: 60px;
+         text-align: left;font-size:12px; margin-top: -3px">
+        *From Date  is required
+       </div>
+   </div>
+   
+   <div class="md-errors-spacer" [hidden]="date1.valid || date1.untouched">
+      <div *ngIf="date1.errors && rate_plan.errors.required" style="color: red;margin-left:162px;margin-right: 60px;
+       text-align: left;font-size:12px; margin-top: -3px">
+      *From Date  is required
+     </div>
+ </div>
+   
 </div>
 <br>
 <div class="row" style="padding-bottom:5px;">
@@ -269,7 +301,7 @@
 </div>
 <div class="row">
   <div class="col-md-3" *ngFor="let list of roomtypes">
-      <input type="checkbox" value="{{list.room_id}}" style="width: 1rem;height: 1rem;" (change)="onroomCheckboxChange(list,$event)"><label  style="margin-left:10px;">{{list.room_name}}</label>
+      <input type="checkbox" value="{{list.room_id}}" style="width: 1rem;height: 1rem;" (change)="onroomCheckboxChange(list,$event)" ><label  style="margin-left:10px;">{{list.room_name}}</label>
   </div>
   <!-- <table>
     <tbody>
@@ -280,6 +312,9 @@
       </tr>
     </tbody>
   </table> -->
+</div>
+<div class="row">
+  
 </div>
 <br>
 <div class="row" style="padding-bottom:5px;">
