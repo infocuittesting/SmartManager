@@ -7,7 +7,7 @@
   <div class="col-md-12">
     <ul class="nav nav-tabs">
       <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Grid">Room Type</a></li>
-      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Daterange">Rate Plan</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Daterange" (click)="refreshroom()" (click)="clickrateplan()">Rate Plan</a></li>
     </ul>
   </div>
 </div>
@@ -231,32 +231,17 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-      <input type="text" name="rate_plan" id="rate_plan" style="width: 13.0em; height: 2.4em;" [(ngModel)]="rate_plan_id"  #rate_plan ="ngModel"  required >
+      <input type="text" name="" id="" style="width: 13.0em; height: 2.4em;" [(ngModel)]="conf_rate.rate_plan_id">
     <!-- <select class="form-control" name="roomsizeid" style="height: 2.4em;" [(ngModel)]="rate_plan_id">
       <option *ngFor="let list of rateplan" [ngValue] = "list.rate_plan_id"> {{list.rate_plan}}</option> 
 >
     </select> -->
   </div>
   <div class="col-md-4">
-    <select class="form-control" name="roomsizeid" style="width: 13.0em;height: 2.4em;" [(ngModel)]="policy_id" #Cancellation ="ngModel"  required>
+    <select class="form-control" name="roomsizeid" style="width: 13.0em;height: 2.4em;" [(ngModel)]="conf_rate.policy_id">
       <option *ngFor="let list of cancelpolicy" [ngValue] = "list.policy_id"> {{list.policy_name}}</option> 
       </select>
     </div>
-</div>
-<div class="row">
-    <div class="md-errors-spacer" [hidden]="rate_plan.valid || rate_plan.untouched">
-        <div *ngIf="rate_plan.errors && rate_plan.errors.required" style="color: red;margin-left:35px;margin-right: 60px;
-         text-align: left;font-size:12px; margin-top: -3px">
-        *Rate plan is required
-       </div>
-   </div>
-   
-   <div class="md-errors-spacer" [hidden]="Cancellation.valid || Cancellation.untouched">
-      <div *ngIf="Cancellation.errors && rate_plan.errors.required" style="color: red;margin-left:364px;margin-right: 60px;
-       text-align: left;font-size:12px; margin-top: -3px">
-      *Canceleton policy is required
-     </div>
- </div>
 </div>
 <br>
 <div class="row">
@@ -269,29 +254,27 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-      <input type="date" [min]="date" name="From_date" id="From_date" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate" #from_date="ngModel">
+      <input type="date" [min]="date" name="Fromdate" id="Fromdate" style="width: 13.0em; height: 2.4em;"[(ngModel)]="conf_rate.fromdate" #Fromdate="ngModel">
 
     </div>
    <div class="col-md-4">
-    <input type="date" [min]="fromdate" name="todate" id="todate" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" #To_date="ngModel">
+    <input type="date" [min]="conf_rate.fromdate" name="date1" id="date1" style="width: 13.0em; height: 2.4em;"[(ngModel)]="conf_rate.todate" #date1="ngModel">
   </div>
 </div>
 <div class="row">
-
-    <div class="md-errors-spacer" [hidden]="from_date.valid || from_date.untouched">
-        <div *ngIf="from_date.errors && rate_plan.errors.required" style="color: red;margin-left:25px;margin-right: 60px;
-         text-align: left;font-size:12px; margin-top: -3px">
-        *From Date  is required
-       </div>
-   </div>
-   
-   <div class="md-errors-spacer" [hidden]="To_date.valid || To_date.untouched">
-      <div *ngIf="To_date.errors && rate_plan.errors.required" style="color: red;margin-left:162px;margin-right: 60px;
-       text-align: left;font-size:12px; margin-top: -3px">
-      *To Date  is required
-     </div>
+<div class="md-errors-spacer" [hidden]="Fromdate.valid || Fromdate.untouched">
+  <div *ngIf="Fromdate.errors && rate_plan.errors.required" style="color: red;margin-left:25px;margin-right: 60px;
+   text-align: left;font-size:12px; margin-top: -3px">
+  *From Date  is required
  </div>
-   
+</div>
+
+<div class="md-errors-spacer" [hidden]="date1.valid || date1.untouched">
+<div *ngIf="date1.errors && rate_plan.errors.required" style="color: red;margin-left:162px;margin-right: 60px;
+ text-align: left;font-size:12px; margin-top: -3px">
+*To Date  is required
+</div>
+</div>
 </div>
 <br>
 <div class="row" style="padding-bottom:5px;">
@@ -301,7 +284,7 @@
 </div>
 <div class="row">
   <div class="col-md-3" *ngFor="let list of roomtypes">
-      <input type="checkbox" value="{{list.room_id}}" style="width: 1rem;height: 1rem;" (change)="onroomCheckboxChange(list,$event)" ><label  style="margin-left:10px;">{{list.room_name}}</label>
+      <input type="checkbox" value="{{list.room_id}}" style="width: 1rem;height: 1rem;" (change)="onroomCheckboxChange(list,$event)"><label  style="margin-left:10px;">{{list.room_name}}</label>
   </div>
   <!-- <table>
     <tbody>
@@ -312,9 +295,6 @@
       </tr>
     </tbody>
   </table> -->
-</div>
-<div class="row">
-  
 </div>
 <br>
 <div class="row" style="padding-bottom:5px;">
@@ -345,9 +325,12 @@
     
     <br>
     <div class="row">
-        <div class="col-md-5"></div>
+        <div class="col-md-5">
+            <label *ngIf="roomTypesFieldErrorFlag" style="margin-left: 200px;font-weight: 600;color: red;margin-top: 10px;">Enter all fields</label>
+
+        </div>
         <div class="col-md-2">
-          <button type="button" class="btn btn-success"(click)="insertrateplan(rate_plan_id,policy_id,fromdate,todate)">Save</button>
+          <button type="button" class="btn btn-success"(click)="insertrateplan(conf_rate)">Save</button>
         </div>
         <div class="col-md-5"></div>
     </div>
@@ -370,16 +353,16 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-3">
-                  <font>Room Name</font>
+                  <font>Room Name*</font>
                 </div>
                 <div class="col-md-3">
-                  <font> Room Size </font>
+                  <font> Room Size* </font>
                 </div>
                 <div class="col-md-3">
-                 <font>Min Adults </font> 
+                 <font>Min Adults* </font> 
                 </div>
                 <div class="col-md-3">
-                  <font>Default Child </font>
+                  <font>Default Child* </font>
                 </div>
               </div>
             <div class="row">
@@ -400,16 +383,16 @@
             </div>
             <div class="row">
               <div class="col-md-3">
-                <font>Bedding</font>
+                <font>Bedding*</font>
               </div>
               <div class="col-md-3">
-                <font>Bed Size </font>
+                <font>Bed Size* </font>
               </div>
               <div class="col-md-3">
-               <font>Max Extrabed</font> 
+               <font>Max Extrabed*</font> 
               </div>
               <div class="col-md-3">
-                <font>Room Amenities </font>
+                <font>Room Amenities* </font>
               </div>
 
             </div>
@@ -440,7 +423,7 @@
                 <font>Photos</font>
               </div>
               <div class="col-md-3">
-                <font>Min Price</font>
+                <font>Min Price*</font>
               </div>
               <div class="col-md-3">
                 <font>Smoking</font>
@@ -459,8 +442,15 @@
             </div>
             </div>
           </div>
+          <!-- <div class="col-md-5"> -->
+         
+                <!-- <label *ngIf="roomTypesFieldErrorFlag" style="margin-left: 200px;font-weight: 600;color: red;margin-top: 10px;">Enter all fields</label>
+             
+        </div> -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" (click)="insertroom(plan)" data-dismiss="modal"><b>Save</b></button>
+                <label *ngIf="roomTypesFieldErrorFlag" style="margin-left: 200px;font-weight: 600;color: red;margin-top: 10px;">Enter all fields</label>
+
+                <button type="button" class="btn btn-success" (click)="insertroom(plan)" ><b>Save</b></button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
   
             </div>
