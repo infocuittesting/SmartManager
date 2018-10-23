@@ -1,0 +1,337 @@
+<form #ClearAll="ngForm">
+<div class="row">
+  
+  <div class="col-md-12">
+      <!-- <h6>Reservation</h6> -->
+  </div>
+</div>
+<div *ngIf="showMore!=true">
+<div class="row">
+  <div class="col-md-4">
+    <font> Arrival</font>
+  </div>
+  <div class="col-md-4">
+    <font style="margin-left: -87px;"> Departure</font>
+  </div>
+  <div class="col-md-4">
+    <font style="margin-left: -174px;"> Search</font>
+  </div>
+
+</div>  
+<div class="row">
+    <div class="col-md-3">
+        <!-- <div class="input-group">
+      <input placeholder="DD-MM-YYYY"  class="" style="border: 1px solid gray;padding-left:15px;max-width: 10em; " name="arrivdate" id="arrivdate" [(ngModel)]="arrivdate" #name="ngModel" ngbDatepicker #g="ngbDatepicker" >
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
+        style="border-radius: 0px;">
+          <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+        </button>
+      </div>
+      </div> -->
+    <div class="input-group">
+      <input type="date"  placeholder="YYYY-MM-DD" class="" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="date" name="date" [(ngModel)]="date" ngbDatepicker #g="ngbDatepicker">
+      <!-- <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
+        style="border-radius: 0px;">
+          <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+        </button>
+      </div> -->
+    </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <input type="date"  placeholder="YYYY-MM-DD" class="" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="dep_date" name="dep_date" [(ngModel)]="dep_date" ngbDatepicker #g="ngbDatepicker">
+            <!-- <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
+              style="border-radius: 0px;">
+                <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+              </button>
+            </div> -->
+          </div>
+        <!-- <div class="input-group">
+        <input type="date" placeholder="YYYY-MM-DD" class="" style="border: 1px solid gray;padding-left:15px;max-width: 10em; " name="depart" id="depart" [(ngModel)]="depart" ngbDatepicker #d="ngbDatepicker" > -->
+        <!-- <div class="input-group-append">
+            <button class="btn btn-outline-secondary"  type="button"
+            style="border-radius: 0px;">
+              <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+            </button>
+          </div> -->
+        <!-- </div> -->
+    </div>
+    <div class="col-md-3">
+        <input type="number" class="form-control" name="conf_num" id="conf_num" [(ngModel)]="conf_num" style="border: 1px solid gray; height: 2.4em; max-width: 12.2em; ">
+    </div>
+    <div class="col-mg-3">
+        <button type="button" class="btn btn-warning" (click)="cleartab();ClearAll.reset()">Clear</button>
+    </div>
+</div>
+<br>
+<div class="row" >
+  <div class="col-md-12">
+<table class="table table-bordered  fixtab" style="margin-top: -14px;">
+  <thead style="background-color:#337ab7;color: white">
+    <tr>
+      <th style="width:50px">Seq</th>
+      <th style="width:160px"> Cofirmation No</th>
+      <th style="width:140px"> Arrival</th>
+      <th style="width:140px"> Departure</th>
+      <th style="width:140px"> Room Type</th>
+      <th style="width:80px"> Adult</th>
+      <th style="width:80px"> Child</th>
+      <th style="width:110px"> Channels</th>
+      <th>Total Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let detail of hello |filterdata: date :'customer_arrival_date'|filterdata: conf_num :'customer_confirmation_number'|filterdata: dep_date :'customer_depature_date';let i = index" (click)="selectMembersEdit(detail,i)"
+    [ngClass]="{'backGroundColor':i==selectindex}" (dblclick)="showMoreBut()">
+      <td style="width:50px">{{i+1}}</td>
+      <td style="width:160px">{{detail.customer_confirmation_number}}</td>
+      <td style="width:140px">{{detail.customer_arrival_date}} </td>
+      <td style="width:140px">{{detail.customer_depature_date}} </td>
+      <td style="width:140px">{{detail.customer_room_type}} </td>
+      <td style="width:80px">{{detail.customer_adult}} </td>
+      <td style="width:80px">{{detail.customer_child}} </td>
+      <td style="width:110px">{{detail.channel}} </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</form>
+     <!-- Alert start-->
+     <div *ngIf="showMore==true">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <div class="row" style="border:1px solid lightgrey;margin:10px ">
+            <div class="col-md-4" style="border-right: 1px solid lightgrey;">
+              <p>Arrival</p>
+              <h6 style="margin-top:-15px;">{{Arrival}}</h6>  
+              <br>        
+              <p>Departure</p>
+              <h6 style="margin-top:-15px;">{{Departure}}</h6>
+              <br>
+              <p>Stay Length</p>
+              <h6 style="margin-top:-15px;"> </h6>
+              <br>
+              <p>Total Adult</p>
+              <h6 style="margin-top:-15px;">{{adults}}</h6>
+              <br>
+              <p>Total Child</p>
+              <h6 style="margin-top:-15px;">{{child}}</h6>
+              <br>
+              <p>Total Price</p>
+              <h6 style="margin-top:-15px;">{{rate}} </h6>
+            </div>
+            <div class="col-md-8">
+              <p>Guest Name:</p>
+              <h6 style="margin-top:-15px;"> </h6>  
+              <br>    
+              <p>Preferred Language</p>
+              <h6 style="margin-top:-15px;"> </h6>
+              <br>
+              <p>Channel</p>
+              <h6 style="margin-top:-15px;">{{channel}}</h6>
+              <br>
+              <p>Confirmation Number</p>
+              <h6 style="margin-top:-15px;">{{Confirmation}}</h6>
+              <br>
+              <p>Booked On</p>
+              <h6 style="margin-top:-15px;">{{Booked}}</h6>
+              <br>
+              <p>No Of Rooms</p>
+              <h6 style="margin-top:-15px;">{{Roomno}} </h6>
+            </div>
+          </div>
+          <div  class=" card" style="border:1px solid lightgrey;margin:10px ">
+            <div class="card-header  bg-light">
+              <h5>{{Roomtype}}</h5>
+              <p><span><i class="fa fa-sign-in"></i>{{Arrival}}</span> <span><i class="fa fa-sign-out"></i>{{Departure}}</span></p>
+            </div>
+            <div class="row">
+            <div class="col-md-4">
+                <p>Guest Name</p>
+                <br>
+                <p>Max Guest</p>
+                <label style="margin-top:-15px;">{{adults+child}}</label>
+                <br>
+                <p>Meal Options</p>
+                <label></label>
+                <img src="../../assets/images/Deluxe Suite.jpg" alt="" width="300px" height="250px">
+                <br>
+              </div>
+              <div class="col-md-8">
+                <br>
+                <br>
+                <br><br><br><br>
+                <br>
+                  <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Firstname</th>
+                          <th>Lastname</th>
+                          <th>Email</th>
+                        </tr>
+                        <tr>
+                          <td>John</td>
+                          <td>Doe</td>
+                          <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                          <td>Mary</td>
+                          <td>Moe</td>
+                          <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                          <td>July</td>
+                          <td>Dooley</td>
+                          <td>july@example.com</td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
+            </div>
+            <br>
+          </div>
+        
+        </div>
+      </div>
+              <!-- <div class="row" style="padding-left:37px;padding-bottom:5px;">
+                <div class="col-md-3">
+                  <font>Confirmation No</font>
+                </div>
+                <div class="col-md-3">
+                  <font> Arrival </font>
+                </div>
+                <div class="col-md-3">
+                 <font>Booking Status </font> 
+                </div>
+                <div class="col-md-3">
+                  <font>Booked Date  </font>
+                </div>
+              </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Confirmation">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Arrival">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Status">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Booked">
+              </div>
+            </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <font>Adults</font>
+              </div>
+              <div class="col-md-3">
+                <font> Departure </font>
+              </div>
+              <div class="col-md-3">
+               <font> Credit Card</font> 
+              </div>
+              <div class="col-md-3">
+                <font>Expiry Date </font>
+              </div>
+
+            </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;"  [(ngModel)]="adults">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Departure">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="creditcard">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Expdate">
+              </div>
+            </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <font>Child</font>
+              </div>
+              <div class="col-md-3">
+                <font>Contry Code </font>
+              </div>
+              <div class="col-md-3">
+               <font> Mobile</font> 
+              </div>
+              <div class="col-md-3">
+                <font>Language</font>
+              </div>
+            </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="child">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="country">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Mobile">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Language">
+              </div>
+            </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <font> Channel</font>
+              </div>
+              <div class="col-md-3">
+                <font> Number of Room</font>
+              </div>
+              <div class="col-md-3">
+                <font>Room Type</font>
+              </div>
+              <div class="col-md-3">
+                <font>Room Rate</font>
+              </div>
+            </div>
+            <div class="row" style="padding-left:37px;padding-bottom:5px;">
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;"  [(ngModel)]="channel">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;"  [(ngModel)]="Roomno">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="Roomtype">
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="" id="" style=" height: 2.4em;" [(ngModel)]="rate">
+              </div>
+            </div>
+            
+            <div class="row" style="padding-left:37px;padding-top: 5px;">
+              <div class="col-md-3">
+                  <p><span class="badge" style="width:25px;height: 12px;" [ngClass]="{'backgroundcolorgreenschange': pickup=='y','backgroundcolorgreenchange': pickup=='Y', 'backgroundcolorredchange': pickup==null}"> </span> Pickup_Drop </p>
+              </div>
+              <div class="col-md-3">
+                  <font><span class="badge" style="width:25px;height: 12px;" [ngClass]="{'backgroundcolorgreenchange': modification=='yes', 'backgroundcolorredchange': modification==null}"> </span> Modification</font>
+              </div>
+              <div class="col-md-3">
+                  <font><span class="badge" style="width:25px;height: 12px;" [ngClass]="{'backgroundcolorgreenchange': sms=='success', 'backgroundcolorredschange': sms==null,'backgroundcolorredchange': sms=='failure'}"> </span> SMS</font>
+              </div>
+            </div> -->
+
+            
+            <div class="text-center">
+               <button type="button" class="btn btn-danger" [ngClass]="{disabling:showMore!=false}" (click)="showlessBut()"><b>Close</b><span class="glyphicon glyphicon-remove" style="padding-left:5px;"></span></button>  
+            </div>
+         
+          
+        
+      </div> 
+      <!-- Alert End --> 
