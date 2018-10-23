@@ -10,6 +10,7 @@ import { NgClass, DatePipe } from '@angular/common';
 // import { StatisticsService } from "./statistics.service";
 import { ReportsService } from "./reports.service";
 import {Chart} from 'chart.js'
+import * as moment from 'moment';
 // import *as D3 from "d3";
 
 @Component({
@@ -24,6 +25,11 @@ export class ReportsComponent implements OnInit {
   constructor(private AmCharts: AmChartsService,
     private ReportsService: ReportsService,
     public session: SessionStorageService, private datePipe: DatePipe) { }
+
+    public now:any;
+    //end date
+    public start_date:any = new Date().toJSON().split('T')[0];
+ 
   public chartDatas = [];
   public getroomdetails=[] ;
   public cancelcount=[];

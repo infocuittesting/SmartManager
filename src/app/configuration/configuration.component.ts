@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SessionStorageService } from 'ngx-webstorage';
 import { ConfigurationService } from "./configuration.service";
-
 import $ from 'jquery';
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
 import { viewClassName } from '@angular/compiler';
@@ -28,6 +27,11 @@ export class ConfigurationComponent implements OnInit {
   inclusion = [];
   public plan = {};
   i = 0;
+  // public now = moment().format("DD-MM-YYYY");
+
+  public now:any;
+  public date:any = new Date().toJSON().split('T')[0];
+
   constructor(private configurationService: ConfigurationService,
     public session: SessionStorageService) { }
 

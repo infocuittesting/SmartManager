@@ -105,7 +105,7 @@
                 <ng-container >
                 <thead>
                 <tr class="tabborder">
-                <th class="tabborder text-center">Delux Room</th>
+                <th class="tabborder text-center" colspan="100%">Delux Room</th>
                 <!-- <ng-container *ngFor="let grd2 of rm_sell2">
                 <td style="font-weight:700" class="tabborder"> {{grd2.room_date}}</td>
                 </ng-container> -->
@@ -137,7 +137,7 @@
                 <thead>
                 <tr class="tabborder text-center" >
                     
-                    <th class="tabborder" >Deluxe Suite</th>
+                    <th class="tabborder" colspan="100%">Deluxe Suite</th>
                     
                 <!-- <ng-container *ngFor="let gridd of rm_sell3">
                 <td style="font-weight:700" class="tabborder"></td>
@@ -199,7 +199,7 @@
         </div>
         <div class="col-sm-4">
         <div class="input-group">
-        <input class="form-control" type="date" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em;"
+        <input class="form-control" type="date" [min]="rangefrom" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em;"
         name="dp" [(ngModel)]="todate2" (ngModelChange)="enablinputs()">
         </div>
         </div>
@@ -378,7 +378,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" type="date" [min]="rangefrom" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="dp" [(ngModel)]="min_date" >
         </div>
         </div>
@@ -405,7 +405,7 @@
         
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="maximu" [(ngModel)]="max_date" >
         </div>
         </div> 
@@ -419,7 +419,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="open_arrival_from" [(ngModel)]="open_arrival_from" >
         </div>
         </div>
@@ -432,7 +432,7 @@
         </div> 
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="open_arrival_from" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="open_arrival_to" [(ngModel)]="open_arrival_to" >
         </div>
         </div> 
@@ -446,7 +446,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="open_departure_from" [(ngModel)]="open_departure_from" >
         </div>
         </div>
@@ -458,7 +458,7 @@
         </div> 
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="open_departure_from" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="open_departure_to" [(ngModel)]="open_departure_to" >
         </div>
         </div> 
@@ -472,7 +472,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="close_arrival_from" [(ngModel)]="close_arrival_from" >
         </div>
         </div>
@@ -485,7 +485,7 @@
         </div> 
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="close_arrival_from" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="close_arrival" [(ngModel)]="close_arrival_to" >
         </div>
         </div> 
@@ -499,7 +499,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="close_from" [(ngModel)]="close_departure_from" >
         </div>
         </div>
@@ -511,7 +511,7 @@
         </div> 
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="close_departure_from" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
         name="close_departure" [(ngModel)]="close_departure_to" >
         </div>
         </div> 
@@ -525,7 +525,7 @@
         </div>
         <div class="col-sm-3">
         <div class="input-group">
-        <input class="" placeholder="dd-mm-yyyy" type="date" style="border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;border-radius: 5px;"
+        <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;border-radius: 5px;"
         name="houseclose" [(ngModel)]="house_close" >
         </div>
         </div> 

@@ -254,11 +254,11 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-      <input type="date" name="" id="" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate">
+      <input type="date" [min]="date" name="from_date" id="from_date" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate">
 
     </div>
    <div class="col-md-4">
-    <input type="date" name="" id="" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" >
+    <input type="date" [min]="fromdate" name="todate" id="todate" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" >
   </div>
 </div>
 <br>

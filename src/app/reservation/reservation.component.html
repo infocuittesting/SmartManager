@@ -30,7 +30,7 @@
       </div>
       </div> -->
     <div class="input-group">
-      <input type="date"  placeholder="YYYY-MM-DD" class="" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="date" name="date" [(ngModel)]="date" ngbDatepicker #g="ngbDatepicker">
+      <input type="date"  placeholder="YYYY-MM-DD" class="form-control" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " id="fromdate" name="fromdate" [(ngModel)]="date">
       <!-- <div class="input-group-append">
         <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
         style="border-radius: 0px;">
@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-3">
         <div class="input-group">
-            <input type="date"  placeholder="YYYY-MM-DD" class="" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="dep_date" name="dep_date" [(ngModel)]="dep_date" ngbDatepicker #g="ngbDatepicker">
+            <input type="date"  placeholder="YYYY-MM-DD" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="dep_date" name="dep_date" [(ngModel)]="dep_date">
             <!-- <div class="input-group-append">
               <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
               style="border-radius: 0px;">
@@ -60,7 +60,7 @@
         <!-- </div> -->
     </div>
     <div class="col-md-3">
-        <input type="number" class="form-control" name="conf_num" id="conf_num" [(ngModel)]="conf_num" style="border: 1px solid gray; height: 2.4em; max-width: 12.2em; ">
+        <input type="number"  class="form-control" name="conf_num" id="conf_num" [(ngModel)]="conf_num" style="border: 1px solid gray; height: 2.4em; max-width: 12.2em; ">
     </div>
     <div class="col-mg-3">
         <button type="button" class="btn btn-warning" (click)="cleartab();ClearAll.reset()">Clear</button>

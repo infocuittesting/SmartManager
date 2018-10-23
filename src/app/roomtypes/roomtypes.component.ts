@@ -27,16 +27,19 @@ const now = new Date();
 /* tslint:disable */
 export class RoomtypesComponent implements OnInit {
 
+
  constructor(private roomTypeService: RoomTypeService,public session: SessionStorageService
  ,private datePipe: DatePipe ,
  private dateFormate:NgbDateCustomParserFormatter) { }
 
- 
+ public rangefrom:any = new Date().toJSON().split('T')[0];
+
+
  getroomTypedetails=[];
  NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- rangefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
+
  rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
