@@ -269,26 +269,26 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-      <input type="date" [min]="date" name="from_date" id="from_date" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate">
+      <input type="date" [min]="date" name="From_date" id="From_date" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="fromdate" #from_date="ngModel">
 
     </div>
    <div class="col-md-4">
-    <input type="date" [min]="fromdate" name="todate" id="todate" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" >
+    <input type="date" [min]="fromdate" name="todate" id="todate" style="border: 1px solid lightgray;padding-left:15px;width: 13.0em;height: 2.4em; " [(ngModel)]="todate" #To_date="ngModel">
   </div>
 </div>
 <div class="row">
 
-    <div class="md-errors-spacer" [hidden]="Fromdate.valid || Fromdate.untouched">
-        <div *ngIf="Fromdate.errors && rate_plan.errors.required" style="color: red;margin-left:25px;margin-right: 60px;
+    <div class="md-errors-spacer" [hidden]="from_date.valid || from_date.untouched">
+        <div *ngIf="from_date.errors && rate_plan.errors.required" style="color: red;margin-left:25px;margin-right: 60px;
          text-align: left;font-size:12px; margin-top: -3px">
         *From Date  is required
        </div>
    </div>
    
-   <div class="md-errors-spacer" [hidden]="date1.valid || date1.untouched">
-      <div *ngIf="date1.errors && rate_plan.errors.required" style="color: red;margin-left:162px;margin-right: 60px;
+   <div class="md-errors-spacer" [hidden]="To_date.valid || To_date.untouched">
+      <div *ngIf="To_date.errors && rate_plan.errors.required" style="color: red;margin-left:162px;margin-right: 60px;
        text-align: left;font-size:12px; margin-top: -3px">
-      *From Date  is required
+      *To Date  is required
      </div>
  </div>
    
