@@ -200,8 +200,8 @@ this.disvar=false
  let body = { 
  "business_id": this.bs_id,
  "room_id":user.room_id,
- "start_date": this.rangefrom.year+'-'+this.rangefrom.month+'-'+this.rangefrom.day,
- "end_date":this.todate2.year+'-'+this.todate2.month+'-'+this.todate2.day
+ "start_date": this.rangefrom,
+ "end_date":this.todate2
  };
  console.log("rommmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",body)
  this.roomTypeService.selectrateplan(body)
@@ -257,6 +257,10 @@ public newpll1=[];
 public newpll2=[];
 public newpll3=[];
 public newpll4=[];
+// room2plan2
+public rm2pl2=[];
+public rm2pll2=[];
+public rm2pl2finl=[];
 
  ngOnInit() {
     this.bs_id = this.session.retrieve("business_id")
@@ -415,6 +419,39 @@ public newpll4=[];
      }
     //  console.log("new final array",this.newpll3)
 
+
+// roomtype2 -->plans -->room_plan2   
+for (var i in this.rm2){
+    this.rm2pl2.push(this.rm2[i].room_plan2)     
+  }
+  //remove undefined values
+  this.rm2pll2 = this.rm2pl2.filter(function( element ) {
+  return element !== undefined;
+  });
+  // console.log("plan3",this.pll3)
+
+// matching room to sell date with plan dates
+for (var k=0;k<this.rm_to_sell_date2.length;k++){
+  
+  // console.log("sell datee",this.rm_to_sell_date2[k])
+ 
+  try{
+    if (this.rm2pll2.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
+      this.rm2pl2finl.push(this.rm2pll2[k])
+    }
+  }
+ 
+  catch(e){
+    console.log(e)
+    this.rm2pl2finl[k]={'room_open':"NA"}
+  }
+ 
+}
+ console.log("room2 plan2 final array",this.rm2pl2finl)
+
+
+
+// roomtype3 roomtosell date
     for(var i in this.rm_sell3){
       this.rm_to_sell_date3.push(this.rm_sell3[i]['room_date'])
     }
@@ -430,10 +467,9 @@ public newpll4=[];
         });
         // console.log("plan4",this.pll4)
 
-  });
-
-  // matching room to sell date with plan dates
-  for (var l=0;l<this.rm_to_sell_date3.length;l++){
+ // matching room to sell date with plan dates
+    
+ for (var l=0;l<this.rm_to_sell_date3.length;l++){
         
     console.log("sell datee",this.rm_to_sell_date3[l])
    
@@ -451,6 +487,9 @@ public newpll4=[];
    
  }
  console.log("new final array4",this.newpll4)
+  });
+
+ 
 
   
 
@@ -575,7 +614,9 @@ setperiod=[];
  todate1:any;
  todate4:any;
  planA7:any = {};
- getperioddays(getdate) {
+ getperioddays(fromdate1,todate1) {
+     
+
  this.pl1=[];
  this.pl2=[];
  this.pl3=[];
@@ -587,8 +628,8 @@ setperiod=[];
 this.parms = {
  
  "business_id": this.session.retrieve("business_id"),
- "from_date": this.fromdate.year+'-'+this.fromdate.month+'-'+this.fromdate.day,
- "to_date": this.todate3.year+'-'+this.todate3.month+'-'+this.todate3.day
+ "from_date": fromdate1,
+ "to_date": todate1
 
 
  }
@@ -601,24 +642,37 @@ this.parms = {
  }
 
 
- console.log("room plannnnnnnnnnnnnnnn",this.gridget)
+ console.log("entire service array",this.countdates)
  
- console.log("length",this.countdates.length)
+//  console.log("length",this.countdates.length)
  
  this.volume1=this.countdates[0].room_type1;
- console.log("volume111111111111111111111111111111111111111",this.volume1) 
+//  console.log("volume111111111111111111111111111111111111111",this.volume1) 
  this.frstrmname=this.countdates[0].room_name;
  this.secondrmname=this.countdates[1].room_name;
  this.thirdrmname=this.countdates[2].room_name
 
  this.volume2=this.countdates[1].room_type2;
- console.log("volume22222222222222222222222222222222",this.volume2)
+//  console.log("volume22222222222222222222222222222222",this.volume2)
  
  this.volume3=this.countdates[2].room_type3;
- console.log("volume33333333333333333333333333333333",this.volume3)
+//  console.log("volume33333333333333333333333333333333",this.volume3)
+
+ this.rm_sell1=[];
+ this.rm1=[];
+ this.newpll1=[];
+ this.newpll2=[];
+ this.newpll3=[];
+ this.rm_to_sell_date1=[];
+ this.rm_to_sell_date2=[];
+
+//  making array empty
+this.rm2pl2=[];
+this.rm2pll2=[];
+this.rm2pl2finl=[];
  
  this.volar.push(this.volume1,this.volume2,this.volume3)
- console.log("volarrrrrrrrrr",this.volar)
+//  console.log("volarrrrrrrrrr",this.volar)
  this.rm_sell1=this.countdates[0].room_type1.room_to_sell
  this.rm_sell2=this.countdates[1].room_type2.room_to_sell
  this.rm_sell3=this.countdates[2].room_type3.room_to_sell
@@ -627,14 +681,24 @@ this.parms = {
  this.rm3=this.countdates[2].room_type3.plans
  this.planar.push(this.rm1,this.rm2,this.rm3)
  console.log("roomplan1",this.rm1)
- console.log("arrayyyyyyyyyyyy",this.planar)
- console.log("rm_sell",this.rm_sell1)
+//  console.log("arrayyyyyyyyyyyy",this.planar)
+ console.log("room to sell for roomtype 1",this.rm_sell1)
 
  // this.origin = this.rm1.filter(
  // org => org.room_date === this.rm_sell["room_date"]
  // );
  
  
+ for(var i in this.rm_sell1){
+    this.rm_to_sell_date1.push(this.rm_sell1[i]['room_date'])
+  }
+   console.log("room to sell date only ",this.rm_to_sell_date1)
+
+  for(var i in this.rm_sell2){
+    this.rm_to_sell_date2.push(this.rm_sell2[i]['room_date'])
+  }
+
+
 // roomtype1 -->plans -->room_plan1
  for (var i in this.rm1){
  this.pl1.push(this.rm1[i].room_plan1)
@@ -646,7 +710,27 @@ this.parms = {
  this.pll1 = this.pl1.filter(function( element ) {
  return element !== undefined;
  });
- console.log("plan1",this.pl1)
+ console.log("roomtype1 plan1",this.pl1)
+// matching room to sell date with plan dates
+for (var k=0;k<this.rm_to_sell_date1.length;k++){
+        
+    // console.log("sell datee",this.rm_to_sell_date1[k])
+   
+    try{
+      if (this.pll1.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
+        this.newpll1.push(this.pll1[k])
+      }
+    }
+   
+    catch(e){
+      // console.log(e)
+      this.newpll1[k]={'room_open':"NA"}
+    }
+   
+ }
+   console.log("new final array newpll1",this.newpll1)
+
+
 
  // roomtype1 -->plans -->room_plan2
  for (var i in this.rm1){
@@ -656,7 +740,29 @@ this.parms = {
  this.pll2 = this.pl2.filter(function( element ) {
  return element !== undefined;
  });
- console.log("plan2",this.pl2)
+ console.log("plan2",this.pll2)
+// matching room to sell date with plan dates
+for (var k=0;k<this.rm_to_sell_date1.length;k++){
+        
+    // console.log("sell datee",this.rm_to_sell_date1[k])
+   
+    try{
+      if (this.pll2.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
+        this.newpll2.push(this.pll2[k])
+      }
+    }
+   
+    catch(e){
+      console.log(e)
+      this.newpll2[k]={'room_open':"NA"}
+    }
+   
+ }
+ console.log("roomtype1 plan 2",this.newpll2)
+
+
+
+
 
  // roomtype2 -->plans -->room_plan1 
  for (var i in this.rm2){
@@ -667,6 +773,57 @@ this.parms = {
  return element !== undefined;
  });
  console.log("plan3",this.pl3)
+
+ // matching room to sell date with plan dates
+ for (var k=0;k<this.rm_to_sell_date2.length;k++){
+        
+    // console.log("sell datee",this.rm_to_sell_date2[k])
+   
+    try{
+      if (this.pll3.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
+        this.newpll3.push(this.pll3[k])
+      }
+    }
+   
+    catch(e){
+      console.log(e)
+      this.newpll3[k]={'room_open':"NA"}
+    }
+   
+ }
+ console.log("roomtype2 plan1 final",this.newpll3)
+
+ 
+// roomtype2 -->plans -->room_plan2   
+for (var i in this.rm2){
+    this.rm2pl2.push(this.rm2[i].room_plan2)     
+  }
+  //remove undefined values
+  this.rm2pll2 = this.rm2pl2.filter(function( element ) {
+  return element !== undefined;
+  });
+  // console.log("plan3",this.pll3)
+
+// matching room to sell date with plan dates
+for (var k=0;k<this.rm_to_sell_date2.length;k++){
+  
+  // console.log("sell datee",this.rm_to_sell_date2[k])
+ 
+  try{
+    if (this.rm2pll2.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
+      this.rm2pl2finl.push(this.rm2pll2[k])
+    }
+  }
+ 
+  catch(e){
+    console.log(e)
+    this.rm2pl2finl[k]={'room_open':"NA"}
+  }
+ 
+}
+ console.log("room2 plan2 final array",this.rm2pl2finl)
+
+
 
 // roomtype3 -->plans -->room_plan1 
  for (var i in this.rm3){
@@ -831,6 +988,7 @@ this.parms = {
 // console.log("changessssssssssssss",this.pll1)
 // }
 
+// roomtype1 plan1
 public frstflow:any=[];
 public secondflow:any=[];
 public thirdflow:any=[];
@@ -851,11 +1009,11 @@ selecteditem1
  }
  this.frstflow.push(model1)
  
- console.log("valuessssssssssondblclick",model1)
- console.log("changessssssssssssssfrstflow",this.frstflow)
- console.log("changessssssssssssss",this.pll1)
+ console.log("valuessssssssssondblclick roomtype1 plan1",model1)
+ console.log("changessssssssssssssfrstflow roomtype3 plan1",this.frstflow)
+ console.log("changessssssssssssss roomtype3 plan1",this.pll1)
  }
-
+// roomtype2 plan1
  selectedindex2;
  selecteditem2
  editfun2(index2,model2){
@@ -871,10 +1029,11 @@ selecteditem1
  this.pll3[index2].room_open="1"
  }
  this.frstflow.push(model2)
- console.log("valuessssssssssondblclick",model2)
- console.log("changessssssssssssss",this.pll3)
+ console.log("valuessssssssssondblclick roomtype2 plan1",model2)
+ console.log("roomtype2 plan1",this.pll3)
  }
 
+//  roomtype3 plan1
  selectedindex3;
  selecteditem3
  editfun3(index3,model3){
@@ -890,11 +1049,51 @@ selecteditem1
  this.pll4[index3].room_open="1"
  }
  this.frstflow.push(model3)
- console.log("valuessssssssssondblclick",model3)
- console.log("changessssssssssssss",this.pll4)
+ console.log("valuessssssssssondblclick roomtype3 plan1",model3)
+ console.log("roomtype3 plan1",this.pll4)
+ }
+// roomtype1 plan2
+ selectedindex4;
+ selecteditem4
+ editfun4(index4,model4){
+ this.selectedindex4=index4;
+ this.selecteditem4=model4.room_open;
+ console.log(this.selecteditem4)
+ if(this.selecteditem4=="1"){
+ this.selecteditem4="0"
+ this.pll2[index4].room_open ="0"
+ }
+ else{
+ this.selecteditem3= "1"
+ this.pll2[index4].room_open="1"
+ }
+ this.frstflow.push(model4)
+ console.log("valuessssssssssondblclick roomtype1 plan2",model4)
+ console.log("roomtype1 plan2 changed array",this.pll2)
  }
 
 
+ // roomtype2 plan2
+ selectedindex5;
+ selecteditem5
+ editfun5(index5,model5){
+ this.selectedindex5=index5;
+ this.selecteditem5=model5.room_open;
+ console.log(this.selecteditem5)
+ if(this.selecteditem5=="1"){
+ this.selecteditem5="0"
+ this.rm2pll2[index5].room_open ="0"
+ }
+ else{
+ this.selecteditem5= "1"
+ this.rm2pll2[index5].room_open="1"
+ }
+ this.frstflow.push(model5)
+ console.log("valuessssssssssondblclick roomtype1 plan2",model5)
+ console.log("roomtype1 plan2 changed array",this.rm2pll2)
+ }
+
+ public gridsavestatus:any=[];
  // send updated values to db
  sendvalues(){
  
@@ -905,8 +1104,15 @@ selecteditem1
  console.log("bodyyyyyyyyy",body_send_values)
  this.roomTypeService.getsavebutton(body_send_values)
  .subscribe((resp: any) => {
+    // this.gridsavestatus = resp.Status;
+ console.log("responseeeeeeee",resp)
+     
  if (resp.Status == 'Success') {
- alert("resp.Status "+resp.ServiceStatus);
+    alert("resp.ServiceStatus " + resp.Status);
+ 
+ }
+ else{
+     alert("error")
  }
 
  });
@@ -979,8 +1185,8 @@ selecteditem1
  daterangedetails(user) {
     console.log("daterange details", user)
     console.log("userrrrr",user.roomtosell)
-    this.from = this.rangefrom.year + '-' + this.rangefrom.month + '-' + this.rangefrom.day
-    this.to = this.todate2.year + '-' + this.todate2.month + '-' + this.todate2.day
+    this.from = this.rangefrom
+    this.to = this.todate2
     // if (getdate != null && todate != null && user.roomtosell != null && user.rangeprice != null && user.extra_adult_rate != null) {
     if (this.from !=null && this.to !=null && user.room_id !=null && user.rate_plan_id !=null && user.roomtosell != null && user.rangeprice != null && user.extra_adult_rate != null && (user.sund != null || user.mon != null || user.tue != null || user.wed != null || user.thur != null || user.fri != null || user.sat != null)) {
         // alert("all values are given");

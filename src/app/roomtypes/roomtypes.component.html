@@ -58,7 +58,7 @@
                
                
                 <div class="col-sm-4">
-                <button type="button" class="btn btn-primary" (click)="getperioddays(setperiod)"
+                <button type="button" class="btn btn-primary" (click)="getperioddays(fromdate,todate3)"
                 style="width: 52%;height: 35px; padding-top: 2px;border-radius: 0px;">Set Period</button>
                 </div>
                 </div>     
@@ -91,12 +91,19 @@
                     </ng-container>
                     </tr> 
                         <tr class="rows">
-                        <th class="tabborder" data-toggle="modal" data-target="#myModal1">standard rate</th>
+                        <th class="tabborder" data-toggle="modal" data-target="#myModal1">Special rate</th>
                             <!-- <td class="tabborder" *ngFor="let grrm1 of pll1" [ngClass]="{'backgroundcolorgreenchange': !clicked, 'backgroundcolorredchange': clicked}" (dblclick)="clicked=true"></td> -->
                             <!-- <td class="tabborder" *ngFor="let grrm1 of pll1 let j=index" (dblclick)="editfun1(j,grrm1)" [ngClass]="{'backgroundcolorgreenchange': grrm1.room_open== '1', 'backgroundcolorredchange': grrm1.room_open== '0'}"></td> -->
                             <td class="tabborder" *ngFor="let grrm1 of newpll1 let j=index" (dblclick)="editfun1(j,grrm1)" [ngClass]="{'backgroundcolorgreenchange': grrm1.room_open== '1', 'backgroundcoloryellowchange': grrm1.room_open== 'NA','backgroundcolorredchange': grrm1.room_open== '0'}"></td>       
             
                         </tr>
+                        <tr class="rows">
+                            <th class="tabborder" data-toggle="modal" data-target="#myModal2">Hacker rate</th>
+                                <!-- <td class="tabborder" *ngFor="let grrm1 of pll1" [ngClass]="{'backgroundcolorgreenchange': !clicked, 'backgroundcolorredchange': clicked}" (dblclick)="clicked=true"></td> -->
+                                <!-- <td class="tabborder" *ngFor="let grrm1 of pll1 let j=index" (dblclick)="editfun1(j,grrm1)" [ngClass]="{'backgroundcolorgreenchange': grrm1.room_open== '1', 'backgroundcolorredchange': grrm1.room_open== '0'}"></td> -->
+                                <td class="tabborder" *ngFor="let rm1pln2 of newpll2 let j=index" (dblclick)="editfun4(j,rm1pln2)" [ngClass]="{'backgroundcolorgreenchange': rm1pln2.room_open== '1', 'backgroundcoloryellowchange': rm1pln2.room_open== 'NA','backgroundcolorredchange': rm1pln2.room_open== '0'}"></td>       
+                
+                            </tr>
                       
                     </tbody>
                 <br> 
@@ -124,26 +131,27 @@
                     </ng-container>
                     </tr>
                     <tr class="rows">
-                    <th class="tabborder"data-toggle="modal" data-target="#myModal3" >Standard Rate</th>
-                    <!-- <td class="tabborder" *ngFor="let grpl3 of pll3 let j=index" (dblclick)="editfun2(j,grpl3)" [ngClass]="{'backgroundcolorgreenchange': grpl3.room_open== '1', 'backgroundcolorredchange': grpl3.room_open== '0'}"></td> -->
-                    <td class="tabborder" *ngFor="let grpl3 of newpll3 let j=index" (dblclick)="editfun2(j,grpl3)" [ngClass]="{'backgroundcolorgreenchange': grpl3.room_open== '1', 'backgroundcoloryellowchange': grpl3.room_open== 'NA','backgroundcolorredchange': grpl3.room_open== '0'}"></td>   
-                    <!-- <td class="tabborder" *ngFor="let grpl3 of pll3" [ngClass]="{'backgroundcolorgreenchange': grpl3.room_open== '1', 'backgroundcolorredchange': grpl3.room_open== '0'}" ></td> -->
+                        <th class="tabborder"data-toggle="modal" data-target="#myModal3" >Special Rate</th>
+                        <td class="tabborder" *ngFor="let grpl3 of newpll3 let j=index" (dblclick)="editfun2(j,grpl3)" [ngClass]="{'backgroundcolorgreenchange': grpl3.room_open== '1', 'backgroundcoloryellowchange': grpl3.room_open== 'NA','backgroundcolorredchange': grpl3.room_open== '0'}"></td>   
                     </tr>
+                    <tr class="rows">
+                        <th class="tabborder"data-toggle="modal" data-target="#myModal5" >Hacker Rate</th>
+                        <td class="tabborder" *ngFor="let rm2pln2 of rm2pl2finl let j=index" (dblclick)="editfun5(j,rm2pln2)" [ngClass]="{'backgroundcolorgreenchange': rm2pln2.room_open== '1', 'backgroundcoloryellowchange': rm2pln2.room_open== 'NA','backgroundcolorredchange': rm2pln2.room_open== '0'}"></td>   
+                        </tr>
                     </tbody>
                 <br> 
                 </ng-container>
                 </table>
-                
-                <table>
+
+        <!-- table 3 -->
+                <!-- <table>
                 <ng-container>
                 <thead>
                 <tr class="tabborder text-center" >
                     
                     <th class="tabborder" colspan="100%">Deluxe Suite</th>
                     
-                <!-- <ng-container *ngFor="let gridd of rm_sell3">
-                <td style="font-weight:700" class="tabborder"></td>
-                </ng-container> -->
+                
                 </tr>
                 </thead>
                 <tbody>
@@ -157,16 +165,16 @@
                     </tr>
                     <tr class="rows">
                     <th class="tabborder" data-toggle="modal" data-target="#myModal4">Standard Rate</th>
-                    <td class="tabborder" *ngFor="let grpl4 of pll4 let j=index" (dblclick)="editfun3(j,grpl4)" [ngClass]="{'backgroundcolorgreenchange': grpl4.room_open== '1', 'backgroundcolorredchange': grpl4.room_open== '0'}"></td>
+                    <td class="tabborder" *ngFor="let grpl4 of newpll4 let j=index" (dblclick)="editfun3(j,grpl4)" [ngClass]="{'backgroundcolorgreenchange': grpl4.room_open== '1', 'backgroundcolorredchange': grpl4.room_open== '0'}"></td>
                     
-                    <!-- <td class="tabborder" *ngFor="let grpl4 of pll4" [ngClass]="{'backgroundcolorgreenchange': grpl4.room_open== '1', 'backgroundcolorredchange': grpl4.room_open== '0'}"></td> -->
                     </tr>
                     </tbody>
             
                 <br> 
                 </ng-container>
-                </table>
-                <!-- <div class="row" [hidden]="!showlabelname" style="margin-bottom: 20px;"> -->
+                </table> -->
+        <!-- table3 ends -->
+
                 <div class="row"  style="margin-bottom: 20px;">
                 <div class="col-sm-10" ></div>
                 <div class="col-sm-2">
@@ -683,7 +691,7 @@
         
         <!-- Modal Header -->
         <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
+        <h4 class="modal-title">Special Rate</h4>
         <button type="button" class="close" data-dismiss="modal">×</button>
         </div>
         <!-- Modal body -->
@@ -750,7 +758,8 @@
         </div>
         </div>
         <!-- -->
-        <!-- //rate with break fast -->
+
+        <!-- roomtype2 plan1 -->
        
         <div class="modal fade" id="myModal2">
         <div class="modal-dialog " style="width:100%; margin-left: 207px;">
@@ -806,7 +815,7 @@
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td><b>CloseDepacture</b></td>
+        <td><b>CloseDeparture</b></td>
         <ng-container *ngFor="let planB7 of pll2">
         <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB7.close_departure" ></td>
         </ng-container>
@@ -830,7 +839,88 @@
         </div>
         </div>
         </div>
+
+        <!-- roomtype2 plan2 -->
        
+        <div class="modal fade" id="myModal5">
+        <div class="modal-dialog " style="width:100%; margin-left: 207px;">
+        <div class="modal-content" style="width: 986px;" >
+        
+        <!-- Modal Header -->
+        <div class="modal-header">
+        <h4 class="modal-title">Hacker Rate</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+        <div class="container">
+        <table class="table table-bordered">
+        <thead>
+        
+        </thead>
+        <tbody>
+        <tr style="height: 41px;">
+        <td class="tabbor"><b >RoomDate</b></td>
+        <ng-container *ngFor="let planB1 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"  class="tabbor"> {{planB1.room_date}}</td>
+        </ng-container>
+        </tr>
+        <tr style="height: 10px;">
+        <td><b>RoomRate</b></td>
+        <ng-container *ngFor="let planB2 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB2.room_rate" > </td>
+        </ng-container>
+        </tr>
+        <tr style="height: 10px;">
+        <td><b>RoomOpen</b></td>
+        <ng-container *ngFor="let planB3 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB3.room_open" ></td>
+        </ng-container>
+        </tr>
+        <tr style="height: 10px;">
+        <td><b>MinStay</b></td>
+        <ng-container *ngFor="let planB4 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB4.min_stay" > </td>
+        </ng-container>
+        </tr>
+        <tr style="height: 10px;">
+        <td><b>MaxStay</b></td>
+        <ng-container *ngFor="let planB5 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB5.max_stay" ></td>
+        </ng-container>
+        </tr>
+        <tr style="height: 10px;">
+        <td><b>CloseArrival</b></td>
+        <ng-container *ngFor="let planB6 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB6.close_arrival" > </td>
+        </ng-container>
+        </tr>
+        <tr style="height: 10px;">
+        <td><b>CloseDeparture</b></td>
+        <ng-container *ngFor="let planB7 of rm2pll2">
+        <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB7.close_departure" ></td>
+        </ng-container>
+        </tr>
+        <!-- <tr style="height: 10px;">
+        <td><b>ExtraAdults</b></td>
+        <ng-container *ngFor="let planB8 of pll2">
+        <td style="font-weight:700" class="tabborder"> {{planB8.min_stay}}</td>
+        </ng-container>
+        </tr> -->
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer" style="margin-top: -25px">
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sendval(pll2)">Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+
        
         <!-- //standed rate -->
        
