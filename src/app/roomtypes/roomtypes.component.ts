@@ -258,6 +258,10 @@ public newpll1=[];
 public newpll2=[];
 public newpll3=[];
 public newpll4=[];
+
+public rm1pl3=[];
+public rm1pll3=[];
+public newrm1pll3=[];
 // room2plan2
 public rm2pl2=[];
 public rm2pll2=[];
@@ -306,6 +310,8 @@ public rm2pl2finl=[];
     for(var i in this.rm_sell2){
       this.rm_to_sell_date2.push(this.rm_sell2[i]['room_date'])
     }
+
+    
     // console.log("room to sell date ",this.rm_to_sell_date2)
 
    
@@ -391,7 +397,45 @@ public rm2pl2finl=[];
      }
     //  console.log("new final array",this.newpll2)
 
- // roomtype2 -->plans -->room_plan1   
+
+// roomtype1 -->plans -->room_plan3
+for (var i in this.rm1){
+    this.rm1pl3.push(this.rm1[i].room_plan3)    
+}
+  //remove undefined values
+  this.rm1pll3 = this.rm1pl3.filter(function( element ) {
+    return element !== undefined;
+  });
+  // console.log("plan2",this.pl2)
+
+// matching room to sell date with plan dates
+for (var k=0;k<this.rm_to_sell_date1.length;k++){
+  
+  // console.log("sell datee",this.rm_to_sell_date1[k])
+ 
+  try{
+    if (this.rm1pll3.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
+      this.newrm1pll3.push(this.rm1pll3[k])
+    }
+  }
+ 
+  catch(e){
+    console.log(e)
+    this.newrm1pll3[k]={'room_open':"NA"}
+  }
+ 
+}
+ console.log("new final array",this.newrm1pll3)
+
+
+
+
+
+
+
+
+ // roomtype2 -->plans -->room_plan1  
+  
         for (var i in this.rm2){
           this.pl3.push(this.rm2[i].room_plan1)     
         }
@@ -399,7 +443,8 @@ public rm2pl2finl=[];
         this.pll3 = this.pl3.filter(function( element ) {
         return element !== undefined;
         });
-        // console.log("plan3",this.pll3)
+        console.log("roomtype2 all plans",this.rm2)
+        console.log("roomtype2 roomplan1  removing undefined",this.pll3)
 
   // matching room to sell date with plan dates
       for (var k=0;k<this.rm_to_sell_date2.length;k++){
@@ -418,7 +463,9 @@ public rm2pl2finl=[];
         }
        
      }
-    //  console.log("new final array",this.newpll3)
+     console.log("roomtype2 rm to sell datee",this.rm_to_sell_date2)
+          
+     console.log("roomtype2 plan 1",this.newpll3)
 
 
 // roomtype2 -->plans -->room_plan2   
@@ -671,6 +718,9 @@ this.parms = {
 this.rm2pl2=[];
 this.rm2pll2=[];
 this.rm2pl2finl=[];
+this.rm1pl3=[];
+this.rm1pll3=[];
+this.newrm1pll3=[];
  
  this.volar.push(this.volume1,this.volume2,this.volume3)
 //  console.log("volarrrrrrrrrr",this.volar)
@@ -762,6 +812,34 @@ for (var k=0;k<this.rm_to_sell_date1.length;k++){
  console.log("roomtype1 plan 2",this.newpll2)
 
 
+// roomtype1 -->plans -->room_plan3
+for (var i in this.rm1){
+    this.rm1pl3.push(this.rm1[i].room_plan3)    
+}
+  //remove undefined values
+  this.rm1pll3 = this.rm1pl3.filter(function( element ) {
+    return element !== undefined;
+  });
+  // console.log("plan2",this.pl2)
+
+// matching room to sell date with plan dates
+for (var k=0;k<this.rm_to_sell_date1.length;k++){
+  
+  // console.log("sell datee",this.rm_to_sell_date1[k])
+ 
+  try{
+    if (this.rm1pll3.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
+      this.newrm1pll3.push(this.rm1pll3[k])
+    }
+  }
+ 
+  catch(e){
+    console.log(e)
+    this.newrm1pll3[k]={'room_open':"NA"}
+  }
+ 
+}
+ console.log("new final array",this.newrm1pll3)
 
 
 
@@ -970,24 +1048,25 @@ for (var k=0;k<this.rm_to_sell_date2.length;k++){
  this.todate=null;
  }
 
-// selectedindex;
-// selecteditem
-// editfun(index,model){
-// this.selectedindex=index;
-// this.selecteditem=model.room_open;
-// console.log(this.selecteditem)
-// if(this.selecteditem=="1"){
-// this.selecteditem="0"
-// this.pll1[index].room_open ="0"
-// }
-// else{
-// this.selecteditem="1"
-// this.pll1[index].room_open="1"
-// }
+selectedindex;
+selecteditem
+editfun(index,model){
+this.selectedindex=index;
+this.selecteditem=model.room_open;
+console.log(this.selecteditem)
+if(this.selecteditem=="1"){
+this.selecteditem="0"
+this.rm1pll3[index].room_open ="0"
+}
+else{
+this.selecteditem="1"
+this.rm1pll3[index].room_open="1"
+}
+this.frstflow.push(model)
 
-// console.log("valuessssssssssondblclick",model)
-// console.log("changessssssssssssss",this.pll1)
-// }
+console.log("valuessssssssssondblclick",model)
+console.log("changessssssssssssss",this.rm1pll3)
+}
 
 // roomtype1 plan1
 public frstflow:any=[];
@@ -1104,12 +1183,12 @@ selecteditem1
  }
  console.log("bodyyyyyyyyy",body_send_values)
  this.roomTypeService.getsavebutton(body_send_values)
- .subscribe((resp: any) => {
+ .subscribe((resp1: any) => {
     // this.gridsavestatus = resp.Status;
- console.log("responseeeeeeee",resp)
+ console.log("responseeeeeeee",resp1)
      
- if (resp.Status == 'Success') {
-    alert("resp.ServiceStatus " + resp.Status);
+ if (resp1[0].Status == 'Success') {
+    alert("resp1.ServiceStatus " + resp1[0].Status);
  
  }
  else{
@@ -1138,8 +1217,8 @@ selecteditem1
  console.log("bodyyyyyyyyy",body_send_values)
  this.roomTypeService.getsavebutton(body_send_values)
  .subscribe((resp: any) => {
- if (resp.Status == 'Success') {
- alert("resp.Status "+resp.ServiceStatus);
+ if (resp[0].Status == 'Success') {
+ alert("resp.Status "+resp[0].Status);
  }
 
  });
