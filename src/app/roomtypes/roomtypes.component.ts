@@ -32,14 +32,14 @@ export class RoomtypesComponent implements OnInit {
  ,private datePipe: DatePipe ,
  private dateFormate:NgbDateCustomParserFormatter) { }
 
-  public from1:any = new Date().toJSON().split('T')[0];
+  public rangefrom:any = new Date().toJSON().split('T')[0];
 
 
  getroomTypedetails=[];
  NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
+//  rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
  rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
@@ -195,13 +195,13 @@ this.disvar=false
  }
  ]
  onChangeObj(event,user, bs_id){
- console.log(event,user.room_id,bs_id)
+ console.log(event,user.room_id,bs_id,this.rangefrom)
  this.enrate = false
  let body = { 
  "business_id": this.bs_id,
  "room_id":user.room_id,
- "start_date": this.rangefrom.year+'-'+this.rangefrom.month+'-'+this.rangefrom.day,
- "end_date":this.todate2.year+'-'+this.todate2.month+'-'+this.todate2.day
+ "start_date": this.rangefrom,
+ "end_date":this.todate2
  };
  console.log("rommmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",body)
  this.roomTypeService.selectrateplan(body)
@@ -977,10 +977,10 @@ selecteditem1
  public user={};
  roomTypesFieldErrorFlag = false;
  daterangedetails(user) {
-    console.log("daterange details", user)
+    console.log("daterange details", user,this.rangefrom)
     console.log("userrrrr",user.roomtosell)
-    this.from = this.rangefrom.year + '-' + this.rangefrom.month + '-' + this.rangefrom.day
-    this.to = this.todate2.year + '-' + this.todate2.month + '-' + this.todate2.day
+    this.from = this.rangefrom
+    this.to = this.todate2
     // if (getdate != null && todate != null && user.roomtosell != null && user.rangeprice != null && user.extra_adult_rate != null) {
     if (this.from !=null && this.to !=null && user.room_id !=null && user.rate_plan_id !=null && user.roomtosell != null && user.rangeprice != null && user.extra_adult_rate != null && (user.sund != null || user.mon != null || user.tue != null || user.wed != null || user.thur != null || user.fri != null || user.sat != null)) {
         // alert("all values are given");
