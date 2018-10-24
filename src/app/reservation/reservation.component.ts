@@ -20,6 +20,11 @@ export class ReservationComponent implements OnInit {
     private dateFormate:NgbDateCustomParserFormatter,
     private router: Router,
     private route: ActivatedRoute ) { }
+
+    //end date
+    public date:any = new Date().toJSON().split('T')[0];
+
+    public dep_date:any=new Date().toJSON().split('T')[0];
       //show more
   showMoreBut(){
     this.showMore=true;

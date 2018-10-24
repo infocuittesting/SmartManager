@@ -131,3 +131,11 @@ border-radius: 0px !important;
 .tabbor1{
     border: 1px solid black !important;
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   margin: 0;
+}

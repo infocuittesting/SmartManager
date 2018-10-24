@@ -28,6 +28,8 @@ export class ConfigurationComponent implements OnInit {
   inclusion = [];
   public plan = {};
   i = 0;
+
+  public date:any = new Date().toJSON().split('T')[0];
   constructor(private configurationService: ConfigurationService,
     public session: SessionStorageService) { }
 
@@ -164,6 +166,8 @@ updateconfig(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,pho
   this.showlessBut();
   })
 }
+// public roomTypesFieldErrorFlag:boolean;
+roomTypesFieldErrorFlag = false;
   insertroom(param) {
     param.business_id = this.session.retrieve("business_id");
     console.log("$$$$$$$$$$$$$", JSON.stringify(param));
@@ -172,14 +176,70 @@ updateconfig(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,pho
     } else {
       param.smoking = 0;
     }
+    if(param.room_name !=null && param.max_adults !=null && param.max_child && param.room_size_id !=null && param.bedding_option_id !=null && param.extrabed_id !=null && param.bed_size_id !=null && param.amenitie_id !=null && param.smoking !=null && param.min_price !=null){
+      this.roomTypesFieldErrorFlag = false;
+  
     console.log("Checking smoking value", param.smoking);
     this.configurationService.insertRoomDetails(param)
       .subscribe((resp: any) => {
         if (resp.ReturnCode == 'RIS') {
           alert("resp.ServiceStatus " + resp.ReturnCode);
+         
+          this.configurationService.getRoomDetails()
+          .subscribe((resp:any)=>{
+             this.roomdetails=resp.Result;
+             console.log(this.roomdetails)
+             this.roomdetils_length = this.roomdetails.length
+             console.log(this.roomdetils_length)
+             for (var i = 0; i < this.roomdetails.length; i++)
+             {
+              this.amentiesss = this.roomdetails[i]['amenitie']
+              this.amentiesss = this.amentiesss.slice(0,3)
+              this.room_amentie_name = this.roomdetails[i]['room_name']
+              //  console.log(this.roomdetails)
+              //  this.amentiesss = this.amenitiestemp.amenitie.slice(0,3);
+              //  this.amentiesss = this.amentiesss.slice(0,3);
+              //  console.log(this.amentiesss)
+              //  console.log(this.room_amentie_name)
+              this.roomdetails[i]["amentie_name1"] = this.amentiesss[0],
+              this.roomdetails[i]["amentie_name2"] = this.amentiesss[1],
+              this.roomdetails[i]["amentie_name3"] = this.amentiesss[2],
+               this.amentite_details.push({
+                 "room_name":this.room_amentie_name,
+                 "amentie_name1":this.amentiesss[0],
+                 "amentie_name2":this.amentiesss[1],
+                 "amentie_name3":this.amentiesss[2]
+               })
+              
+             }
+            //  console.log("thisamen*************",this.amentite_details)
+             console.log("thisamen*************",this.roomdetails)
+            //  console.log("'djahdhasdia",this.amentite_details)
+              //  this.roomdetails.push({
+              //    "amenitie":this.amentiesss
+              //  })
+              //  console.log("this.amen",this.roomdetails)
+          //    for (let amenitiestemp of this.roomdetails ){
+          //     // this.amenitiestemp = amenitiestemp[amenitiestemp.length-1]
+          //      this.amentiesss = amenitiestemp.amenitie.split(",");
+          //      this.amentiesss = this.amentiesss.slice(0,3);
+          
+          //      console.log("this is amenties**************",this.amentiesss)
+          //      this.i=this.i+1;
+          //    }
+           
+          //    console.log("new value", this.roomdetails)
+          
+          // console.log("get room details response",JSON.stringify(this.roomdetails));
+          });
         }
-        console.log("RETURN VALUE FOR INSERT ROOM", resp.Return);
+        this.plan = {};
+        // console.log("RETURN VALUE FOR INSERT ROOM", resp.Return);
       });
+    }
+    else{
+      this.roomTypesFieldErrorFlag = true;
+    }
   }
 
 Queryselectoptions(){
@@ -242,29 +302,58 @@ onCheckboxChange(option, event) {
     }
     console.log(this.roomcheckedList);
     }
-  
-insertrateplan(rate_plan_id,policy_id,fromdate,todate){
-console.log("rateplan screen",rate_plan_id,policy_id,fromdate,todate)
+  public conf_rate  = {};
+insertrateplan(conf_rate){
+console.log("rateplan screen",conf_rate)
+if(conf_rate.rate_plan_id !=null && conf_rate.policy_id !=null && conf_rate.fromdate !=null && conf_rate.todate !=null && this.checkedList.length !=0  && this.roomcheckedList.length !=0 ){
+  this.roomTypesFieldErrorFlag = false;
+
 let body = {   
 	"business_id":  this.session.retrieve("business_id").toString(),
-	"rate_plan":rate_plan_id,
-	"cancellation_policy_id":policy_id,
+	"rate_plan":conf_rate.rate_plan_id,
+	"cancellation_policy_id":conf_rate.policy_id,
 	"room_types_id":this.roomcheckedList,
 	"packages_id":this.checkedList,
-	"start_date":fromdate,
-	"end_date":todate
+	"start_date":conf_rate.fromdate,
+	"end_date":conf_rate.todate
 }
 console.log("body value",body)
+
 this.configurationService.create_rate_planss(body)
+
 .subscribe((resp: any) => {
+  this.checkedList = [];
+    this.roomcheckedList = [];
+
   if (resp.ServiceStatus == 'Success') {
     alert("resp.ServiceStatus "+resp.ServiceStatus);
+    this.conf_rate = {};
+    
   }
-  else{
-    alert("failure ");
-  }
+  
 
+
+  
 });
+}
+else{
+  this.roomTypesFieldErrorFlag = true
+}
+}
+// Auto Refersh data
+refreshroom(){
+  this.configurationService.selectroomtype()
+  .subscribe((resp:any)=>{
+     this.roomtypes=resp.Result;
+     console.log(this.roomtypes)
+  });
+}
+clickrateplan(){
+  this.configurationService.packages()
+  .subscribe((resp:any)=>{
+     this.pakages=resp.Result;
+     console.log(this.pakages)
+  });
 }
 
 }

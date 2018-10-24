@@ -27,16 +27,19 @@ const now = new Date();
 /* tslint:disable */
 export class RoomtypesComponent implements OnInit {
 
+
  constructor(private roomTypeService: RoomTypeService,public session: SessionStorageService
  ,private datePipe: DatePipe ,
  private dateFormate:NgbDateCustomParserFormatter) { }
 
- 
+  public from1:any = new Date().toJSON().split('T')[0];
+
+
  getroomTypedetails=[];
  NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- rangefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
+ rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
  rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
@@ -191,12 +194,12 @@ this.disvar=false
  "Summer_special":"no",
  }
  ]
- onChangeObj(event,room_id,bs_id){
- console.log(event,room_id,bs_id)
+ onChangeObj(event,user, bs_id){
+ console.log(event,user.room_id,bs_id)
  this.enrate = false
  let body = { 
  "business_id": this.bs_id,
- "room_id":room_id,
+ "room_id":user.room_id,
  "start_date": this.rangefrom.year+'-'+this.rangefrom.month+'-'+this.rangefrom.day,
  "end_date":this.todate2.year+'-'+this.todate2.month+'-'+this.todate2.day
  };
@@ -971,128 +974,214 @@ selecteditem1
  public price:number;
  public sell:number;
  public extra_price:number;
- daterangedetails(getdate,todate,sun,mon,tue,wed,thur,fri,sat,roomtosell,rangeprice,extra_adult_rate,room_id,rate_plan_id){
- console.log("daterange details",getdate,todate,sun,mon,tue,wed,thur,fri,sat,roomtosell,rangeprice,extra_adult_rate,room_id,rate_plan_id)
- // days checkbox input
- this.extra_price = extra_adult_rate
- this.price = rangeprice;
- this.sell = roomtosell;
- if(sun == true)
- {
- this.sunday = 1;
- // console.log("checkif", this.sunday)
- }else{
- this.sunday = 0;
- // console.log("checkelse", this.sunday)
- }
- if(mon == true){
- this.monday = 1;
- }
- else{
- this.monday = 0;
- }
- if(tue == true){
- this.tuesday = 1;
- }
- else{
- this.tuesday = 0;
- }
- if(wed == true){
- this.wednesday = 1;
- }
- else{
- this.wednesday = 0;
- }
- if(thur == true){
- this.thursday = 1;
- }
- else{
- this.thursday = 0;
- }
- if(fri == true){
- this.friday = 1;
- }
- else{
- this.friday = 0;
- }
- if(sat == true){
- this.saturday = 1;
- }
- else{
- this.saturday = 0;
- }
- 
+ public user={};
+ roomTypesFieldErrorFlag = false;
+ daterangedetails(user) {
+    console.log("daterange details", user)
+    console.log("userrrrr",user.roomtosell)
+    this.from = this.rangefrom.year + '-' + this.rangefrom.month + '-' + this.rangefrom.day
+    this.to = this.todate2.year + '-' + this.todate2.month + '-' + this.todate2.day
+    // if (getdate != null && todate != null && user.roomtosell != null && user.rangeprice != null && user.extra_adult_rate != null) {
+    if (this.from !=null && this.to !=null && user.room_id !=null && user.rate_plan_id !=null && user.roomtosell != null && user.rangeprice != null && user.extra_adult_rate != null && (user.sund != null || user.mon != null || user.tue != null || user.wed != null || user.thur != null || user.fri != null || user.sat != null)) {
+        // alert("all values are given");
+        this.roomTypesFieldErrorFlag = false;
+        // days checkbox input
+        this.extra_price = user.extra_adult_rate
+        this.price = user.rangeprice;
+        this.sell = user.roomtosell;
+        if (user.sund == true) {
+            this.sunday = 1;
+            // console.log("checkif", this.sunday)
+        } else {
+            this.sunday = 0;
+            // console.log("checkelse", this.sunday)
+        }
+        if (user.mon == true) {
+            this.monday = 1;
+        }
+        else {
+            this.monday = 0;
+        }
+        if (user.tue == true) {
+            this.tuesday = 1;
+        }
+        else {
+            this.tuesday = 0;
+        }
+        if (user.wed == true) {
+            this.wednesday = 1;
+        }
+        else {
+            this.wednesday = 0;
+        }
+        if (user.thur == true) {
+            this.thursday = 1;
+        }
+        else {
+            this.thursday = 0;
+        }
+        if (user.fri == true) {
+            this.friday = 1;
+        }
+        else {
+            this.friday = 0;
+        }
+        if (user.sat == true) {
+            this.saturday = 1;
+        }
+        else {
+            this.saturday = 0;
+        }
 
- // console.log("details", this.sunday,this.monday,this.rangefrom.year+'-'+this.rangefrom.month+'-'+this.rangefrom.day,this.todate.year+'-'+this.todate.month+'-'+this.todate.day,)
- console.log("dayscount",this.monday,this.tuesday,this.sunday, this.thursday )
- this.from = this.rangefrom.year+'-'+this.rangefrom.month+'-'+this.rangefrom.day
- this.to = this.todate2.year+'-'+this.todate2.month+'-'+this.todate2.day
- let params = {
- 
- "business_id": this.session.retrieve("business_id").toString(),
- "st_date": this.from.toString(),
- "ed_date": this.to.toString() ,
- "days":{
- "sun": this.sunday,
- "mon":this.monday,
- "tue":this.tuesday,
- "wed":this.wednesday,
- "thu":this.thursday,
- "fri":this.friday,
- "sat":this.saturday
- },
- "available_count": this.sell ,
- "room_rate":this.price,
- "extra_adult_rate":this.extra_price,
- "room_id":room_id,
- "rate_plan_id":rate_plan_id
- 
- }
- console.log("input********************",params)
- this.roomTypeService.daterangecount(params)
- 
- .subscribe((resp: any) => {
- if (resp.ServiceStatus == 'Success') {
- alert("resp.ServiceStatus "+resp.ServiceStatus);
- }
 
- });
- }
- restrcitdeatils(min_stay,min_date,max_stay,max_date,close_arrival_from,close_arrival_to,close_departure_from,close_departure_to,house_close,open_arrival_from,open_departure_from,open_arrival_to,open_departure_to){
- console.log("restrictdetails",min_stay,min_date,max_stay,max_stay,close_arrival_from,close_arrival_to,close_departure_from,close_departure_to,house_close)
- let body = {
- 
- 
- // "business_id":this.session.retrieve("business_id").toString(),
- "business_id": this.session.retrieve("business_id"),
- "min_stay": min_stay != null ? min_stay.toString() : "",
- "max_stay": max_stay !=null ? max_stay.toString():"",
- "close_arrival":close_arrival_from !=null ? close_arrival_from :"",
- "close_departure":close_departure_from !=null ? close_departure_from:"",
- "house_close":house_close !=null ? house_close:"",
- "min_stay_date":min_date !=null ? min_date:"",
- "max_stay_date":max_date !=null ? max_date:"",
- "close_arrival_to":close_arrival_to !=null ? close_arrival_to:"",
- "close_departure_to":close_departure_to !=null ? close_departure_to:"",
- "open_arrival":open_arrival_from !=null ? open_arrival_from:"",
- "open_departure":open_departure_from !=null ? open_departure_from:"",
- "open_arrival_to":open_arrival_to !=null ? open_arrival_to:"",
- "open_departure_to":open_departure_to !=null ? open_departure_to:""
- 
- 
- }
- 
- console.log("params details",body)
- this.roomTypeService.restriction(body)
- 
- .subscribe((resp: any) => {
- if (resp.ServiceStatus == 'Success') {
- alert("resp.ServiceStatus "+resp.ServiceStatus);
- }
- 
- });
- 
- }
+        // console.log("details", this.sunday,this.monday,this.rangefrom.year+'-'+this.rangefrom.month+'-'+this.rangefrom.day,this.todate.year+'-'+this.todate.month+'-'+this.todate.day,)
+        console.log("dayscount", this.monday, this.tuesday, this.sunday, this.thursday)
+
+        let params = {
+
+            "business_id": this.session.retrieve("business_id").toString(),
+            "st_date": this.from.toString(),
+            "ed_date": this.to.toString(),
+            "days": {
+                "sun": this.sunday,
+                "mon": this.monday,
+                "tue": this.tuesday,
+                "wed": this.wednesday,
+                "thu": this.thursday,
+                "fri": this.friday,
+                "sat": this.saturday
+            },
+            "available_count": this.sell,
+            "room_rate": this.price,
+            "extra_adult_rate": this.extra_price,
+            "room_id": user.room_id,
+            "rate_plan_id": user.rate_plan_id
+
+        }
+        console.log("input********************", params)
+        this.roomTypeService.daterangecount(params)
+
+            .subscribe((resp: any) => {
+                if (resp.ServiceStatus == 'Success') {
+                    alert("resp.ServiceStatus " + resp.ServiceStatus);
+                    this.user={};
+                    this.rangefrom;
+                    this.todate2 ={};
+                }
+            });
+    }
+    else{
+        // alert("All values are mandatory");
+        this.roomTypesFieldErrorFlag = true
+    }
+}
+public rate_res = {};
+ restrcitdeatils(rate_res) {
+    console.log("restrictdetails",rate_res)
+    if(rate_res.dropdownvalue !=null){
+        this.roomTypesFieldErrorFlag = false
+        if(rate_res.dropdownvalue == "Minimum Stay"){
+            if(rate_res.min_stay !=null && rate_res.min_date){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+        if(rate_res.dropdownvalue == "Maximum Stay"){
+            if(rate_res.max_stay !=null && rate_res.max_date){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+        if(rate_res.dropdownvalue == "Open For Arrival"){
+            if(rate_res.open_arrival_from !=null && rate_res.open_arrival_to){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+        if(rate_res.dropdownvalue == "Open For Departure"){
+            if(rate_res.open_departure_from !=null && rate_res.open_departure_to){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+        if(rate_res.dropdownvalue == "Close For Arrival"){
+            if(rate_res.close_arrival_from !=null && rate_res.close_arrival_to){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+        if(rate_res.dropdownvalue == "Close For Departure"){
+            if(rate_res.close_departure_from !=null && rate_res.close_departure_to){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+        if(rate_res.dropdownvalue == "House Close"){
+            if(rate_res.house_close !=null ){
+                this.roomTypesFieldErrorFlag = false;
+                this.restrictionData(rate_res);
+            }
+            else{
+                this.roomTypesFieldErrorFlag = true
+            }
+        }
+    }else{
+        this.roomTypesFieldErrorFlag = true
+    }
+    
+}
+
+restrictionData(rate_res){
+    let body = {
+
+
+        // "business_id":this.session.retrieve("business_id").toString(),
+        "business_id": this.session.retrieve("business_id"),
+        "min_stay": rate_res.min_stay != null ? rate_res.min_stay.toString() : "",
+        "max_stay": rate_res.max_stay != null ? rate_res.max_stay.toString() : "",
+        "close_arrival": rate_res.close_arrival_from != null ? rate_res.close_arrival_from : "",
+        "close_departure": rate_res.close_departure_from != null ? rate_res.close_departure_from : "",
+        "house_close": rate_res.house_close != null ? rate_res.house_close : "",
+        "min_stay_date": rate_res.min_date != null ? rate_res.min_date : "",
+        "max_stay_date": rate_res.max_date != null ? rate_res.max_date : "",
+        "close_arrival_to": rate_res.close_arrival_to != null ? rate_res.close_arrival_to : "",
+        "close_departure_to": rate_res.close_departure_to != null ? rate_res.close_departure_to : "",
+        "open_arrival": rate_res.open_arrival_from != null ? rate_res.open_arrival_from : "",
+        "open_departure": rate_res.open_departure_from != null ? rate_res.open_departure_from : "",
+        "open_arrival_to": rate_res.open_arrival_to != null ? rate_res.open_arrival_to : "",
+        "open_departure_to": rate_res.open_departure_to != null ? rate_res.open_departure_to : ""
+
+
+    }
+
+    console.log("params details", body)
+    this.roomTypeService.restriction(body)
+
+        .subscribe((resp: any) => {
+            if (resp.ServiceStatus == 'Success') {
+                alert("resp.ServiceStatus " + resp.ServiceStatus);
+            }
+
+        });
+}
  public toggleValue:any;
 public open:any;
 public toggdate;
@@ -1132,4 +1221,12 @@ public togdate;
  alert('Double Click Event')
 
  }
+ refreshroomtype(){
+    this.roomTypeService.selectroomtype()
+    .subscribe((resp: any) => {
+        this.roomtypes = resp.Result;
+        // this.todate4=this.selectrestr.house_close;
+        console.log("room plannnnnnnnnnnnnnnn", this.roomtypes)
+    });
+}
 }

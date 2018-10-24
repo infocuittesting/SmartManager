@@ -16,13 +16,13 @@
         <div class="form-group-addon">
             <b>Startdate</b> 
           <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-          <input type="date" class="form-control" id="Startdate" name="Startdate"placeholder="Startdate" style="height: 32px;" [(ngModel)]="start_date">
+          <input type="date" class="form-control"  id="Startdate" name="Startdate" placeholder="Startdate" style="height: 2.4em;" [(ngModel)]="start_date">
         </div>
       </div>
       <div class="col-md-3">
           <div class="form-group">
             <b>Enddate</b>
-            <input type="date" class="form-control" id="Startdate" name="endtdate" style="height: 32px;" [(ngModel)]="end_date" (ngModelChange)="fetchrecord($event,start_date,end_date)">
+            <input type="date" [min]="start_date" class="form-control" id="enddate" name="endtdate" style="height: 2.4em;" [(ngModel)]="end_date" (ngModelChange)="fetchrecord($event,start_date,end_date)">
           </div>
         </div>
         <!-- <div class="col-md-3">
