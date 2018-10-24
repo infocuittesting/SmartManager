@@ -252,7 +252,7 @@
    </div>
    
    <div class="md-errors-spacer" [hidden]="Cancellation.valid || Cancellation.untouched">
-      <div *ngIf="Cancellation.errors && rate_plan.errors.required" style="color: red;margin-left:364px;margin-right: 60px;
+      <div *ngIf="Cancellation.errors && rate_plan.errors.required" style="color: red;    margin-left: 365px;margin-right: 60px;
        text-align: left;font-size:12px; margin-top: -3px">
       *Canceleton policy is required
      </div>
@@ -347,7 +347,7 @@
     <div class="row">
         <div class="col-md-5"></div>
         <div class="col-md-2">
-          <button type="button" class="btn btn-success"(click)="insertrateplan(rate_plan_id,policy_id,fromdate,todate)">Save</button>
+          <button type="button" class="btn btn-success"(click)="insertrateplan(rate_plan_id,policy_id,fromdate,todate)" style="margin-top: 37px">Save</button>
         </div>
         <div class="col-md-5"></div>
     </div>
