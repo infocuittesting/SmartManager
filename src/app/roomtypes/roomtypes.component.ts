@@ -34,11 +34,12 @@ export class RoomtypesComponent implements OnInit {
 
  public rangefrom:any = new Date().toJSON().split('T')[0];
  public from1:any = new Date().toJSON().split('T')[0];
+ public fromdate:any = new Date().toJSON().split('T')[0];
 
 
  getroomTypedetails=[];
  NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
+//  fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
 //  rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
  rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
