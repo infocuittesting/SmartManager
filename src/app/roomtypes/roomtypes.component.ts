@@ -32,14 +32,15 @@ export class RoomtypesComponent implements OnInit {
  ,private datePipe: DatePipe ,
  private dateFormate:NgbDateCustomParserFormatter) { }
 
-  public from1:any = new Date().toJSON().split('T')[0];
+ public rangefrom:any = new Date().toJSON().split('T')[0];
+ public from1:any = new Date().toJSON().split('T')[0];
 
 
  getroomTypedetails=[];
  NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
+//  rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
  rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  restricefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
@@ -195,7 +196,7 @@ this.disvar=false
  }
  ]
  onChangeObj(event,user, bs_id){
- console.log(event,user.room_id,bs_id)
+ console.log(event,user.room_id,bs_id,this.rangefrom)
  this.enrate = false
  let body = { 
  "business_id": this.bs_id,
@@ -1183,7 +1184,7 @@ selecteditem1
  public user={};
  roomTypesFieldErrorFlag = false;
  daterangedetails(user) {
-    console.log("daterange details", user)
+    console.log("daterange details", user,this.rangefrom)
     console.log("userrrrr",user.roomtosell)
     this.from = this.rangefrom
     this.to = this.todate2
