@@ -32,7 +32,8 @@ export class RoomtypesComponent implements OnInit {
  ,private datePipe: DatePipe ,
  private dateFormate:NgbDateCustomParserFormatter) { }
 
-  public rangefrom:any = new Date().toJSON().split('T')[0];
+ public rangefrom:any = new Date().toJSON().split('T')[0];
+ public from1:any = new Date().toJSON().split('T')[0];
 
 
  getroomTypedetails=[];

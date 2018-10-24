@@ -193,7 +193,7 @@
             <div class="col-sm-4">
             <div class="input-group" [class.has-error]="form.touched && form.invalid">
             <input class=" form-control" type="date" placeholder="dd-mm-yyyy" style="border: 1px solid gray;padding-left:15px;max-width: 12.7em; "
-            name="form" id="form" [(ngModel)]="rangefrom" [min]="rangefrom"   #form="ngModel"  required>
+            name="form" id="form" [(ngModel)]="rangefrom" [min]="from1"   #form="ngModel"  required>
             <div *ngIf="form.touched && !form.valid && form.errors?.required " ngClass="{ 'has-error' : !form.valid && submitAttempt }">
             </div>
             </div>
@@ -382,7 +382,7 @@
             </div>
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy" type="date" [min]="rangefrom" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+            <input class="" placeholder="dd-mm-yyyy" type="date" [min]="from1" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
             name="dp" [(ngModel)]="rate_res.min_date" >
             </div>
             </div>
@@ -409,7 +409,7 @@
             
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy" type="date" [min]="rangefrom" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+            <input class="" placeholder="dd-mm-yyyy" type="date" [min]="from1" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
             name="maximu" [(ngModel)]="rate_res.max_date" >
             </div>
             </div> 
@@ -423,7 +423,7 @@
             </div>
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+            <input class="" placeholder="dd-mm-yyyy" [min]="from1" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
             name="open_arrival_from" [(ngModel)]="rate_res.open_arrival_from" >
             </div>
             </div>
@@ -450,7 +450,7 @@
             </div>
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+            <input class="" placeholder="dd-mm-yyyy" [min]="from1" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
             name="open_departure_from" [(ngModel)]="rate_res.open_departure_from" >
             </div>
             </div>
@@ -476,7 +476,7 @@
             </div>
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+            <input class="" placeholder="dd-mm-yyyy" [min]="from1" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
             name="close_arrival_from" [(ngModel)]="rate_res.close_arrival_from" >
             </div>
             </div>
@@ -503,7 +503,7 @@
             </div>
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy" [min]="rangefrom" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
+            <input class="" placeholder="dd-mm-yyyy" [min]="from1" type="date" style="border-radius: 5px;border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;"
             name="close_from" [(ngModel)]="rate_res.close_departure_from" >
             </div>
             </div>
@@ -529,7 +529,7 @@
             </div>
             <div class="col-sm-3">
             <div class="input-group">
-            <input class="" placeholder="dd-mm-yyyy"  type="date" [min]="rangefrom" style="border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;border-radius: 5px;"
+            <input class="" placeholder="dd-mm-yyyy"  type="date" [min]="from1" style="border: 1px solid gray;padding-left:15px;max-width: 13.2em;height: 36px;border-radius: 5px;"
             name="houseclose" [(ngModel)]="rate_res.house_close" >
             </div>
             </div> 
