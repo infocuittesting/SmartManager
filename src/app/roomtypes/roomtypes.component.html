@@ -63,14 +63,10 @@
                 </div>
                 </div>     
         
-                <div class="row" style="margin-top: 15PX;" >
-                    <div class="col-sm-12" style="padding-left:770px;">
-                        <a >Price shown on calender are in <b>$</b></a>
-                    </div>  
-                </div>
+            
               
         
-                <table>
+                <table style="margin-top: 15PX;">
                
                     <ng-container >
                 <thead>
@@ -691,7 +687,7 @@
         
         <!-- modal1 -->
         <div class="modal fade" id="myModal1">
-        <div class="modal-dialog " style="width:100%; margin-left: 330px;margin-top: 100px">
+        <div class="modal-dialog " style="width:100%; margin-left: 324px; margin-top: 89px;">
         <div class="modal-content" style="width: 986px;" >
         
         <!-- Modal Header -->
@@ -702,49 +698,49 @@
         <!-- Modal body -->
         <div class="modal-body">
         <div class="container">
-        <table class=" table  table-bordered ">
+        <table class=" table  table-bordered table-responsive">
         <thead>
         
         </thead>
         <tbody class=" table  table-bordered "> 
         <tr  style="height: 41px;">
-        <td class="tabbor" ><b style="margin-left: -83px;">RoomDate</b></td>
+        <td class="tabbor" ><b>RoomDate</b></td>
         <ng-container *ngFor="let planA1 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"> {{planA1.room_date}} </td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -83px;">RoomRate</b></td>
+        <td class="tabbor"><b>RoomRate</b></td>
         <ng-container *ngFor="let planA2 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"><input class="text-center" type="number" style="width:45px;" [(ngModel)]="planA2.room_rate" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor" ><b style="margin-left: -83px;">Extra Adult Rate</b></td>
+        <td class="tabbor" ><b>Extra Adult Rate</b></td>
         <ng-container *ngFor="let planA3 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planA3.room_open" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -99px">MinStay</b></td>
+        <td class="tabbor"><b>MinStay</b></td>
         <ng-container *ngFor="let planA4 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planA4.min_stay" > </td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -99px">MaxStay</b></td>
+        <td class="tabbor"><b>MaxStay</b></td>
         <ng-container *ngFor="let planA5 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planA5.max_stay" > </td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -74px">CloseArrival</b></td>
+        <td class="tabbor"><b>CloseArrival</b></td>
         <ng-container *ngFor="let planA6 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planA6.close_arrival" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -47px;">CloseDeparture</b></td>
+        <td class="tabbor"><b>CloseDeparture</b></td>
         <ng-container *ngFor="let planA7 of pll1">
         <td style="font-weight:600" class="tabborder" class="tabbor"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planA7.close_departure" ></td>
         </ng-container>
@@ -767,7 +763,7 @@
         <!-- roomtype2 plan1 -->
        
         <div class="modal fade" id="myModal2">
-        <div class="modal-dialog " style="width:100%; margin-left: 207px;">
+        <div class="modal-dialog " style="width:100%; margin-left: 324px; margin-top: 89px;">
         <div class="modal-content" style="width: 986px;" >
         
         <!-- Modal Header -->
@@ -778,7 +774,7 @@
         <!-- Modal body -->
         <div class="modal-body">
         <div class="container">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive">
         <thead>
         
         </thead>
@@ -941,49 +937,49 @@
         <!-- Modal body -->
         <div class="modal-body">
         <div class="container">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive">
         <thead>
         
         </thead>
         <tbody>
         <tr style="height: 41px;">
-        <td class="tabbor"><b style=" margin-left: -37px;">RoomDate</b></td>
+        <td class="tabbor"><b >RoomDate</b></td>
         <ng-container *ngFor="let planC1 of rm1pll3">
         <td style="font-weight:600" class="tabborder" class="tabbor"> {{planC1.room_date}}</td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style=" margin-left: -39px;">RoomRate</b></td>
+        <td class="tabbor"><b>RoomRate</b></td>
         <ng-container *ngFor="let planC2 of rm1pll3">
         <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC2.room_rate" > </td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor" ><b style=" margin-left: -36px;">RoomOpen</b></td>
+        <td class="tabbor" ><b>RoomOpen</b></td>
         <ng-container *ngFor="let planC3 of rm1pll3">
         <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC3.room_open" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style=" margin-left: -62px;">MinStay</b></td>
+        <td class="tabbor"><b>MinStay</b></td>
         <ng-container *ngFor="let planC4 of rm1pll3">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC4.min_stay" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style=" margin-left: -59px;">MaxStay</b></td>
+        <td class="tabbor"><b>MaxStay</b></td>
         <ng-container *ngFor="let planC5 of rm1pll3">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC5.max_stay" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style=" margin-left: -40px;">CloseArrival</b></td>
+        <td class="tabbor"><b>CloseArrival</b></td>
         <ng-container *ngFor="let planC6 of rm1pll3">
         <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC6.close_arrival" > </td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style=" margin-left: -49px;">Departure</b></td>
+        <td class="tabbor"><b>Departure</b></td>
         <ng-container *ngFor="let planC7 of rm1pll3">
         <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC7.close_departure" > </td>
         </ng-container>
@@ -1008,7 +1004,7 @@
        
        
         <div class="modal fade" id="myModal4">
-        <div class="modal-dialog " style="width:100%; margin-left: 316px;">
+        <div class="modal-dialog " style="width:100%; margin-left: 324px; margin-top: 89px;">
         <div class="modal-content" style="width: 986px;" >
         
         <!-- Modal Header -->
@@ -1019,49 +1015,49 @@
         <!-- Modal body -->
         <div class="modal-body">
         <div class="container">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive">
         <thead>
         
         </thead>
         <tbody>
         <tr style="height: 41px;">
-        <td class="tabbor"><b style="margin-left: -337px;">RoomDate</b></td>
+        <td class="tabbor"><b>RoomDate</b></td>
         <ng-container *ngFor="let planD1 of pll4">
         <td style="font-weight:600" class="tabborder"> {{planD1.room_date}}</td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -337px;">RoomRate</b></td>
+        <td class="tabbor"><b>RoomRate</b></td>
         <ng-container *ngFor="let planD2 of pll4">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD2.room_rate" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -337px;">RoomOpen</b></td>
+        <td class="tabbor"><b>RoomOpen</b></td>
         <ng-container *ngFor="let planD3 of pll4">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD3.room_open" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -355px">MinStay</b></td>
+        <td class="tabbor"><b>MinStay</b></td>
         <ng-container *ngFor="let planD4 of pll4">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD4.min_stay" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -355px">MaxStay</b></td>
+        <td class="tabbor"><b>MaxStay</b></td>
         <ng-container *ngFor="let planD5 of pll4">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD5.max_stay" ></td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -337px;">CloseArrival</b></td>
+        <td class="tabbor"><b>CloseArrival</b></td>
         <ng-container *ngFor="let planD6 of pll4">
         <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD6.close_arrival" > </td>
         </ng-container>
         </tr>
         <tr style="height: 10px;">
-        <td class="tabbor"><b style="margin-left: -305px">CloseDeparture</b></td>
+        <td class="tabbor"><b>CloseDeparture</b></td>
         <ng-container *ngFor="let planD7 of pll4">
         <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD7.close_departure" ></td>
         </ng-container>
