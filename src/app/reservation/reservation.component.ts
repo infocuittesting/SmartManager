@@ -73,6 +73,7 @@ export class ReservationComponent implements OnInit {
     pickup;
     modification;
     sms;
+    name;
     selectindex;
   selectMembersEdit(details,index){
     console.log(details)  
@@ -81,22 +82,23 @@ export class ReservationComponent implements OnInit {
     this.Confirmation=details.customer_confirmation_number;
     this.Arrival=details.customer_arrival_date;
     this.Bookingcon=details.customer_booking_confirmed;
-    this.Booked=details.customer_booked_date;
+    this.Booked=details.booked_date;
     this.Mobile=details.customer_mobile;
     this.Departure=details.customer_depature_date;
     this.creditcard=details.customer_cc;
     this.Expdate=details.customer_expirydate;
-    this.Roomno=details.customer_no_of_room;
+    this.Roomno=details.customer_no_of_rooms;
     this.channel=details.channel;
     this.adults=details.customer_adult;
     this.country=details.cntry_code;
-    this.Language=details.language;
+    this.Language=details.ivr_language;
     this.child=details.customer_child;
-    this.rate=details.customer_room_rate;
+    this.rate=details.customer_amount;
     this.Status=details.customer_booked_status;
     this.pickup=details.customer_pickup_drop;
     this.modification=details.modification;
     this.sms=details.send_sms;
+    this.name=details.customer_name;
     console.log(this.Roomtype);
   }
  

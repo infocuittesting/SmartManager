@@ -51,7 +51,7 @@ import { CancellationpaymentService } from "../app/cancellationpayment/cancellat
 import { ReportsComponent } from './reports/reports.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { FilterdataPipe } from './filterdata.pipe';
-
+import { ToasterService } from './toaster.service';
 
 export const appRoutes: Routes = [
   { path: 'appcom', component: AppComponent },
@@ -133,7 +133,7 @@ let socialloginproviders = {
   ],
   providers: [CommonService, LoginregService,RoomTypeService,PrmotionsService,DatePipe, 
     CancellationpaymentService,
-    {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter}],
+    {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter},ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

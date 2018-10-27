@@ -2,30 +2,35 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+import { SessionStorageService } from "ngx-webstorage";
 
 @Injectable()
 export class DashboardService {
 
   constructor(
-    private http: Http
+    private http: Http,public session: SessionStorageService
   ) { }
 
   dashBoardNotification():Observable<object[]>{
-
-    return this.http.get('https://ivrinfocuit.herokuapp.com/Dashboard_report')
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    let body={"business_id":this.session.retrieve("business_id").toString(),}
+    return this.http.post('https://ivrinfocuit.herokuapp.com/Dashboard_report',body,options)
     .map(this.extractData)
   }
 
   
   dashBoardChat():Observable<object[]>{
-
-    return this.http.get('https://ivrinfocuit.herokuapp.com/lastchannelrecord')
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    let body={"business_id":this.session.retrieve("business_id").toString(),}
+    return this.http.post('https://ivrinfocuit.herokuapp.com/lastchannelrecord',body,options)
     .map(this.extractData)
   }
 
   //registration details
   dashboardDetails(dashbrddata: any): Observable<object[]> {
-
+    
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
     //let body = { "userKey": dashbrddata };

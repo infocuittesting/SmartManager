@@ -34,11 +34,12 @@ export class RoomtypesComponent implements OnInit {
 
  public rangefrom:any = new Date().toJSON().split('T')[0];
  public from1:any = new Date().toJSON().split('T')[0];
-
+ public fromdate:any;
+ public todate3:any;
 
  getroomTypedetails=[];
  NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
+ //fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
  fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
 //  rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
  rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
@@ -272,6 +273,8 @@ public rm2pl2finl=[];
     this.roomTypeService.getgriddef()
     .subscribe((resp: any) => {
       this.gridget = resp.Result;
+      this.fromdate=resp.from_date;
+      this.todate3=resp.to_date;
       // console.log("room plannnnnnnnnnnnnnnn",this.gridget)
    
     // console.log("length",this.gridget.length)
@@ -657,7 +660,6 @@ setperiod=[];
  public showlabelname = false;
  getdatedetails=[];
  parms:{};
- todate3:any;
  todate2:any;
  todate1:any;
  todate4:any;

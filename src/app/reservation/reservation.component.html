@@ -69,17 +69,18 @@
 <br>
 <div class="row" >
   <div class="col-md-12">
-<table class="table table-bordered  fixtab" style="margin-top: -14px;">
+<table class="table table-bordered table-hover fixtab" style="margin-top: -14px;">
   <thead style="background-color:#337ab7;color: white">
     <tr>
       <th style="width:50px">Seq</th>
-      <th style="width:160px"> Cofirmation No</th>
-      <th style="width:140px"> Arrival</th>
-      <th style="width:140px"> Departure</th>
+      <th style="width:150px"> Cofirmation No</th>
+      <th style="width:130px">Guest Name</th>
+      <th style="width:110px"> Arrival</th>
+      <th style="width:110px"> Departure</th>
       <th style="width:140px"> Room Type</th>
-      <th style="width:80px"> Adult</th>
-      <th style="width:80px"> Child</th>
-      <th style="width:110px"> Channels</th>
+      <th style="width:60px"> Adult</th>
+      <th style="width:60px"> Child</th>
+      <th style="width:90px"> Channels</th>
       <th>Total Amount</th>
     </tr>
   </thead>
@@ -87,14 +88,15 @@
     <tr *ngFor="let detail of hello |filterdata: date :'customer_arrival_date'|filterdata: conf_num :'customer_confirmation_number'|filterdata: dep_date :'customer_depature_date';let i = index" (click)="selectMembersEdit(detail,i)"
     [ngClass]="{'backGroundColor':i==selectindex}" (dblclick)="showMoreBut()">
       <td style="width:50px">{{i+1}}</td>
-      <td style="width:160px">{{detail.customer_confirmation_number}}</td>
-      <td style="width:140px">{{detail.customer_arrival_date}} </td>
-      <td style="width:140px">{{detail.customer_depature_date}} </td>
+      <td style="width:150px">{{detail.customer_confirmation_number}}</td>
+      <td style="width:130px">{{detail.customer_name}}</td>
+      <td style="width:110px">{{detail.customer_arrival_date}} </td>
+      <td style="width:110px">{{detail.customer_depature_date}} </td>
       <td style="width:140px">{{detail.customer_room_type}} </td>
-      <td style="width:80px">{{detail.customer_adult}} </td>
-      <td style="width:80px">{{detail.customer_child}} </td>
-      <td style="width:110px">{{detail.channel}} </td>
-      <td> </td>
+      <td style="width:60px">{{detail.customer_adult}} </td>
+      <td style="width:60px">{{detail.customer_child}} </td>
+      <td style="width:90px">{{detail.channel}} </td>
+      <td>{{detail.customer_amount}} </td>
     </tr>
   </tbody>
 </table>
@@ -129,10 +131,10 @@
             </div>
             <div class="col-md-8">
               <p>Guest Name:</p>
-              <h6 style="margin-top:-15px;"> </h6>  
+              <h6 style="margin-top:-15px;">{{name}} </h6>  
               <br>    
               <p>Preferred Language</p>
-              <h6 style="margin-top:-15px;"> </h6>
+              <h6 style="margin-top:-15px;"> {{Language}}</h6>
               <br>
               <p>Channel</p>
               <h6 style="margin-top:-15px;">{{channel}}</h6>
@@ -141,7 +143,7 @@
               <h6 style="margin-top:-15px;">{{Confirmation}}</h6>
               <br>
               <p>Booked On</p>
-              <h6 style="margin-top:-15px;">{{Booked}}</h6>
+              <h6 style="margin-top:-15px;">{{Booked|date}}</h6>
               <br>
               <p>No Of Rooms</p>
               <h6 style="margin-top:-15px;">{{Roomno}} </h6>
@@ -150,16 +152,17 @@
           <div  class=" card" style="border:1px solid lightgrey;margin:10px ">
             <div class="card-header  bg-light">
               <h5>{{Roomtype}}</h5>
-              <p><span><i class="fa fa-sign-in"></i>{{Arrival}}</span> <span><i class="fa fa-sign-out"></i>{{Departure}}</span></p>
+              <p><span><i class="fa fa-sign-in" style="margin:10px 10px 10px 0px;"></i>{{Arrival}}</span> <span><i class="fa fa-sign-out" style="margin:10px;"></i>{{Departure}}</span></p>
             </div>
-            <div class="row">
+            <div class="row" style="padding:20px">
             <div class="col-md-4">
                 <p>Guest Name</p>
+                <h6 style="margin-top:-15px;">{{name}} </h6>  
                 <br>
                 <p>Max Guest</p>
-                <label style="margin-top:-15px;">{{adults+child}}</label>
+                <h6 style="margin-top:-15px;">{{adults+child}}</h6>
                 <br>
-                <p>Meal Options</p>
+                <p>Room Options</p>
                 <label></label>
                 <img src="../../assets/images/Deluxe Suite.jpg" alt="" width="300px" height="250px">
                 <br>

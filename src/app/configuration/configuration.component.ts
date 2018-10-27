@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SessionStorageService } from 'ngx-webstorage';
 import { ConfigurationService } from "./configuration.service";
+import { ToasterService } from '../toaster.service';
 
 import $ from 'jquery';
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
@@ -17,7 +18,7 @@ declare var $ :any;
   selector: 'app-configuration',
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.css'],
-  providers: [ConfigurationService]
+  providers: [ConfigurationService,ToasterService]
 })
 export class ConfigurationComponent implements OnInit {
   roomsize = [];
@@ -31,8 +32,8 @@ export class ConfigurationComponent implements OnInit {
 
   public date:any = new Date().toJSON().split('T')[0];
   constructor(private configurationService: ConfigurationService,
-    public session: SessionStorageService) { }
-
+    public session: SessionStorageService,private toasterService:ToasterService) {}
+    
   showMore = false;
   add = {};
   roomdetails: any;
@@ -67,10 +68,12 @@ export class ConfigurationComponent implements OnInit {
     photo;
     smoke;
     minprice;
+    rmid;
   viewdata(flags){
     this.Queryselectoptions();
     this.showMore=true;
 this.room=flags.room_name;
+this.rmid=flags.room_id;
 this.rmsize=flags.room_size_id;
 this.maxadult=flags.max_adults;
 this.maxchild=flags.max_child
@@ -159,11 +162,37 @@ this.configurationService.cancellationpolicy()
 }
 //update
 configupdate;
-updateconfig(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke){
-  this.configurationService.updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke)
+updateconfig(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke,rmid){
+  this.configurationService.updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke,rmid)
   .subscribe((resp: any) => {
+    if(resp.ReturnCode == "RUS"){
+      // this.toastSuccess("Room type Updated Successfully");
+      this.toasterService.success("Room Type Updated Successfully");
   this.configupdate=resp.ReturnCode;
+  this.configurationService.getRoomDetails()
+  .subscribe((resp:any)=>{
+     this.roomdetails=resp.Result;
+     console.log(this.roomdetails)
+     this.roomdetils_length = this.roomdetails.length
+     console.log(this.roomdetils_length)
+     for (var i = 0; i < this.roomdetails.length; i++)
+     {
+      this.amentiesss = this.roomdetails[i]['amenitie']
+      this.amentiesss = this.amentiesss.slice(0,3)
+      this.room_amentie_name = this.roomdetails[i]['room_name']
+      this.roomdetails[i]["amentie_name1"] = this.amentiesss[0],
+      this.roomdetails[i]["amentie_name2"] = this.amentiesss[1],
+      this.roomdetails[i]["amentie_name3"] = this.amentiesss[2],
+       this.amentite_details.push({
+         "room_name":this.room_amentie_name,
+         "amentie_name1":this.amentiesss[0],
+         "amentie_name2":this.amentiesss[1],
+         "amentie_name3":this.amentiesss[2]
+       })
+     }
+  });
   this.showlessBut();
+    }
   })
 }
 // public roomTypesFieldErrorFlag:boolean;
@@ -183,7 +212,7 @@ roomTypesFieldErrorFlag = false;
     this.configurationService.insertRoomDetails(param)
       .subscribe((resp: any) => {
         if (resp.ReturnCode == 'RIS') {
-          alert("resp.ServiceStatus " + resp.ReturnCode);
+          this.toasterService.success("Room Type is Created");
          
           this.configurationService.getRoomDetails()
           .subscribe((resp:any)=>{

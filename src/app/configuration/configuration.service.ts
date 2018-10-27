@@ -11,11 +11,11 @@ export class ConfigurationService {
     ) { }
 
 //update services
-updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke): Observable<object[]>{
+updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke,rmid): Observable<object[]>{
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
-    let body={
-        "room_id":0,
+    let body={"business_id":this.session.retrieve("business_id").toString(),
+        "room_id":rmid,
 	"room_name":room,
 	"max_adults":maxadult,
 	"max_child":maxchild,
@@ -100,9 +100,9 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
 
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
+        let body={"business_id":this.session.retrieve("business_id").toString()}
 
-
-        return this.http.post('https://ivrinfocuit.herokuapp.com/select_configuration', options)
+        return this.http.post('https://ivrinfocuit.herokuapp.com/select_configuration',body, options)
             .map(this.extractData);
 
     }

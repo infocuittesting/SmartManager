@@ -25,6 +25,8 @@ export class MenusComponent implements OnInit {
   public configurationsarrowflag = false;
   public reportsarrowflag =false;
   public toolbar:any;
+  public name:any=this.session.retrieve("username");
+ 
 
   ngOnInit() {
     this.router.navigate(['dashboard'], { relativeTo: this.route });

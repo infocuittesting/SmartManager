@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+import { SessionStorageService } from "ngx-webstorage";
 
 @Injectable()
 export class ReservationService {
 
-  constructor( private http: Http) { }
+  constructor( private http: Http,public session: SessionStorageService) { }
   reservationdetails(): Observable<object[]> {
 
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
-    //let body = { "userKey": dashbrddata };
+    let body = { "business_id":this.session.retrieve("business_id") };
 
-    return this.http.get('https://ivrinfocuit.herokuapp.com/Query_Reservation')
+    return this.http.post('https://ivrinfocuit.herokuapp.com/Query_Reservation',body,options)
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   }
