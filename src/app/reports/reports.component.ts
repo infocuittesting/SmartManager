@@ -228,7 +228,400 @@ this.charts.push( this.chart );
          this.charts.push(this.chart)
       });
       
-      this.ReportsService.futurebooking()
+      
+// dropdown lilst
+      this.ReportsService.yearreservation()
+      .subscribe((resp: any) => {
+        // if (resp.ServiceStatus == 'Success') {
+          this.getyear = resp.Returnvalue;
+          console.log("get year",this.getyear)
+      });
+
+var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+this.chart = this.AmCharts.makeChart( "chart20", {
+  "type": "map",
+  "theme": "light",
+  "projection": "miller",
+
+  "dataProvider": {
+    "map": "worldLow",
+    "getAreasFromMap": true
+  },
+  "areasSettings": {
+    "autoZoom": true,
+    "selectedColor": "#CC0000"
+  },
+  "smallMap": {},
+  "export": {
+    "enabled": true,
+    "position": "bottom-right"
+  }
+} );
+
+    
+    
+      
+}
+public no_room;
+public rate_res={}
+onchangeobj(rate_res){
+  if(rate_res == "Number of Rooms"){
+   this.no_room = 1
+  }
+  else if (rate_res == "Nights"){
+    this.no_room = 2
+  }
+console.log("valueeee",this.no_room)
+}
+fetchrecord(event,start_date,end_date){
+  console.log("its coming to chart",event,start_date,end_date)
+  let statsParms = {
+    
+      "arrival_from":start_date,
+      "arrival_to":end_date
+  
+  }
+}
+GetallDetails(start_date,end_date){
+  
+  this.ReportsService.statisticsDetails(start_date,end_date)
+    .subscribe((resp: any) => {
+      // if (resp.ServiceStatus == 'Success') {
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+        this.chart = this.AmCharts.makeChart('chart2', {
+          'type': 'pie',
+          'theme': 'light',
+          'hideCredits':true,
+          "titles": [{
+            "text": "Booking details",
+            "align":"center"
+          }],
+          "marginTop": 25,
+          "legend": {
+            "horizontalGap": 10,
+            "maxColumns": 1,
+            "position": "right",
+            "marginRight": 80,
+            "autoMargins": false
+          },
+          'dataProvider':this.chartDatas,
+          'titleField': 'title',
+          'valueField': 'value',
+          'labelRadius': 5,
+
+          'radius': '39%',
+          'innerRadius': '50%',
+          'labelText': '[[title]]',
+          'export': {
+            "enabled": true,
+            "menu": [ ],
+            
+          }
+        });
+        this.charts.push( this.chart );
+      });
+      this.ReportsService.channeldetails(start_date,end_date)
+       .subscribe((resp: any) => {   
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+        this.chart = this.AmCharts.makeChart('chart3', {
+          'type': 'pie',
+          'theme': 'light',
+          'hideCredits':true,
+          "titles": [{
+            "text": "Channels reservation",
+            "align":"center"
+          }],
+          "marginTop": 25,
+          "legend": {
+            "horizontalGap": 10,
+            "maxColumns": 1,
+            "position": "right",
+            "marginRight": 80,
+            "autoMargins": false
+          },
+          'dataProvider':this.chartDatas,
+          'titleField': 'title',
+          'valueField': 'value',
+          'labelRadius': 5,
+
+          'radius': '40%',
+          'innerRadius': '0%',
+          'labelText': '[[title]]',
+          'export': {
+            "enabled": true,
+            "menu": [],
+            
+          }
+        });
+        this.charts.push( this.chart );
+      });
+      // this.getroomdetails = [];
+      console.log("valuesareeeeeeeeee",start_date,end_date,this.no_room)
+      this.ReportsService.Roomoccupancy(start_date,end_date,this.no_room)
+      .subscribe((resp: any) => {   
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+          this.chart = this.AmCharts.makeChart('chart4', {
+            'type': 'pie',
+            'theme': 'light',
+            'hideCredits':true,
+            "marginTop": 25,
+            "titles": [{
+              "text": "Room types",
+              "align":"center"
+            }],
+           
+            "legend": {
+              "horizontalGap": 10,
+              "maxColumns": 1,
+              "position": "right",
+              "marginRight": 80,
+              "autoMargins": false
+            },
+            'dataProvider':this.chartDatas,
+            'titleField': 'title',
+            'valueField': 'value',
+            'labelRadius': 5,
+  
+            'radius': '40%',
+            'innerRadius': '0%',
+            'labelText': '[[title]]',
+            'export': {
+              "enabled": true,
+              "menu": [ ],
+             
+            }
+          });
+          this.charts.push( this.chart );
+      });
+      //Booking vs conformation
+      this.ReportsService.BookingvsConfirmation(start_date,end_date)
+      .subscribe((resp: any) => {   
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("BookingvsConfirmation",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+          this.chart = this.AmCharts.makeChart('chart5', {
+            'type': 'pie',
+            'theme': 'light',
+            'hideCredits':true,
+            "titles": [{
+              "text": "Booking vs Confirmation",
+              "align":"center"
+            }],
+            "marginTop": 25,
+            "legend": {
+              "horizontalGap": 5,
+              "maxColumns": 1,
+              "position": "right",
+              "marginRight": 65,
+              "autoMargins": false
+            },
+            'dataProvider':this.chartDatas,
+            'titleField': 'title',
+            'valueField': 'value',
+            'labelRadius': 5,
+  
+            'radius': '40%',
+            'innerRadius': '60%',
+            'labelText': '[[title]]',
+            'export': {
+              "enabled": true,
+              "menu":  [  ],
+              
+            }
+          });
+          this.charts.push( this.chart );
+      });
+    
+      //Languages
+      this.ReportsService.Languages(start_date,end_date)
+      .subscribe((resp: any) => {   
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+          this.chart = this.AmCharts.makeChart('chart6', {
+            'type': 'pie',
+            'theme': 'light',
+            'hideCredits':true,
+            "titles": [{
+              "text": "Language",
+              "align":"center"
+            }],
+            "marginTop": 25,
+         
+            "legend": {
+              "horizontalGap": 20,
+              "maxColumns": 1,
+              "position": "right",
+              "marginRight": 80,
+              "autoMargins": false
+            },
+            'dataProvider':this.chartDatas,
+            'titleField': 'title',
+            'valueField': 'value',
+            'labelRadius': 5,
+  
+            'radius': '40%',
+            'innerRadius': '0%',
+            'labelText': '[[title]]',
+            'export': {
+              "enabled": true,
+              "menu":  [ ],
+             
+            },
+            "responsive": {
+              "enabled": true
+            },
+          });
+          this.charts.push( this.chart );
+      });
+      //SMS
+      this.ReportsService.Sms(start_date,end_date)
+      .subscribe((resp: any) => {   
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+          this.chart = this.AmCharts.makeChart('chart7', {
+            'type': 'pie',
+            'theme': 'light',
+            'hideCredits':true,
+            "titles": [{
+              "text": "Booking vs Delivery",
+              "align":"center"
+            }],
+            "marginTop": 25,
+            "legend": {
+              "horizontalGap": 10,
+              "maxColumns": 1,
+              "position": "right",
+              "marginRight": 80,
+              "autoMargins": false
+            },
+            'dataProvider':this.chartDatas,
+            'titleField': 'title',
+            'valueField': 'value',
+            'labelRadius': 5,
+  
+            'radius': '40%',
+            'innerRadius': '0%',
+            'labelText': '[[title]]',
+            'export': {
+              "enabled": true,
+              "menu":  [  ],
+              
+            }
+          });
+          this.charts.push( this.chart );
+      });
+      //country reservation
+      this.ReportsService.countryreservation(start_date,end_date,this.no_room)
+      .subscribe((resp: any) => {   
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+          this.chart = this.AmCharts.makeChart('chart8', {
+            'type': 'pie',
+            'theme': 'light',
+            'hideCredits':true,
+            "titles": [{
+              "text": "Countries",
+              "align":"center"
+            }],
+            "marginTop": 25,
+            "legend": {
+              "horizontalGap": 10,
+              "maxColumns": 1,
+              "position": "right",
+              "marginRight": 80,
+              "autoMargins": false
+            },
+            'dataProvider':this.chartDatas,
+            'titleField': 'title',
+            'valueField': 'value',
+            'labelRadius': 5,
+  
+            'radius': '40%',
+            'innerRadius': '0%',
+            'labelText': '[[title]]',
+            'export': {
+              "enabled": true,
+               "menu": []
+
+              
+            }
+          });
+          this.charts.push( this.chart );
+      });
+      this.ReportsService.futurebooking(this.no_room)
       .subscribe((resp: any) => {   
         this.futurebook = resp.Returnvalue;
         // this.cancelcount = resp.cancelcount;
@@ -334,612 +727,113 @@ function zoomChart(){
 }
 
 });
-// dropdown lilst
-      this.ReportsService.yearreservation()
-      .subscribe((resp: any) => {
-        // if (resp.ServiceStatus == 'Success') {
-          this.getyear = resp.Returnvalue;
-          console.log("get year",this.getyear)
-      });
+
 // historybooking
-      this.ReportsService.Historybooking()
-      .subscribe((resp: any) => {   
-        this.historybook = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("future booking",this.historybook);
-        // this.chartDatas=[];
-        
-        this.historybook_data = [];
-        for(var i=0;i<this.historybook.length;i++){
-          this.historybook_data.push({
-            'date':this.historybook[i].date,
-            'value':this.historybook[i].value })
-      
-    
-        }
-        console.log("month,value",this.historybook_data)
-        this.chart = this.AmCharts.makeChart("chart9", {
-          "type": "serial",
-    "theme": "light",
-    "marginRight":80,
-    "autoMarginOffset":20,
-    "marginTop": 25,
-    "titles": [{
-      "text": "History Booking Reservation",
-      "bold": true,
-      "position": "top",
-      "align":"center",
-      
-    }],
-    "legend": {
-      "equalWidths": false,
-      "periodValueText": "History Booking: [[value.sum]]",
-      "position": "top",
-      "valueAlign": "left",
-      "valueWidth": 25
-    },
-    "dataProvider": this.historybook_data ,
-    "valueAxes": [{
-      "axisAlpha": 0,
-      "guides": [{
-          "fillAlpha": 0.1,
-          "fillColor": "#888888",
-          "lineAlpha": 0,
-          "toValue": 16,
-          "value": 10
-      }],
-      "position": "left",
-      "tickLength": 0
-  }],
-  "graphs": [{
-      "balloonText": "[[category]]<br><b><span style='font-size:14px;'>value:[[value]]</span></b>",
-      "bullet": "round",
-      "dashLength": 3,
-      "colorField":"color",
-      "valueField": "value"
-  }],
-  "trendLines": [{
-      "finalDate": "2012-01-11 12",
-      "finalValue": 19,
-      "initialDate": "2012-01-02 12",
-      "initialValue": 10,
-      "lineColor": "#CC0000"
-  }, {
-      "finalDate": "2012-01-22 12",
-      "finalValue": 10,
-      "initialDate": "2012-01-17 12",
-      "initialValue": 16,
-      "lineColor": "#CC0000"
-  }],
-  "chartScrollbar": {
-      "scrollbarHeight":2,
-      "offset":-1,
-      "backgroundAlpha":0.1,
-      "backgroundColor":"#888888",
-      "selectedBackgroundColor":"#67b7dc",
-      "selectedBackgroundAlpha":1
-  },
-  "chartCursor": {
-      "fullWidth":true,
-      "valueLineEabled":true,
-      "valueLineBalloonEnabled":true,
-      "valueLineAlpha":0.5,
-      "cursorAlpha":0
-  },
-  "categoryField": "date",
-  "categoryAxis": {
-      "parseDates": true,
-      "axisAlpha": 0,
-      "gridAlpha": 0.1,
-      "minorGridAlpha": 0.1,
-      "minorGridEnabled": true
-  },
-  "export": {
-      "enabled": true
-   }
+this.ReportsService.Historybooking(this.no_room)
+.subscribe((resp: any) => {   
+  this.historybook = resp.Returnvalue;
+  // this.cancelcount = resp.cancelcount;
+  // this.modifycount = resp.Totalbookingcount;
+  console.log("future booking",this.historybook);
+  // this.chartDatas=[];
+  
+  this.historybook_data = [];
+  for(var i=0;i<this.historybook.length;i++){
+    this.historybook_data.push({
+      'date':this.historybook[i].date,
+      'value':this.historybook[i].value })
+
+
+  }
+  console.log("month,value",this.historybook_data)
+  this.chart = this.AmCharts.makeChart("chart9", {
+    "type": "serial",
+"theme": "light",
+"marginRight":80,
+"autoMarginOffset":20,
+"marginTop": 25,
+"titles": [{
+"text": "History Booking Reservation",
+"bold": true,
+"position": "top",
+"align":"center",
+
+}],
+"legend": {
+"equalWidths": false,
+"periodValueText": "History Booking: [[value.sum]]",
+"position": "top",
+"valueAlign": "left",
+"valueWidth": 25
+},
+"dataProvider": this.historybook_data ,
+"valueAxes": [{
+"axisAlpha": 0,
+"guides": [{
+    "fillAlpha": 0.1,
+    "fillColor": "#888888",
+    "lineAlpha": 0,
+    "toValue": 16,
+    "value": 10
+}],
+"position": "left",
+"tickLength": 0
+}],
+"graphs": [{
+"balloonText": "[[category]]<br><b><span style='font-size:14px;'>value:[[value]]</span></b>",
+"bullet": "round",
+"dashLength": 3,
+"colorField":"color",
+"valueField": "value"
+}],
+"trendLines": [{
+"finalDate": "2012-01-11 12",
+"finalValue": 19,
+"initialDate": "2012-01-02 12",
+"initialValue": 10,
+"lineColor": "#CC0000"
+}, {
+"finalDate": "2012-01-22 12",
+"finalValue": 10,
+"initialDate": "2012-01-17 12",
+"initialValue": 16,
+"lineColor": "#CC0000"
+}],
+"chartScrollbar": {
+"scrollbarHeight":2,
+"offset":-1,
+"backgroundAlpha":0.1,
+"backgroundColor":"#888888",
+"selectedBackgroundColor":"#67b7dc",
+"selectedBackgroundAlpha":1
+},
+"chartCursor": {
+"fullWidth":true,
+"valueLineEabled":true,
+"valueLineBalloonEnabled":true,
+"valueLineAlpha":0.5,
+"cursorAlpha":0
+},
+"categoryField": "date",
+"categoryAxis": {
+"parseDates": true,
+"axisAlpha": 0,
+"gridAlpha": 0.1,
+"minorGridAlpha": 0.1,
+"minorGridEnabled": true
+},
+"export": {
+"enabled": true
+}
 });
 this.charts.push( this.chart );    
 this.chart.addListener("dataUpdated", zoomChart);
 
 function zoomChart(){
-    this.chart.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
+this.chart.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
 }
 });
-var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
-
-this.chart = this.AmCharts.makeChart( "chart20", {
-  "type": "map",
-  "theme": "light",
-  "projection": "miller",
-
-  "dataProvider": {
-    "map": "worldLow",
-    "getAreasFromMap": true
-  },
-  "areasSettings": {
-    "autoZoom": true,
-    "selectedColor": "#CC0000"
-  },
-  "smallMap": {},
-  "export": {
-    "enabled": true,
-    "position": "bottom-right"
-  }
-} );
-// this.chart = this.AmCharts.makeChart("chart9", {
-
-//     "type": "map",
-
-
-//     "dataProvider": {
-//       "map": "worldLow",
-//       "getAreasFromMap": true
-//     },
-
-
-//     "areasSettings": {
-//       "autoZoom": true,
-//       "selectedColor": "#CC0000"
-//     },
-
-
-//     "smallMap": {}
-//   } );
-
-// }
-    //   console.log("its")
-    //   this.chart = this.AmCharts.makeChart('chartdiv', {
-    //     "type": "serial",
-    //     "theme": "light",
-    //     "marginRight": 80,
-    //     "dataProvider": [{
-    //         "lineColor": "#b7e021",
-    //         "date": "2012-01-01",
-    //         "duration": 408
-    //     }, {
-    //         "date": "2012-01-02",
-    //         "duration": 482
-    //     }, {
-    //         "date": "2012-01-03",
-    //         "duration": 562
-    //     }, {
-    //         "date": "2012-01-04",
-    //         "duration": 379
-    //     }, {
-    //         "lineColor": "#fbd51a",
-    //         "date": "2012-01-05",
-    //         "duration": 501
-    //     }, {
-    //         "date": "2012-01-06",
-    //         "duration": 443
-    //     }, {
-    //         "date": "2012-01-07",
-    //         "duration": 405
-    //     }, {
-    //         "date": "2012-01-08",
-    //         "duration": 309,
-    //         "lineColor": "#2498d2"
-    //     }, {
-    //         "date": "2012-01-09",
-    //         "duration": 287
-    //     }, {
-    //         "date": "2012-01-10",
-    //         "duration": 485
-    //     }, {
-    //         "date": "2012-01-11",
-    //         "duration": 890
-    //     }, {
-    //         "date": "2012-01-12",
-    //         "duration": 810
-    //     }],
-    //     "balloon": {
-    //         "cornerRadius": 6,
-    //         "horizontalPadding": 15,
-    //         "verticalPadding": 10
-    //     },
-    //     "valueAxes": [{
-    //         "duration": "mm",
-    //         "durationUnits": {
-    //             "hh": "h ",
-    //             "mm": "min"
-    //         },
-    //         "axisAlpha": 0
-    //     }],
-    //     "graphs": [{
-    //         "bullet": "square",
-    //         "bulletBorderAlpha": 1,
-    //         "bulletBorderThickness": 1,
-    //         "fillAlphas": 0.3,
-    //         "fillColorsField": "lineColor",
-    //         "legendValueText": "[[value]]",
-    //         "lineColorField": "lineColor",
-    //         "title": "duration",
-    //         "valueField": "duration"
-    //     }],
-    //     "chartScrollbar": {
-    
-    //     },
-    //     "chartCursor": {
-    //         "categoryBalloonDateFormat": "YYYY MMM DD",
-    //         "cursorAlpha": 0,
-    //         "fullWidth": true
-    //     },
-    //     "dataDateFormat": "YYYY-MM-DD",
-    //     "categoryField": "date",
-    //     "categoryAxis": {
-    //         "dateFormats": [{
-    //             "period": "DD",
-    //             "format": "DD"
-    //         }, {
-    //             "period": "WW",
-    //             "format": "MMM DD"
-    //         }, {
-    //             "period": "MM",
-    //             "format": "MMM"
-    //         }, {
-    //             "period": "YYYY",
-    //             "format": "YYYY"
-    //         }],
-    //         "parseDates": true,
-    //         "autoGridCount": false,
-    //         "axisColor": "#555555",
-    //         "gridAlpha": 0,
-    //         "gridCount": 50
-    //     },
-    //     "export": {
-    //         "enabled": true
-    //     }
-    // });
-    
-    
-      
-}
-fetchrecord(event,start_date,end_date){
-  console.log("its coming to chart",event,start_date,end_date)
-  let statsParms = {
-    
-      "arrival_from":start_date,
-      "arrival_to":end_date
-  
-  }
-  this.ReportsService.statisticsDetails(statsParms)
-    .subscribe((resp: any) => {
-      // if (resp.ServiceStatus == 'Success') {
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-        this.chart = this.AmCharts.makeChart('chart2', {
-          'type': 'pie',
-          'theme': 'light',
-          'hideCredits':true,
-          "titles": [{
-            "text": "Booking details",
-            "align":"center"
-          }],
-          "marginTop": 25,
-          "legend": {
-            "horizontalGap": 10,
-            "maxColumns": 1,
-            "position": "right",
-            "marginRight": 80,
-            "autoMargins": false
-          },
-          'dataProvider':this.chartDatas,
-          'titleField': 'title',
-          'valueField': 'value',
-          'labelRadius': 5,
-
-          'radius': '39%',
-          'innerRadius': '50%',
-          'labelText': '[[title]]',
-          'export': {
-            "enabled": true,
-            "menu": [ ],
-            
-          }
-        });
-        this.charts.push( this.chart );
-      });
-      this.ReportsService.channeldetails(statsParms)
-       .subscribe((resp: any) => {   
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-        this.chart = this.AmCharts.makeChart('chart3', {
-          'type': 'pie',
-          'theme': 'light',
-          'hideCredits':true,
-          "titles": [{
-            "text": "Channels reservation",
-            "align":"center"
-          }],
-          "marginTop": 25,
-          "legend": {
-            "horizontalGap": 10,
-            "maxColumns": 1,
-            "position": "right",
-            "marginRight": 80,
-            "autoMargins": false
-          },
-          'dataProvider':this.chartDatas,
-          'titleField': 'title',
-          'valueField': 'value',
-          'labelRadius': 5,
-
-          'radius': '40%',
-          'innerRadius': '0%',
-          'labelText': '[[title]]',
-          'export': {
-            "enabled": true,
-            "menu": [],
-            
-          }
-        });
-        this.charts.push( this.chart );
-      });
-      // this.getroomdetails = [];
-      this.ReportsService.Roomoccupancy(statsParms)
-      .subscribe((resp: any) => {   
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-          this.chart = this.AmCharts.makeChart('chart4', {
-            'type': 'pie',
-            'theme': 'light',
-            'hideCredits':true,
-            "marginTop": 25,
-            "titles": [{
-              "text": "Room types",
-              "align":"center"
-            }],
-           
-            "legend": {
-              "horizontalGap": 10,
-              "maxColumns": 1,
-              "position": "right",
-              "marginRight": 80,
-              "autoMargins": false
-            },
-            'dataProvider':this.chartDatas,
-            'titleField': 'title',
-            'valueField': 'value',
-            'labelRadius': 5,
-  
-            'radius': '40%',
-            'innerRadius': '0%',
-            'labelText': '[[title]]',
-            'export': {
-              "enabled": true,
-              "menu": [ ],
-             
-            }
-          });
-          this.charts.push( this.chart );
-      });
-      //Booking vs conformation
-      this.ReportsService.BookingvsConfirmation(statsParms)
-      .subscribe((resp: any) => {   
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("BookingvsConfirmation",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-          this.chart = this.AmCharts.makeChart('chart5', {
-            'type': 'pie',
-            'theme': 'light',
-            'hideCredits':true,
-            "titles": [{
-              "text": "Booking vs Confirmation",
-              "align":"center"
-            }],
-            "marginTop": 25,
-            "legend": {
-              "horizontalGap": 5,
-              "maxColumns": 1,
-              "position": "right",
-              "marginRight": 65,
-              "autoMargins": false
-            },
-            'dataProvider':this.chartDatas,
-            'titleField': 'title',
-            'valueField': 'value',
-            'labelRadius': 5,
-  
-            'radius': '40%',
-            'innerRadius': '60%',
-            'labelText': '[[title]]',
-            'export': {
-              "enabled": true,
-              "menu":  [  ],
-              
-            }
-          });
-          this.charts.push( this.chart );
-      });
-    
-      //Languages
-      this.ReportsService.Languages(statsParms)
-      .subscribe((resp: any) => {   
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-          this.chart = this.AmCharts.makeChart('chart6', {
-            'type': 'pie',
-            'theme': 'light',
-            'hideCredits':true,
-            "titles": [{
-              "text": "Language",
-              "align":"center"
-            }],
-            "marginTop": 25,
-         
-            "legend": {
-              "horizontalGap": 20,
-              "maxColumns": 1,
-              "position": "right",
-              "marginRight": 80,
-              "autoMargins": false
-            },
-            'dataProvider':this.chartDatas,
-            'titleField': 'title',
-            'valueField': 'value',
-            'labelRadius': 5,
-  
-            'radius': '40%',
-            'innerRadius': '0%',
-            'labelText': '[[title]]',
-            'export': {
-              "enabled": true,
-              "menu":  [ ],
-             
-            },
-            "responsive": {
-              "enabled": true
-            },
-          });
-          this.charts.push( this.chart );
-      });
-      //SMS
-      this.ReportsService.Sms(statsParms)
-      .subscribe((resp: any) => {   
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-          this.chart = this.AmCharts.makeChart('chart7', {
-            'type': 'pie',
-            'theme': 'light',
-            'hideCredits':true,
-            "titles": [{
-              "text": "Booking vs Delivery",
-              "align":"center"
-            }],
-            "marginTop": 25,
-            "legend": {
-              "horizontalGap": 10,
-              "maxColumns": 1,
-              "position": "right",
-              "marginRight": 80,
-              "autoMargins": false
-            },
-            'dataProvider':this.chartDatas,
-            'titleField': 'title',
-            'valueField': 'value',
-            'labelRadius': 5,
-  
-            'radius': '40%',
-            'innerRadius': '0%',
-            'labelText': '[[title]]',
-            'export': {
-              "enabled": true,
-              "menu":  [  ],
-              
-            }
-          });
-          this.charts.push( this.chart );
-      });
-      //country reservation
-      this.ReportsService.countryreservation(statsParms)
-      .subscribe((resp: any) => {   
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-          this.chart = this.AmCharts.makeChart('chart8', {
-            'type': 'pie',
-            'theme': 'light',
-            'hideCredits':true,
-            "titles": [{
-              "text": "Countries",
-              "align":"center"
-            }],
-            "marginTop": 25,
-            "legend": {
-              "horizontalGap": 10,
-              "maxColumns": 1,
-              "position": "right",
-              "marginRight": 80,
-              "autoMargins": false
-            },
-            'dataProvider':this.chartDatas,
-            'titleField': 'title',
-            'valueField': 'value',
-            'labelRadius': 5,
-  
-            'radius': '40%',
-            'innerRadius': '0%',
-            'labelText': '[[title]]',
-            'export': {
-              "enabled": true,
-               "menu": []
-
-              
-            }
-          });
-          this.charts.push( this.chart );
-      });
-
-}
+    }
 // User count report in pdf file
 public usercount = [];
 public columns=[];
@@ -950,109 +844,109 @@ public channelcount = [];
 public channelrows=[];
 public fun1_arr=[];
 
-fun1(statsParms){
+// fun1(statsParms){
 
-  this.ReportsService.channeldetails(statsParms)
-  .subscribe((resp: any) => {   
-    this.channelcount = resp.Returnvalue;
-    console.log("this is come",this.channelcount)
-    for(var i=0;i<this.channelcount.length;i++){
+//   this.ReportsService.channeldetails(statsParms)
+//   .subscribe((resp: any) => {   
+//     this.channelcount = resp.Returnvalue;
+//     console.log("this is come",this.channelcount)
+//     for(var i=0;i<this.channelcount.length;i++){
       
-      this.channelrows.push([this.channelcount[i].title, this.channelcount[i].value])
+//       this.channelrows.push([this.channelcount[i].title, this.channelcount[i].value])
 
-      var columns = ["Title", "Value"];
-      console.log("rowwww",this.channelrows)
-    }
-  });
-  return(this.channelrows)
- }
+//       var columns = ["Title", "Value"];
+//       console.log("rowwww",this.channelrows)
+//     }
+//   });
+//   return(this.channelrows)
+//  }
 
-DownloadPDF(start_date,end_date){
-  // var jsPDF = require('jspdf');
-  // require('jspdf-autotable');
-  let statsParms = {
+// DownloadPDF(start_date,end_date){
+//   // var jsPDF = require('jspdf');
+//   // require('jspdf-autotable');
+//   let statsParms = {
     
-    "arrival_from":start_date,
-    "arrival_to":end_date
+//     "arrival_from":start_date,
+//     "arrival_to":end_date
 
-}
+// }
 
-console.log("startdate",statsParms)
-  this.ReportsService.statisticsDetails(statsParms)
-      .subscribe((resp: any) => {   
-        this.usercount = resp.Returnvalue;
-        console.log("this is come",this.usercount)
-        for(var i=0;i<this.usercount.length;i++){
+// console.log("startdate",statsParms)
+//   this.ReportsService.statisticsDetails(statsParms)
+//       .subscribe((resp: any) => {   
+//         this.usercount = resp.Returnvalue;
+//         console.log("this is come",this.usercount)
+//         for(var i=0;i<this.usercount.length;i++){
        
-          this.rows.push([this.usercount[i].title, this.usercount[i].value,this.usercount[i].percentage])
+//           this.rows.push([this.usercount[i].title, this.usercount[i].value,this.usercount[i].percentage])
        
-         var columns = ["Title", "Count","percentage"];
+//          var columns = ["Title", "Count","percentage"];
        
-          console.log("rowwww",this.rows)
+//           console.log("rowwww",this.rows)
           
-        }
-        let doc = new jsPDF('p', 'pt');
+//         }
+//         let doc = new jsPDF('p', 'pt');
        
-        doc.text("Booking Reservation", 10, 10)
-        doc.autoTable( columns, this.rows, { startY: 20 });
-      //  doc.autoTable( columns,  logBar = () => {
-      //  console.log("Bar's value is: ");}
-      //  , { startY: 20 }
-      // );
-        doc.save('usercount.pdf')
+//         doc.text("Booking Reservation", 10, 10)
+//         doc.autoTable( columns, this.rows, { startY: 20 });
+//       //  doc.autoTable( columns,  logBar = () => {
+//       //  console.log("Bar's value is: ");}
+//       //  , { startY: 20 }
+//       // );
+//         doc.save('usercount.pdf')
     
-      });
+//       });
       
-// ***********************************
+// // ***********************************
 
-      // *****************************************
+//       // *****************************************
     
 
-      // var columns = ["ID", "Name", "Country"];
-      // var rows = [
-      //     [1, "Shaw", "Tanzania"],
-      //     [2, "Nelson", "Kazakhstan"],
-      //     [3, "Garcia", "Madagascar"],
+//       // var columns = ["ID", "Name", "Country"];
+//       // var rows = [
+//       //     [1, "Shaw", "Tanzania"],
+//       //     [2, "Nelson", "Kazakhstan"],
+//       //     [3, "Garcia", "Madagascar"],
           
-      // ];
-  //  let doc = new jsPDF();
-  //  doc.autoTable( this.columns, this.rows);
-  // //  console.log("aw",this.chartDatas)
-  // //  doc.text("hello", 10, 10)
-  //  doc.save('usercount.pdf')
-}
+//       // ];
+//   //  let doc = new jsPDF();
+//   //  doc.autoTable( this.columns, this.rows);
+//   // //  console.log("aw",this.chartDatas)
+//   // //  doc.text("hello", 10, 10)
+//   //  doc.save('usercount.pdf')
+// }
 
-DownloadchannelPDF(start_date,end_date){
-  let statsParms = {
+// DownloadchannelPDF(start_date,end_date){
+//   let statsParms = {
     
-    "arrival_from":start_date,
-    "arrival_to":end_date
+//     "arrival_from":start_date,
+//     "arrival_to":end_date
 
-}
+// }
 
-console.log("startdate",statsParms)
-  this.ReportsService.channeldetails(statsParms)
-      .subscribe((resp: any) => {   
-        this.channelcount = resp.Returnvalue;
-        console.log("this is come",this.channelcount)
-        for(var i=0;i<this.channelcount.length;i++){
-          // this.rowsvalue = []
-          this.channelrows.push([this.channelcount[i].title, this.channelcount[i].value,this.channelcount[i].percentage])
-          // this.rows.push(this.rowsvalue) 
-          // console.log("new array",this.uservalue)
-         var columns = ["Title", "Value","Percentage"];
-          // var rows = [this.uservalue];
-          console.log("rowwww",this.channelrows)
+// console.log("startdate",statsParms)
+//   this.ReportsService.channeldetails(statsParms)
+//       .subscribe((resp: any) => {   
+//         this.channelcount = resp.Returnvalue;
+//         console.log("this is come",this.channelcount)
+//         for(var i=0;i<this.channelcount.length;i++){
+//           // this.rowsvalue = []
+//           this.channelrows.push([this.channelcount[i].title, this.channelcount[i].value,this.channelcount[i].percentage])
+//           // this.rows.push(this.rowsvalue) 
+//           // console.log("new array",this.uservalue)
+//          var columns = ["Title", "Value","Percentage"];
+//           // var rows = [this.uservalue];
+//           console.log("rowwww",this.channelrows)
           
-        }
-        let doc = new jsPDF('p', 'pt');
-         doc.text("Channelcount", 10, 10)
-          doc.autoTable( columns, this.channelrows);
-         //  console.log("aw",this.chartDatas)
-         //  doc.text("hello", 10, 10)
-          doc.save('channel.pdf')
-      });
-}
+//         }
+//         let doc = new jsPDF('p', 'pt');
+//          doc.text("Channelcount", 10, 10)
+//           doc.autoTable( columns, this.channelrows);
+//          //  console.log("aw",this.chartDatas)
+//          //  doc.text("hello", 10, 10)
+//           doc.save('channel.pdf')
+//       });
+// }
 download(){
   var columns = [
     {title: "ID", dataKey: "id"},

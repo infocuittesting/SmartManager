@@ -1,35 +1,47 @@
 <!-- <html>
   <head>
     <!-- Resources -->
-<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+<!-- <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
 <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /> -->
 
 <!-- Chart code -->
  
   <div class="container">
     
     <div class="row" style="margin-top: -11px;">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="form-group-addon">
             <b>Startdate</b> 
           <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-          <input type="date" class="form-control"  id="Startdate" name="Startdate" placeholder="Startdate" style="height: 2.4em;" [(ngModel)]="start_date">
+          <input type="date" class="form-control"  id="Startdate" name="Startdate" placeholder="Startdate" style="height: 2.4em;width: 170px;" [(ngModel)]="start_date">
         </div>
       </div>
       <div class="col-md-3">
-          <div class="form-group">
-            <b>Enddate</b>
-            <input type="date" [min]="start_date" class="form-control" id="enddate" name="endtdate" style="height: 2.4em;" [(ngModel)]="end_date" (ngModelChange)="fetchrecord($event,start_date,end_date)">
-          </div>
+
+        <div class="form-group" style="margin-left: 21px;">
+          <b>End date</b>
+          <input type="date" class="form-control"[min]="start_date"  id="enddate" name="endtdate" style="height: 2.4em;width: 176px;" [(ngModel)]="end_date" (ngModelChange)="fetchrecord($event,start_date,end_date)">
         </div>
-        <!-- <div class="col-md-3">
-          <button type="button" class="btn btn-success" style="width:100%;margin-top: 21px;height: 34px;" (click)="fetchrecord(start_date,end_date)">Getdetails</button>
-        </div> -->
-        <div class="col-md-3">
-            <button class="btn" style="width:100%;margin-top: 21px;height: 40px;" (click)="exportChart()"><i class="fa fa-download"></i> Download</button>
+          <!-- <div class="form-group" style="margin-left: 24px;">
+            <b>Enddate</b>
+            <input type="date"  class="form-control" id="enddate" name="endtdate" style="height: 2.4em;width: 176px;" [(ngModel)]="end_date" (ngModelChange)="fetchrecord($event,start_date,end_date)">
+          </div> -->
+        </div>
+        <div class="col-md-2">
+          <select class="form-control" name="rooms" id="" style="margin-left: -34px;margin-top: 24px;width: 181px;"  [(ngModel)]="rate_res"(ngModelChange)="onchangeobj(rate_res)">
+            <option value = ""></option>
+            <option value="Number of Rooms">Number of Rooms</option>
+            <option value="Nights">Nights</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-success" style="width:100%;margin-top: 24px;height: 34px; margin-left: 4px;" (click)="GetallDetails(start_date,end_date)">Get Details</button> 
+          </div>
+        <div class="col-md-2">
+            <button  class="btn " style="width:100%;margin-top: 24px;height: 34px;margin-left: 4px;" (click)="exportChart()"> Download</button>
             <!-- <button type="button" class="btn btn-success" style="width:100%;margin-top: 21px;height: 34px;" (click)="exportChart()">Download PDF</button> -->
           </div>
        </div> 
@@ -170,7 +182,7 @@
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
 <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /> -->
-  <div class="row" style="margin-top: 8px;">
+  <!-- <div class="row" style="margin-top: 8px;">
     <div class="col-md-12">
       <div class="card">
             <h4 style="text-align: center;">map is came</h4>
@@ -178,5 +190,5 @@
   <div id="chart20" style="width:100%;height:500px;"></div>
 </div>
 </div> 
-</div>
+</div> -->
 <!-- </html> -->

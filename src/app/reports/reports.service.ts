@@ -2,81 +2,105 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-
+import { SessionStorageService } from "ngx-webstorage";
 @Injectable()
 export class ReportsService {
 
   constructor(
-    private http: Http
+    private http: Http,public session: SessionStorageService
   ) { }
 
   
   //statistics details
-  statisticsDetails(statisticsddata: any): Observable<object[]> {
+  statisticsDetails(start_date,end_date): Observable<object[]> {
 
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
-    //let body = { "userKey": dashbrddata };
+    let body = { 
+      
+        "arrival_from":start_date,
+        "arrival_to":end_date,
+        "business_id":this.session.retrieve("business_id") 
+          };
 
-    return this.http.post('https://ivrinfocuit.herokuapp.com/Getreservationcancelmodification', statisticsddata , options)
+    return this.http.post('https://ivrinfocuit.herokuapp.com/Getreservationcancelmodification', body , options)
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   }  
-  channeldetails(params): Observable<object[]> {
+  channeldetails(start_date,end_date): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
+  
+  let body = { 
+    "arrival_from":start_date,
+  "arrival_to":end_date,
+  "business_id":this.session.retrieve("business_id")  };
 
-  return this.http.post('https://ivrinfocuit.herokuapp.com/Getchannelcounts', params , options)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/Getchannelcounts', body , options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }  
-Roomoccupancy(params): Observable<object[]> {
+Roomoccupancy(start_date,end_date,no_room): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
-
-  return this.http.post('https://ivrinfocuit.herokuapp.com/GetRoomOccupancyall', params , options)
+  let body = { 
+    "arrival_from":start_date,
+    "arrival_to":end_date,
+    "type":no_room,
+    "business_id":this.session.retrieve("business_id") 
+     } 
+console.log("room occupancy",body)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/GetRoomOccupancyall', body , options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }
 
-BookingvsConfirmation(params): Observable<object[]> {
+BookingvsConfirmation(start_date,end_date): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
+  let body = { "arrival_from":start_date,
+  "arrival_to":end_date,
+  "business_id":this.session.retrieve("business_id")  };
 
-  return this.http.post('https://ivrinfocuit.herokuapp.com/GetBookingConfirmation', params , options)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/GetBookingConfirmation', body , options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }
 
-Languages(params): Observable<object[]> {
+Languages(start_date,end_date): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
+  let body = {  "arrival_from":start_date,
+  "arrival_to":end_date,
+  "business_id":this.session.retrieve("business_id") };
 
-  return this.http.post('https://ivrinfocuit.herokuapp.com/GetLanguagecount', params , options)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/GetLanguagecount', body , options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }
 
-Sms(params): Observable<object[]> {
+Sms(start_date,end_date): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
+  let body = {  "arrival_from":start_date,
+  "arrival_to":end_date,
+  "business_id":this.session.retrieve("business_id") };
 
-  return this.http.post('https://ivrinfocuit.herokuapp.com/Getsmscount', params , options)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/Getsmscount', body , options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }
 
-countryreservation(params): Observable<object[]> {
+countryreservation(start_date,end_date,no_room): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
+  let body = {	"arrival_from":start_date,
+  "arrival_to":end_date,
+ 
+  "business_id":this.session.retrieve("business_id"),
+  "type":no_room};
 
-  return this.http.post('https://ivrinfocuit.herokuapp.com/GetCountryreservation', params , options)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/GetCountryreservation', body , options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }
@@ -84,9 +108,9 @@ countryreservation(params): Observable<object[]> {
 yearreservation(): Observable<object[]> {
   const headers = new Headers({ 'Content-Type': 'application/json' })
   const options = new RequestOptions({ headers: headers });
-  //let body = { "userKey": dashbrddata };
+  let body = { "business_id": this.session.retrieve("business_id") };
 
-  return this.http.post('https://ivrinfocuit.herokuapp.com/GetYearbyyeareservationcount',   options)
+  return this.http.post('https://ivrinfocuit.herokuapp.com/GetYearbyyeareservationcount',body,   options)
     .map(this.extractData)
   //.catch(this.handleErrorObservable);
 }
@@ -111,23 +135,28 @@ monthreservation(params): Observable<object[]> {
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   }  
-  futurebooking(): Observable<object[]> {
+  futurebooking(no_room): Observable<object[]> {
 
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
-    //let body = { "userKey": dashbrddata };
+    let body = {  "business_id": this.session.retrieve("business_id"),
+    "type":no_room
+  };
 
-    return this.http.get('https://ivrinfocuit.herokuapp.com/futurebooking',  options)
+    return this.http.post('https://ivrinfocuit.herokuapp.com/futurebooking',body,  options)
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   } 
-  Historybooking(): Observable<object[]> {
-
+  Historybooking(no_room): Observable<object[]> {
+   console.log("history_booking",no_room)
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
-    //let body = { "userKey": dashbrddata };
+    let body = {   "business_id": this.session.retrieve("business_id"),
+    "type":no_room
+   };
+   console.log("history_booking*******************",body)
 
-    return this.http.get('https://ivrinfocuit.herokuapp.com/HistoryBooking',  options)
+    return this.http.post('https://ivrinfocuit.herokuapp.com/HistoryBooking',body,  options)
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   } 
