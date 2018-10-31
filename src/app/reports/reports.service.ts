@@ -160,6 +160,22 @@ monthreservation(params): Observable<object[]> {
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   } 
+  
+  convergencereport(start_date,end_date): Observable<object[]> {
+    console.log("history_booking",start_date)
+     const headers = new Headers({ 'Content-Type': 'application/json' })
+     const options = new RequestOptions({ headers: headers });
+     let body = {
+      "arrival_from":start_date,
+      "arrival_to":end_date,
+      "business_id": this.session.retrieve("business_id")
+       }
+    console.log("history_booking*******************",body)
+ 
+     return this.http.post('https://ivrinfocuit.herokuapp.com/GetConvergencereport',body,  options)
+       .map(this.extractData)
+     //.catch(this.handleErrorObservable);
+   } 
   private extractData(res: Response) {
     //alert('hai20')
     console.log('res========---====' + res);

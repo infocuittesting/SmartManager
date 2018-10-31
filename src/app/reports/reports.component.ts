@@ -237,27 +237,27 @@ this.charts.push( this.chart );
           console.log("get year",this.getyear)
       });
 
-var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+// var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
 
-this.chart = this.AmCharts.makeChart( "chart20", {
-  "type": "map",
-  "theme": "light",
-  "projection": "miller",
+// this.chart = this.AmCharts.makeChart( "chart20", {
+//   "type": "map",
+//   "theme": "light",
+//   "projection": "miller",
 
-  "dataProvider": {
-    "map": "worldLow",
-    "getAreasFromMap": true
-  },
-  "areasSettings": {
-    "autoZoom": true,
-    "selectedColor": "#CC0000"
-  },
-  "smallMap": {},
-  "export": {
-    "enabled": true,
-    "position": "bottom-right"
-  }
-} );
+//   "dataProvider": {
+//     "map": "worldLow",
+//     "getAreasFromMap": true
+//   },
+//   "areasSettings": {
+//     "autoZoom": true,
+//     "selectedColor": "#CC0000"
+//   },
+//   "smallMap": {},
+//   "export": {
+//     "enabled": true,
+//     "position": "bottom-right"
+//   }
+// } );
 
     
     
@@ -832,6 +832,56 @@ this.chart.addListener("dataUpdated", zoomChart);
 function zoomChart(){
 this.chart.zoomToDates(new Date(2012, 0, 2), new Date(2012, 0, 13));
 }
+});
+this.ReportsService.convergencereport(start_date,end_date)
+.subscribe((resp: any) => {   
+  this.getroomdetails = resp.Returnvalue;
+  // this.cancelcount = resp.cancelcount;
+  // this.modifycount = resp.Totalbookingcount;
+  console.log("pie chrt work",this.getroomdetails);
+  this.chartDatas=[];
+  for(var i=0;i<this.getroomdetails.length;i++){
+    this.chartDatas.push({
+       'title':this.getroomdetails[i].title,
+       'value':this.getroomdetails[i].value })
+  }
+  // this.getroomdetails=[];
+    // console.log("$$$$$$",this.chartDatas);
+    this.chart = this.AmCharts.makeChart('chart20', {
+      'type': 'pie',
+      'theme': 'light',
+      'hideCredits':true,
+      "titles": [{
+        "text": "Covergence Report",
+        "align":"center"
+      }],
+      "marginTop": 25,
+   
+      "legend": {
+        "horizontalGap": 20,
+        "maxColumns": 1,
+        "position": "right",
+        "marginRight": 80,
+        "autoMargins": false
+      },
+      'dataProvider':this.chartDatas,
+      'titleField': 'title',
+      'valueField': 'value',
+      'labelRadius': 5,
+
+      'radius': '40%',
+      'innerRadius': '50%',
+      'labelText': '[[title]]',
+      'export': {
+        "enabled": true,
+        "menu":  [ ],
+       
+      },
+      "responsive": {
+        "enabled": true
+      },
+    });
+    this.charts.push( this.chart );
 });
     }
 // User count report in pdf file
