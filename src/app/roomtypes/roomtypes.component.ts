@@ -62,6 +62,7 @@ export class RoomtypesComponent implements OnInit {
  closedeparture = false;
  houseclose = false;
  public permittedValues=[];
+ public planA={};
  
  enablinputs(){
 this.disvar=false
@@ -220,325 +221,158 @@ public room_name:any
 public one="roomtype1"
 public volume=[]
 public arr:any=[]
- 
+
+public griddate=[];
 public roomtype;
-
- public volume1=[];
- public volume2=[];
- public volume3=[];
- public rm1:any
- public rm2:any
- public rm3:any
- public planar=[];
- public volar=[];
- public rmplan=[];
- public rm_sell1=[];
- public rm_sell2=[];
- public rm_sell3=[];
- public origin=[];
- public gridget=[];
- public rmpplanname1=[];
- public rmpplanname2=[];
- public rmpplanname3=[];
- public pl1=[];
- public pl2=[];
- public pl3=[];
- public pl4=[];
- public pll1=[];
- public pll2=[];
- public pll3=[];
- public pll4=[];
- public frstrmname=[];
- public secondrmname=[];
- public thirdrmname;
+public gridget=[];
+public newgridget:any=[];
  public bs_id;
- public rm_to_sell_date1=[];
-public rm_to_sell_date2=[];
-public rm_to_sell_date3=[];
-public newpll1=[];
-public newpll2=[];
-public newpll3=[];
-public newpll4=[];
-
-public rm1pl3=[];
-public rm1pll3=[];
-public newrm1pll3=[];
-// room2plan2
-public rm2pl2=[];
-public rm2pll2=[];
-public rm2pl2finl=[];
-
+public gridfromdate:any
+public gridtodate:any
+public grid_length:any
+public j=0
+public total_plans=[];
  ngOnInit() {
     this.bs_id = this.session.retrieve("business_id")
     this.roomTypeService.getgriddef()
     .subscribe((resp: any) => {
+      this.griddate=resp.Date;
       this.gridget = resp.Result;
       this.fromdate=resp.from_date;
       this.todate3=resp.to_date;
-      // console.log("room plannnnnnnnnnnnnnnn",this.gridget)
-   
-    // console.log("length",this.gridget.length)
-    
-    this.volume1=this.gridget[0].room_type1;
-    // console.log("volume1",this.volume1) 
-    this.frstrmname=this.gridget[0].room_name;
-    this.secondrmname=this.gridget[1].room_name;
-    this.thirdrmname=this.gridget[2].room_name
-
-    this.volume2=this.gridget[1].room_type2;
-    // console.log("volume2",this.volume2)
-   
-    this.volume3=this.gridget[2].room_type3;
-    // console.log("volume3",this.volume3)
-    
-    this.volar.push(this.volume1,this.volume2,this.volume3)
-    // console.log("volarrrrrrrrrr",this.volar)
-    this.rm_sell1=this.gridget[0].room_type1.room_to_sell
-    this.rm_sell2=this.gridget[1].room_type2.room_to_sell
-    this.rm_sell3=this.gridget[2].room_type3.room_to_sell
-    this.rm1=this.gridget[0].room_type1.plans
-    this.rm2=this.gridget[1].room_type2.plans
-    this.rm3=this.gridget[2].room_type3.plans
-    this.planar.push(this.rm1,this.rm2,this.rm3)
-    // console.log("roomplan1",this.rm1)
-    // console.log("arrayyyyyyyyyyyy",this.planar)
-    console.log("rm_sell3",this.rm_sell3)
-
-
-    for(var i in this.rm_sell1){
-      this.rm_to_sell_date1.push(this.rm_sell1[i]['room_date'])
-    }
-    // console.log("room to sell date ",this.rm_to_sell_date1)
-
-    for(var i in this.rm_sell2){
-      this.rm_to_sell_date2.push(this.rm_sell2[i]['room_date'])
-    }
-
-    
-    // console.log("room to sell date ",this.rm_to_sell_date2)
-
-   
-    
-   
-
-    // this.origin = this.rm1.filter(
-    //   org => org.room_date === this.rm_sell["room_date"]
-    // );
-
-//---------------------------------------------------------------------------------------------------//
-   //   for (var i in this.rm1){
-        //       this.pl1[i]=this.rm1[i].room_plan1
-        //       if(this.pl1[i] == undefined){
-               
-        //         this.pl1[i]={'room_open':'NA'}
-        //       }
-        //       else{
-        //         this.pl1.push(this.rm1[i].room_plan1)
-        //       }
-              
+    //   console.log("onload initial arrayyyyyyyyyyyy",this.gridget)
+      //console.log("grid dateeeeeee",this.griddate)
+      this.grid_length = this.gridget.length
+    //   console.log("length",this.grid_length)
+      var plans = []
+// loop for dynamic data
+      for(var i in this.gridget){
         
-        // }
+        var j=Number(i)
+        j=j+1
 
-    // roomtype1 -->plans -->room_plan1
+        // console.log("i",i,this.gridget[i]['room_type'+j])
+        // console.log("room_to_sell",this.gridget[i]['room_type'+j]['room_to_sell'])
 
-        for (var i in this.rm1){
-          this.pl1.push(this.rm1[i].room_plan1) 
+// loop for room_to_sell with date match
+        for (var k=0;k<this.griddate.length;k++){
          
-        }
-    //remove undefined values
-        this.pll1 = this.pl1.filter(function( element ) {
-          return element !== undefined;
-        });
-        // console.log("plan1",this.pl1) 
-        // console.log("undefined removed array",this.pll1)      
-      
-// matching room to sell date with plan dates
-      for (var k=0;k<this.rm_to_sell_date1.length;k++){
-        
-        // console.log("sell datee",this.rm_to_sell_date1[k])
-       
-        try{
-          if (this.pll1.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
-            this.newpll1.push(this.pll1[k])
+          try{
+          if(this.griddate[k] == this.gridget[i]['room_type'+j]['room_to_sell'][k]['room_date'] ){
+                //pass     
+                //console.log("pass")
+          }
+          else{
+            //console.log("else")
+            this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
           }
         }
-       
         catch(e){
-          // console.log(e)
-          this.newpll1[k]={'room_open':"NA"}
-        }
-       
-     }
-      //  console.log("new final array",this.newpll1)
-    
-// roomtype1 -->plans -->room_plan2
-        for (var i in this.rm1){
-          this.pl2.push(this.rm1[i].room_plan2)    
-      }
-        //remove undefined values
-        this.pll2 = this.pl2.filter(function( element ) {
-          return element !== undefined;
-        });
-        // console.log("plan2",this.pl2)
-
-// matching room to sell date with plan dates
-      for (var k=0;k<this.rm_to_sell_date1.length;k++){
-        
-        // console.log("sell datee",this.rm_to_sell_date1[k])
-       
-        try{
-          if (this.pll2.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
-            this.newpll2.push(this.pll2[k])
-          }
-        }
-       
-        catch(e){
-          console.log(e)
-          this.newpll2[k]={'room_open':"NA"}
-        }
-       
-     }
-    //  console.log("new final array",this.newpll2)
-
-
-// roomtype1 -->plans -->room_plan3
-for (var i in this.rm1){
-    this.rm1pl3.push(this.rm1[i].room_plan3)    
-}
-  //remove undefined values
-  this.rm1pll3 = this.rm1pl3.filter(function( element ) {
-    return element !== undefined;
-  });
-  // console.log("plan2",this.pl2)
-
-// matching room to sell date with plan dates
-for (var k=0;k<this.rm_to_sell_date1.length;k++){
-  
-  // console.log("sell datee",this.rm_to_sell_date1[k])
- 
-  try{
-    if (this.rm1pll3.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
-      this.newrm1pll3.push(this.rm1pll3[k])
-    }
-  }
- 
-  catch(e){
-    console.log(e)
-    this.newrm1pll3[k]={'room_open':"NA"}
-  }
- 
-}
- console.log("new final array",this.newrm1pll3)
-
-
-
-
-
-
-
-
- // roomtype2 -->plans -->room_plan1  
-  
-        for (var i in this.rm2){
-          this.pl3.push(this.rm2[i].room_plan1)     
-        }
-        //remove undefined values
-        this.pll3 = this.pl3.filter(function( element ) {
-        return element !== undefined;
-        });
-        console.log("roomtype2 all plans",this.rm2)
-        console.log("roomtype2 roomplan1  removing undefined",this.pll3)
-
-  // matching room to sell date with plan dates
-      for (var k=0;k<this.rm_to_sell_date2.length;k++){
-        
-        // console.log("sell datee",this.rm_to_sell_date2[k])
-       
-        try{
-          if (this.pll3.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
-            this.newpll3.push(this.pll3[k])
-          }
-        }
-       
-        catch(e){
-          console.log(e)
-          this.newpll3[k]={'room_open':"NA"}
-        }
-       
-     }
-     console.log("roomtype2 rm to sell datee",this.rm_to_sell_date2)
+          this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
           
-     console.log("roomtype2 plan 1",this.newpll3)
-
-
-// roomtype2 -->plans -->room_plan2   
-for (var i in this.rm2){
-    this.rm2pl2.push(this.rm2[i].room_plan2)     
-  }
-  //remove undefined values
-  this.rm2pll2 = this.rm2pl2.filter(function( element ) {
-  return element !== undefined;
-  });
-  // console.log("plan3",this.pll3)
-
-// matching room to sell date with plan dates
-for (var k=0;k<this.rm_to_sell_date2.length;k++){
-  
-  // console.log("sell datee",this.rm_to_sell_date2[k])
- 
-  try{
-    if (this.rm2pll2.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
-      this.rm2pl2finl.push(this.rm2pll2[k])
-    }
-  }
- 
-  catch(e){
-    console.log(e)
-    this.rm2pl2finl[k]={'room_open':"NA"}
-  }
- 
-}
- console.log("room2 plan2 final array",this.rm2pl2finl)
-
-
-
-// roomtype3 roomtosell date
-    for(var i in this.rm_sell3){
-      this.rm_to_sell_date3.push(this.rm_sell3[i]['room_date'])
-    }
-    console.log("room to sell date33333 ",this.rm_to_sell_date3)
-
-// roomtype3 -->plans -->room_plan1   
-        for (var i in this.rm3){
-          this.pl4.push(this.rm3[i].room_plan1)     
         }
-        //remove undefined values
-        this.pll4 = this.pl4.filter(function( element ) {
-        return element !== undefined;
-        });
-        // console.log("plan4",this.pll4)
+       }
 
- // matching room to sell date with plan dates
-    
- for (var l=0;l<this.rm_to_sell_date3.length;l++){
+// pushing values in newgrid array in respective position
+        this.newgridget.push(this.gridget[i]['room_type'+j])
         
-    console.log("sell datee",this.rm_to_sell_date3[l])
-   
-    try{
-      if (this.pll4.find(x => x.room_date == this.rm_to_sell_date3[l]).room_date!=undefined){
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        this.newpll4.push(this.pll4[l])
+
+// seperating available plan names in plan name array 
+
+    //   console.log("plan",this.gridget[i]['room_type'+j]['plans'])
+      var plan_names = []
+      for(var a=0;a<this.gridget[i]['room_type'+j]['plans'].length;a++){
+         try{
+        
+          if((plan_names.find(x => x == Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])))
+          {
+             
+           }
+           else{
+           plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
+           }
+         }
+         catch(e){
+          plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
+         }
       }
-    }
+    //   console.log("keysss",plan_names) 
+
+// getting plan name in name_of_plan array if exist we won't push else push 
+      var plan=[];
+      var name_of_plan = [];
+      
+      for(var b in plan_names){
+        plan = this.gridget[i]['room_type'+j]['plans'].filter(
+            y => Object.keys(y)[0] === plan_names[b]);
+            // console.log("test plan",plan)
+            var c=Number(b)
+            c=c+1
+            for (var k=0;k<this.griddate.length;k++){
+
+                try{
+                    // checking whether room_open available for all room to sell dates(if room name not available set 'NA')
+                    if(this.griddate[k] == plan[k]['room_plan'+c]['room_date'] ){
+                           
+                        //   console.log("plan[k]['room_plan'+c]['room_date']",plan[k]['room_plan'+c]['rate_plan'])
+                          
+                          if (plan[k]['room_plan'+c]['rate_plan'] != undefined)
+                          {
+
+                             if(name_of_plan.find(x => x == plan[k]['room_plan'+c]['rate_plan'])){
+                                
+                              }
+                             else{
+                                name_of_plan.push(plan[k]['room_plan'+c]['rate_plan'])
+                          }
+                        }
+// replacing key name with number for room_plan1 key issue  
+                        plan[k] = plan[k]['room_plan'+c]
+                    }
+                    else{
+                      
+                      plan[k] ={room_open: "NA",rate_plan:"NA"} 
+                    }
+                  }
+                  catch(e){
+                    plan[k] = {room_open: "NA",rate_plan:"NA"} 
+                    
+                  }
+                
+            }
+            // console.log("test plan111",plan)
+            //if (plan.length == plan)
+            var filteredArray = plan.filter(function(element) { return element.rate_plan == "NA" })
+            if (plan.length != filteredArray.length){
+                 this.total_plans.push(plan)
+            }
+            plan=[];
+      }
    
-    catch(e){
-      console.log(e)
-      this.newpll4[l]={'room_open':"NA"}
-    }
-   
- }
- console.log("new final array4",this.newpll4)
+    //   console.log("name_of_plan",name_of_plan)
+    var objects = [];
+    for (var d = 0; d < name_of_plan.length; d++) {
+
+        // Create the object in the format you want
+        var obj = {"name" : name_of_plan[d]};
+    
+        // Add it to the array
+        objects.push(obj);
+      }
+        //  console.log("objcts",objects)
+      this.gridget[i]['room_type'+j]['plan_name'] = objects
+       //   console.log("total plan",this.total_plans)
+      this.gridget[i]['room_type'+j]['plans'] = this.total_plans
+
+      this.total_plans = [];
+      name_of_plan = [];
+      }
+
+      console.log("newgrid",this.newgridget)
+     
   });
+
+
 
  
 
@@ -594,6 +428,93 @@ this.setper = false
   }
 
 
+  // for color change in grid screen and change values to 0 or 1
+
+  public send_array_savebutton:any=[];
+  selectedindex;
+  selecteditem
+  editfun(index,model){
+  this.selectedindex=index;
+ 
+  if(model.room_open==1){
+  model.room_open=0
+  }
+  else if(model.room_open==0){
+    model.room_open=1
+  
+  }
+  else{
+     model={}
+  }
+  console.log("length",Object.keys(model).length)
+
+  if(Object.keys(model).length!=0)
+  {
+    this.send_array_savebutton.push(model)
+  }
+  
+  
+    //   console.log("valuessssssssssondblclick",model)
+    //   console.log("final model.room_open",model.room_open)
+    //   console.log("send array savebutton",this.send_array_savebutton)
+  }
+
+
+// on clicking plans in grid screen
+public pop_grid = [];
+planclick(index,stuff){
+    // console.log("indexxxxx st",index,stuff)
+    // console.log("indexxxxx st",stuff.room_id)
+    // console.log("indexxxxx st",stuff.rate_plan_id)
+    // console.log("final",this.newgridget)
+    this.pop_grid = [];
+    for(var i=0;i<this.newgridget.length;i++){
+        var new_plan = this.newgridget[i].plans
+        for(var j=0;j<new_plan.length;j++){
+            var new_obj = new_plan[j][0]
+            // console.log("new obj",new_obj,new_plan.indexOf(new_plan[j]))
+            if(new_obj.room_id == stuff.room_id && new_obj.rate_plan_id == stuff.rate_plan_id){
+                if(this.pop_grid.length == 0){
+                this.pop_grid.push(new_plan[new_plan.indexOf(new_plan[j])])
+                // console.log("pop",this.pop_grid)
+                }
+            }
+        }
+    }
+
+
+}
+
+
+//save button in grid main screen
+  public gridsavestatus:any=[];
+  sendvalues(){
+ 
+ 
+    let body_send_values={
+    "records":this.send_array_savebutton 
+    }
+    console.log("bodyyyyyyyyy",body_send_values)
+    this.roomTypeService.getsavebutton(body_send_values)
+    .subscribe((resp1: any) => {
+       // this.gridsavestatus = resp.Status;
+    console.log("responseeeeeeee",resp1)
+        
+    if (resp1[0].Status == 'Success') {
+       alert("resp1.ServiceStatus " + resp1[0].Status);
+    
+    }
+    else{
+        alert("error")
+    }
+   
+    });
+    }
+
+
+
+
+
 // grid tab set period button service
 
 
@@ -611,44 +532,7 @@ this.setper = false
  todate:any;
  retrictto:any;
 
- // get period count \
-// setperiod=[];
-// public dataa = [];
-// public countdates = [];
-// public monthh = [];
-// public monthhh = [];
-// public dayscountt = [];
-// public countdys: number;
-// public cnt: number;
-// public showlabelname = false;
-// getdatedetails=[];
-// parms:{};
-// todate3:any;
-// todate2:any;
-// todate1:any;
-// todate4:any;
-// getperioddays(getdate) {
-// this.parms = {
  
-// "business_id": this.session.retrieve("business_id"),
-// "from_date": this.fromdate.year+'-'+this.fromdate.month+'-'+this.fromdate.day,
-// "to_date": this.todate3.year+'-'+this.todate3.month+'-'+this.todate3.day
-
-
-// }
- 
-// console.log("getdatedaetails#####################",this.parms)
-// this.roomTypeService.getdateDetails(this.parms)
-// .subscribe((resp: any) => {
-// if (resp.ServiceStatus == 'Success') {
-// this.countdates=resp.Result;
-// }
-
-// });
- 
-// this.showlabelname = true;
-
-// }
 setperiod=[];
  public dataa = [];
  public countdates = [];
@@ -664,17 +548,15 @@ setperiod=[];
  todate1:any;
  todate4:any;
  planA7:any = {};
- getperioddays(fromdate1,todate1) {
-     
 
- this.pl1=[];
- this.pl2=[];
- this.pl3=[];
- this.pl4=[];
- this.pll1=[];
- this.pll2=[];
- this.pll3=[];
- this.pll4=[];
+//  set period button calls after giving dates in grid screen 
+ getperioddays(fromdate1,todate1) {
+
+ this.gridget=[];   
+this.griddate=[];
+this.newgridget=[];
+this.total_plans=[];
+
 this.parms = {
  
  "business_id": this.session.retrieve("business_id"),
@@ -688,241 +570,166 @@ this.parms = {
  this.roomTypeService.getgrid(this.parms)
  .subscribe((resp: any) => {
  if (resp.ServiceStatus == 'Success') {
- this.countdates=resp.Result;
- }
+    this.griddate=resp.Date;
+    this.gridget = resp.Result;
+    this.gridfromdate=resp.from_date;
+    this.gridtodate=resp.to_date;
+  //   console.log("onload initial arrayyyyyyyyyyyy",this.gridget)
+    //console.log("grid dateeeeeee",this.griddate)
+    this.grid_length = this.gridget.length
+  //   console.log("length",this.grid_length)
+    var plans = []
+// loop for dynamic data
+    for(var i in this.gridget){
+      
+      var j=Number(i)
+      j=j+1
 
+      // console.log("i",i,this.gridget[i]['room_type'+j])
+      // console.log("room_to_sell",this.gridget[i]['room_type'+j]['room_to_sell'])
 
- console.log("entire service array",this.countdates)
- 
-//  console.log("length",this.countdates.length)
- 
- this.volume1=this.countdates[0].room_type1;
-//  console.log("volume111111111111111111111111111111111111111",this.volume1) 
- this.frstrmname=this.countdates[0].room_name;
- this.secondrmname=this.countdates[1].room_name;
- this.thirdrmname=this.countdates[2].room_name
-
- this.volume2=this.countdates[1].room_type2;
-//  console.log("volume22222222222222222222222222222222",this.volume2)
- 
- this.volume3=this.countdates[2].room_type3;
-//  console.log("volume33333333333333333333333333333333",this.volume3)
-
- this.rm_sell1=[];
- this.rm1=[];
- this.newpll1=[];
- this.newpll2=[];
- this.newpll3=[];
- this.rm_to_sell_date1=[];
- this.rm_to_sell_date2=[];
-
-//  making array empty
-this.rm2pl2=[];
-this.rm2pll2=[];
-this.rm2pl2finl=[];
-this.rm1pl3=[];
-this.rm1pll3=[];
-this.newrm1pll3=[];
- 
- this.volar.push(this.volume1,this.volume2,this.volume3)
-//  console.log("volarrrrrrrrrr",this.volar)
- this.rm_sell1=this.countdates[0].room_type1.room_to_sell
- this.rm_sell2=this.countdates[1].room_type2.room_to_sell
- this.rm_sell3=this.countdates[2].room_type3.room_to_sell
- this.rm1=this.countdates[0].room_type1.plans
- this.rm2=this.countdates[1].room_type2.plans
- this.rm3=this.countdates[2].room_type3.plans
- this.planar.push(this.rm1,this.rm2,this.rm3)
- console.log("roomplan1",this.rm1)
-//  console.log("arrayyyyyyyyyyyy",this.planar)
- console.log("room to sell for roomtype 1",this.rm_sell1)
-
- // this.origin = this.rm1.filter(
- // org => org.room_date === this.rm_sell["room_date"]
- // );
- 
- 
- for(var i in this.rm_sell1){
-    this.rm_to_sell_date1.push(this.rm_sell1[i]['room_date'])
-  }
-   console.log("room to sell date only ",this.rm_to_sell_date1)
-
-  for(var i in this.rm_sell2){
-    this.rm_to_sell_date2.push(this.rm_sell2[i]['room_date'])
-  }
-
-
-// roomtype1 -->plans -->room_plan1
- for (var i in this.rm1){
- this.pl1.push(this.rm1[i].room_plan1)
- // if (this.pl1[i]== undefined){
- // this.pl1.keys[room_open]=0;
- // } 
- }
- //remove undefined values
- this.pll1 = this.pl1.filter(function( element ) {
- return element !== undefined;
- });
- console.log("roomtype1 plan1",this.pl1)
-// matching room to sell date with plan dates
-for (var k=0;k<this.rm_to_sell_date1.length;k++){
-        
-    // console.log("sell datee",this.rm_to_sell_date1[k])
-   
-    try{
-      if (this.pll1.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
-        this.newpll1.push(this.pll1[k])
+// loop for room_to_sell with date match
+      for (var k=0;k<this.griddate.length;k++){
+       
+        try{
+        if(this.griddate[k] == this.gridget[i]['room_type'+j]['room_to_sell'][k]['room_date'] ){
+              //pass     
+              //console.log("pass")
+        }
+        else{
+          //console.log("else")
+          this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
+        }
       }
-    }
-   
-    catch(e){
-      // console.log(e)
-      this.newpll1[k]={'room_open':"NA"}
-    }
-   
- }
-   console.log("new final array newpll1",this.newpll1)
-
-
-
- // roomtype1 -->plans -->room_plan2
- for (var i in this.rm1){
- this.pl2.push(this.rm1[i].room_plan2) 
- }
- //remove undefined values
- this.pll2 = this.pl2.filter(function( element ) {
- return element !== undefined;
- });
- console.log("plan2",this.pll2)
-// matching room to sell date with plan dates
-for (var k=0;k<this.rm_to_sell_date1.length;k++){
+      catch(e){
+        this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
         
-    // console.log("sell datee",this.rm_to_sell_date1[k])
-   
-    try{
-      if (this.pll2.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
-        this.newpll2.push(this.pll2[k])
       }
+     }
+
+// pushing values in newgrid array in respective position
+      this.newgridget.push(this.gridget[i]['room_type'+j])
+      
+
+// seperating available plan names in plan name array 
+
+  //   console.log("plan",this.gridget[i]['room_type'+j]['plans'])
+    var plan_names = []
+    for(var a=0;a<this.gridget[i]['room_type'+j]['plans'].length;a++){
+       try{
+      
+        if((plan_names.find(x => x == Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])))
+        {
+           
+         }
+         else{
+         plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
+         }
+       }
+       catch(e){
+        plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
+       }
     }
-   
-    catch(e){
-      console.log(e)
-      this.newpll2[k]={'room_open':"NA"}
+  //   console.log("keysss",plan_names) 
+
+// getting plan name in name_of_plan array if exist we won't push else push 
+    var plan=[];
+    var name_of_plan = [];
+    
+    for(var b in plan_names){
+      plan = this.gridget[i]['room_type'+j]['plans'].filter(
+          y => Object.keys(y)[0] === plan_names[b]);
+          // console.log("test plan",plan)
+          var c=Number(b)
+          c=c+1
+          for (var k=0;k<this.griddate.length;k++){
+
+              try{
+                  // checking whether room_open available for all room to sell dates(if room name not available set 'NA')
+                  if(this.griddate[k] == plan[k]['room_plan'+c]['room_date'] ){
+                         
+                      //   console.log("plan[k]['room_plan'+c]['room_date']",plan[k]['room_plan'+c]['rate_plan'])
+                        
+                        if (plan[k]['room_plan'+c]['rate_plan'] != undefined)
+                        {
+
+                           if(name_of_plan.find(x => x == plan[k]['room_plan'+c]['rate_plan'])){
+                              
+                            }
+                           else{
+                              name_of_plan.push(plan[k]['room_plan'+c]['rate_plan'])
+                        }
+                      }
+// replacing key name with number for room_plan1 key issue  
+                      plan[k] = plan[k]['room_plan'+c]
+                  }
+                  else{
+                    
+                    plan[k] ={room_open: "NA"} 
+                  }
+                }
+                catch(e){
+                  plan[k] = {room_open: "NA"} 
+                  
+                }
+              
+          }
+          // console.log("test plan111",plan)
+          this.total_plans.push(plan)
+          plan=[];
     }
-   
- }
- console.log("roomtype1 plan 2",this.newpll2)
+ 
+  //   console.log("name_of_plan",name_of_plan)
+  var objects = [];
+  for (var d = 0; d < name_of_plan.length; d++) {
 
-
-// roomtype1 -->plans -->room_plan3
-for (var i in this.rm1){
-    this.rm1pl3.push(this.rm1[i].room_plan3)    
-}
-  //remove undefined values
-  this.rm1pll3 = this.rm1pl3.filter(function( element ) {
-    return element !== undefined;
-  });
-  // console.log("plan2",this.pl2)
-
-// matching room to sell date with plan dates
-for (var k=0;k<this.rm_to_sell_date1.length;k++){
+      // Create the object in the format you want
+      var obj = {"name" : name_of_plan[d]};
   
-  // console.log("sell datee",this.rm_to_sell_date1[k])
- 
-  try{
-    if (this.rm1pll3.find(x => x.room_date == this.rm_to_sell_date1[k]).room_date!=undefined){
-      this.newrm1pll3.push(this.rm1pll3[k])
+      // Add it to the array
+      objects.push(obj);
     }
-  }
- 
-  catch(e){
-    console.log(e)
-    this.newrm1pll3[k]={'room_open':"NA"}
-  }
- 
-}
- console.log("new final array",this.newrm1pll3)
+       console.log("objcts",objects)
+    this.gridget[i]['room_type'+j]['plan_name'] = objects
+     //   console.log("total plan",this.total_plans)
+    this.gridget[i]['room_type'+j]['plans'] = this.total_plans
 
+    this.total_plans = [];
+    name_of_plan = [];
+    }
 
-
- // roomtype2 -->plans -->room_plan1 
- for (var i in this.rm2){
- this.pl3.push(this.rm2[i].room_plan1) 
+    console.log("newgrid",this.newgridget)
  }
- //remove undefined values
- this.pll3 = this.pl3.filter(function( element ) {
- return element !== undefined;
- });
- console.log("plan3",this.pl3)
 
- // matching room to sell date with plan dates
- for (var k=0;k<this.rm_to_sell_date2.length;k++){
+});
+ 
+ }
+
+//  after clicking save button in grid popups
+ 
+sendvalpopgrid(){
+    console.log("roomdate-111",this.pop_grid);
+    let body_send_values={
+        "records":this.pop_grid[0] 
+        }
+        console.log("bodyyyyyyyyy",body_send_values)
+        this.roomTypeService.getsavebutton(body_send_values)
+        .subscribe((resp1: any) => {
+           // this.gridsavestatus = resp.Status;
+        // console.log("responseeeeeeee",resp1)
+            
+        if (resp1[0].Status == 'Success') {
+           alert("resp1.ServiceStatus " + resp1[0].Status);
         
-    // console.log("sell datee",this.rm_to_sell_date2[k])
-   
-    try{
-      if (this.pll3.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
-        this.newpll3.push(this.pll3[k])
-      }
-    }
-   
-    catch(e){
-      console.log(e)
-      this.newpll3[k]={'room_open':"NA"}
-    }
-   
- }
- console.log("roomtype2 plan1 final",this.newpll3)
+        }
+        else{
+            alert("error")
+        }
+       
+        });
 
- 
-// roomtype2 -->plans -->room_plan2   
-for (var i in this.rm2){
-    this.rm2pl2.push(this.rm2[i].room_plan2)     
-  }
-  //remove undefined values
-  this.rm2pll2 = this.rm2pl2.filter(function( element ) {
-  return element !== undefined;
-  });
-  // console.log("plan3",this.pll3)
 
-// matching room to sell date with plan dates
-for (var k=0;k<this.rm_to_sell_date2.length;k++){
-  
-  // console.log("sell datee",this.rm_to_sell_date2[k])
- 
-  try{
-    if (this.rm2pll2.find(x => x.room_date == this.rm_to_sell_date2[k]).room_date!=undefined){
-      this.rm2pl2finl.push(this.rm2pll2[k])
-    }
-  }
- 
-  catch(e){
-    console.log(e)
-    this.rm2pl2finl[k]={'room_open':"NA"}
-  }
- 
 }
- console.log("room2 plan2 final array",this.rm2pl2finl)
-
-
-
-// roomtype3 -->plans -->room_plan1 
- for (var i in this.rm3){
- this.pl4.push(this.rm3[i].room_plan1) 
- }
- //remove undefined values
- this.pll4 = this.pl4.filter(function( element ) {
- return element !== undefined;
- });
- console.log("plan4",this.pl4)
-
- });
- 
- this.showlabelname = true;
-
- }
-
-
 
  
 
@@ -1050,161 +857,15 @@ for (var k=0;k<this.rm_to_sell_date2.length;k++){
  this.todate=null;
  }
 
-selectedindex;
-selecteditem
-editfun(index,model){
-this.selectedindex=index;
-this.selecteditem=model.room_open;
-console.log(this.selecteditem)
-if(this.selecteditem=="1"){
-this.selecteditem="0"
-this.rm1pll3[index].room_open ="0"
-}
-else{
-this.selecteditem="1"
-this.rm1pll3[index].room_open="1"
-}
-this.frstflow.push(model)
 
-console.log("valuessssssssssondblclick",model)
-console.log("changessssssssssssss",this.rm1pll3)
-}
-
-// roomtype1 plan1
-public frstflow:any=[];
-public secondflow:any=[];
-public thirdflow:any=[];
- selectedindex1;
-selecteditem1
- editfun1(index1,model1){
- this.selectedindex1=index1;
- this.selecteditem1=model1.room_open;
- console.log(this.selecteditem1)
- if(this.selecteditem1=="1"){
- this.selecteditem1="0"
- this.pll1[index1].room_open ="0"
  
- } 
- else{
- this.selecteditem1 = "1"
- this.pll1[index1].room_open="1"
- }
- this.frstflow.push(model1)
- 
- console.log("valuessssssssssondblclick roomtype1 plan1",model1)
- console.log("changessssssssssssssfrstflow roomtype3 plan1",this.frstflow)
- console.log("changessssssssssssss roomtype3 plan1",this.pll1)
- }
-// roomtype2 plan1
- selectedindex2;
- selecteditem2
- editfun2(index2,model2){
- this.selectedindex2=index2;
- this.selecteditem2=model2.room_open;
- console.log(this.selecteditem2)
- if(this.selecteditem2=="1"){
- this.selecteditem2="0"
- this.pll3[index2].room_open ="0"
- }
- else{
- this.selecteditem1="1"
- this.pll3[index2].room_open="1"
- }
- this.frstflow.push(model2)
- console.log("valuessssssssssondblclick roomtype2 plan1",model2)
- console.log("roomtype2 plan1",this.pll3)
- }
 
-//  roomtype3 plan1
- selectedindex3;
- selecteditem3
- editfun3(index3,model3){
- this.selectedindex3=index3;
- this.selecteditem3=model3.room_open;
- console.log(this.selecteditem3)
- if(this.selecteditem3=="1"){
- this.selecteditem3="0"
- this.pll4[index3].room_open ="0"
- }
- else{
- this.selecteditem3= "1"
- this.pll4[index3].room_open="1"
- }
- this.frstflow.push(model3)
- console.log("valuessssssssssondblclick roomtype3 plan1",model3)
- console.log("roomtype3 plan1",this.pll4)
- }
-// roomtype1 plan2
- selectedindex4;
- selecteditem4
- editfun4(index4,model4){
- this.selectedindex4=index4;
- this.selecteditem4=model4.room_open;
- console.log(this.selecteditem4)
- if(this.selecteditem4=="1"){
- this.selecteditem4="0"
- this.pll2[index4].room_open ="0"
- }
- else{
- this.selecteditem3= "1"
- this.pll2[index4].room_open="1"
- }
- this.frstflow.push(model4)
- console.log("valuessssssssssondblclick roomtype1 plan2",model4)
- console.log("roomtype1 plan2 changed array",this.pll2)
- }
-
-
- // roomtype2 plan2
- selectedindex5;
- selecteditem5
- editfun5(index5,model5){
- this.selectedindex5=index5;
- this.selecteditem5=model5.room_open;
- console.log(this.selecteditem5)
- if(this.selecteditem5=="1"){
- this.selecteditem5="0"
- this.rm2pll2[index5].room_open ="0"
- }
- else{
- this.selecteditem5= "1"
- this.rm2pll2[index5].room_open="1"
- }
- this.frstflow.push(model5)
- console.log("valuessssssssssondblclick roomtype1 plan2",model5)
- console.log("roomtype1 plan2 changed array",this.rm2pll2)
- }
-
- public gridsavestatus:any=[];
- // send updated values to db
- sendvalues(){
- 
- 
- let body_send_values={
- "records":this.frstflow 
- }
- console.log("bodyyyyyyyyy",body_send_values)
- this.roomTypeService.getsavebutton(body_send_values)
- .subscribe((resp1: any) => {
-    // this.gridsavestatus = resp.Status;
- console.log("responseeeeeeee",resp1)
-     
- if (resp1[0].Status == 'Success') {
-    alert("resp1.ServiceStatus " + resp1[0].Status);
- 
- }
- else{
-     alert("error")
- }
-
- });
- }
 
  selectedindexx;
  selecteditemm
  sendval(departure:any){
  console.log("DATEEE-----------------",departure);
- for(var i=0;i<departure.lenght;i++){
+ for(var i=0;i<departure.length;i++){
  if(departure[i].close_arrival == null){
  departure[i].close_arrival = "0"; 
  console.log("arrivallllll",departure[i].close_arrival)
@@ -1224,6 +885,8 @@ selecteditem1
  }
 
  });
+
+
  }
  // sendval(rate,room_open,min,max,arrival,dept){
  // console.log("helloooooooooooooooooooooooooooooo",rate,room_open,min,max,arrival,dept)

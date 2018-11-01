@@ -18,6 +18,20 @@ export class ReservationService {
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   }
+
+  getreservationtable(): Observable<object[]> {
+
+    const headers = new Headers({ 'Content-Type': 'application/json' })
+    const options = new RequestOptions({ headers: headers });
+    let body = {
+       "business_id":this.session.retrieve("business_id"),
+       "conf_num":"Confirmation"
+      };
+
+    return this.http.post('https://ivrinfocuit.herokuapp.com/Query_Rate_Per_day',body,options)
+      .map(this.extractData)
+    //.catch(this.handleErrorObservable);
+  }
   private extractData(res: Response) {
     //alert('hai20')
     console.log('res========---====' + res);

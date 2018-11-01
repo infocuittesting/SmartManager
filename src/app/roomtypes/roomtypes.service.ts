@@ -102,13 +102,14 @@ daterangecount(params): Observable<object[]> {
     //.catch(this.handleErrorObservable);
   }
 
-  getsavebutton(body_send_values: any): Observable<object[]> {
+  getsavebutton(body_send_values): Observable<object[]> {
     console.log("service came")
 
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
     
-    //console.log("json banuuuuuu",body_send_values)
+    console.log("json banuuuuuu",body_send_values)
+    
 
     return this.http.post('https://ivrinfocuit.herokuapp.com/update_room_open',body_send_values, options)
       .map(this.extractData)

@@ -52,6 +52,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { FilterdataPipe } from './filterdata.pipe';
 import { ToasterService } from './toaster.service';
+import { UniquePipe } from './unique.pipe';
 
 export const appRoutes: Routes = [
   { path: 'appcom', component: AppComponent },
@@ -113,6 +114,7 @@ let socialloginproviders = {
     ReportsComponent,
     ReservationComponent,
     FilterdataPipe,
+    UniquePipe,
     
   ],
   imports: [

@@ -52,6 +52,13 @@ export class ReservationComponent implements OnInit {
    this.hello=resp.result;
    console.log("hello",this.hello)
     });
+
+    //cofirmation table
+    this.ReservationService.getreservationtable()
+    .subscribe((resp: any) => {
+   this.hello=resp.result;
+   console.log("hello",this.hello)
+    });
   }
     Roomtype;
     Confirmation;
