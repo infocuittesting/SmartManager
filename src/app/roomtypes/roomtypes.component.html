@@ -88,7 +88,7 @@
                     <tr class="rows">
                     <th class="tabborder" data-toggle="modal"  style="width:200px">Room To Sell</th>
                         <td *ngFor="let var_avail of item.room_to_sell">
-                                <input class="text-center" type="text" style="width:30px;" [(ngModel)]="var_avail.available_count" >                                
+                                <input type="text" maxlength="3" pattern="([0-9]|[0-9]|[0-9]{3})" style="padding:5px; width:35px;" [(ngModel)]="var_avail.available_count" >                                
                         </td>
                         
                     </tr>
@@ -154,7 +154,7 @@
     
     <div id="Daterange" class="tab-pane container fade" style="margin-top:10px;">
         <br>
-        <form action="">
+       
         <div class="row">
         
         <div class="col-sm-4">
@@ -270,52 +270,20 @@
 
         </div> 
         
-        <div class="row">
-            <div class="md-errors-spacer" [hidden]="roomsizeid.valid || roomsizeid.untouched">
-                    <div *ngIf="roomsizeid.errors && roomsizeid.errors.required" style="color: red;margin-left:15px;margin-right: 60px;
-                        text-align: left;font-size:12px;">
-                        *Room type is required
-                    </div>
-                </div>
-            <div class="md-errors-spacer" [hidden]="roomsizeid.valid || roomsizeid.untouched">
-                    <div *ngIf="roomsizeid.errors && roomsizeid.errors.required" style="color: red;margin-left:15px;margin-right: 60px;
-                        text-align: left;font-size:12px;">
-                        *Room Plan is required
-                    </div>
-                </div>
-            <div class="md-errors-spacer" [hidden]="roomtos.valid || roomtos.untouched">
-                <div *ngIf="roomtos.errors && roomtos.errors.required" style="color: red;margin-left:15px;margin-right: 60px;
-                text-align: left;font-size:12px;">
-                *Room to sell is required
-                </div>
-            </div>
 
-            <div class="md-errors-spacer" [hidden]="roomprice.valid || roomprice.untouched">
-                <div *ngIf="roomprice.errors && roomprice.errors.required" style="color: red;margin-left:15px;margin-right: 60px;
-                text-align: left;font-size:12px;">
-                *price is required
-                </div>
-            </div> 
-
-            <div class="md-errors-spacer" [hidden]="extra.valid || extra.untouched">
-                <div *ngIf="extra.errors && extra.errors.required" style="color: red;margin-left:15px;margin-right: 60px;
-                text-align: left;font-size:12px; margin-top: -3px">
-                *extra adult price is required
-            </div>
-        </div> 
-
-        </div>
     
         <div class="row" *ngIf="roomTypesFieldErrorFlag">
             <label style="margin-left: 380px;font-weight: 600;color: red;margin-top: 10px;">Enter all fields</label>
         </div>
-    </form>
+  
         </div>
     
     
     <!-- Restriction details -->
     <div id="Restriction" class="tab-pane container fade" style="margin-top:10px;">
         <br>
+       
+            <form #res="ngForm">
         <div class="row">
         <div class="col-md-4">
         Rate Restriction
@@ -523,10 +491,12 @@
         </div>
         <div class="col-md-2">
         <button type="button" class="btn btn-info"
-        style="height: 35px; padding-top: 2px;border-radius: 0px;"(click)="restrcitdeatils(rate_res)">Save</button>
+        style="height: 35px; padding-top: 2px;border-radius: 0px;"(click)="restrcitdeatils(rate_res);res.reset()">Save</button>
         </div>
         <div class="col-md-5"></div>
         </div> 
+    </form>
+    
         </div>
     
     <!-- restriction End -->

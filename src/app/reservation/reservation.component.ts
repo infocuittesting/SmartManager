@@ -15,6 +15,7 @@ const now = new Date();
 
 export class ReservationComponent implements OnInit {
   public hello=[];
+  public tabledata:any=[];
   showMore=false;
   constructor(private ReservationService:ReservationService,
     private dateFormate:NgbDateCustomParserFormatter,
@@ -53,12 +54,7 @@ export class ReservationComponent implements OnInit {
    console.log("hello",this.hello)
     });
 
-    //cofirmation table
-    this.ReservationService.getreservationtable()
-    .subscribe((resp: any) => {
-   this.hello=resp.result;
-   console.log("hello",this.hello)
-    });
+    
   }
     Roomtype;
     Confirmation;
@@ -81,6 +77,7 @@ export class ReservationComponent implements OnInit {
     modification;
     sms;
     name;
+    hotel;
     selectindex;
   selectMembersEdit(details,index){
     console.log(details)  
@@ -107,6 +104,14 @@ export class ReservationComponent implements OnInit {
     this.sms=details.send_sms;
     this.name=details.customer_name;
     console.log(this.Roomtype);
+    this.hotel=details.hotel_name;
+
+      //cofirmation table
+  this.ReservationService.getreservationtable(this.Confirmation)
+  .subscribe((resp: any) => {
+ this.tabledata=resp.result;
+ console.log("hello",this.tabledata)
+  });
   }
  
 

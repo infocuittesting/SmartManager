@@ -115,7 +115,7 @@ export class MenusComponent implements OnInit {
   // sign out function
 
   signout() {
-    this.session.clear;
+    this.session.clear();
     this.session.store("Session","loggedout");
     this.router.navigate(['/login']);
   }

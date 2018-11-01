@@ -19,15 +19,15 @@ export class ReservationService {
     //.catch(this.handleErrorObservable);
   }
 
-  getreservationtable(): Observable<object[]> {
+  getreservationtable(Confirmation): Observable<object[]> {
 
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
     let body = {
        "business_id":this.session.retrieve("business_id"),
-       "conf_num":"Confirmation"
+       "conf_num":Confirmation
       };
-
+console.log("........",body);
     return this.http.post('https://ivrinfocuit.herokuapp.com/Query_Rate_Per_day',body,options)
       .map(this.extractData)
     //.catch(this.handleErrorObservable);

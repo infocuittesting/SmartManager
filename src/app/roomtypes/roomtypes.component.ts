@@ -7,6 +7,7 @@ import { NgbModule,NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { isNumber, toInteger, padNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 //custom date format
 import { NgbDateCustomParserFormatter} from "../customdateformat";
+import { ToasterService } from '../toaster.service';
 
 import { NgClass,DatePipe } from '@angular/common';
 import { RoomTypeService } from "./roomtypes.service";
@@ -22,14 +23,14 @@ const now = new Date();
  selector: 'app-roomtypes',
  templateUrl: './roomtypes.component.html',
  styleUrls: ['./roomtypes.component.css'],
- providers: [RoomTypeService,NgbDateCustomParserFormatter]
+ providers: [RoomTypeService,NgbDateCustomParserFormatter,ToasterService]
 })
 /* tslint:disable */
 export class RoomtypesComponent implements OnInit {
 
 
  constructor(private roomTypeService: RoomTypeService,public session: SessionStorageService
- ,private datePipe: DatePipe ,
+ ,private datePipe: DatePipe ,private toasterService:ToasterService,
  private dateFormate:NgbDateCustomParserFormatter) { }
 
  public rangefrom:any = new Date().toJSON().split('T')[0];
@@ -125,78 +126,7 @@ this.disvar=false
  }
  }
 
- RateandAvailability = [
- {
- "month":"jan",
- "day":"mon",
- "date":"1",
- "room_status":"no",
- "room_to_sell":"5",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- },
- {
- "month":"Jan",
- "day":"tue",
- "date":"2",
- "room_status":"yes",
- "room_to_sell":"5",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- },
- {
- "month":"jan",
- "day":"wed",
- "date":"3",
- "room_status":"yes",
- "room_to_sell":"10",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- },
- {
- "month":"jan",
- "day":"thu",
- "date":"4",
- "room_status":"yes",
- "room_to_sell":"10",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- },
- {
- "month":"jan",
- "day":"fri",
- "date":"5",
- "room_status":"yes",
- "room_to_sell":"10",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- },
- {
- "month":"jan",
- "day":"sat",
- "date":"6",
- "room_status":"yes",
- "room_to_sell":"8",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- },
- {
- "month":"jan",
- "day":"sun",
- "date":"7",
- "room_status":"yes",
- "room_to_sell":"5",
- "standard_rate":"yes",
- "NR_rate_with_breakfast":"no",
- "Summer_special":"no",
- }
- ]
+ 
  onChangeObj(event,user, bs_id){
  console.log(event,user.room_id,bs_id,this.rangefrom)
  this.enrate = false
@@ -501,7 +431,7 @@ planclick(index,stuff){
     console.log("responseeeeeeee",resp1)
         
     if (resp1[0].Status == 'Success') {
-       alert("resp1.ServiceStatus " + resp1[0].Status);
+        this.toasterService.success("Update Room Status");
     
     }
     else{
@@ -719,7 +649,7 @@ sendvalpopgrid(){
         // console.log("responseeeeeeee",resp1)
             
         if (resp1[0].Status == 'Success') {
-           alert("resp1.ServiceStatus " + resp1[0].Status);
+            this.toasterService.success("Rate Plane Updated Successfully");
         
         }
         else{
@@ -1014,7 +944,7 @@ sendvalpopgrid(){
 
             .subscribe((resp: any) => {
                 if (resp.ServiceStatus == 'Success') {
-                    alert("resp.ServiceStatus " + resp.ServiceStatus);
+                    this.toasterService.success("Date Range Rate Plan Updated Successfully");
                     this.user={};
                     this.rangefrom;
                     this.todate2 ={};
@@ -1128,7 +1058,7 @@ restrictionData(rate_res){
 
         .subscribe((resp: any) => {
             if (resp.ServiceStatus == 'Success') {
-                alert("resp.ServiceStatus " + resp.ServiceStatus);
+                this.toasterService.success("Restriction updated Successfully");
             }
 
         });
