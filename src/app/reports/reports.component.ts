@@ -29,6 +29,8 @@ export class ReportsComponent implements OnInit {
     public now:any;
     //end date
     public start_date:any = new Date().toJSON().split('T')[0];
+    public nndata= new Date();
+    public end_date= new Date(this.nndata.getFullYear(),this.nndata.getMonth() + 1, 1)
  
   public chartDatas = [];
   public getroomdetails=[] ;

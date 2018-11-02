@@ -645,45 +645,45 @@
     <tbody class=" table  table-bordered "> 
     <ng-container *ngFor="let roomdate of pop_grid let i=index">
     <tr  style="height: 41px;">
-    <td class="tabbor" ><b>RoomDate</b></td> 
+    <td class="tabbor text-left"  ><b>RoomDate</b></td> 
     
-        <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"> {{planA.room_date}} </td>
+        <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"> {{planA.room_date|date:'d'}}/{{planA.room_date|date:'M'}}/{{planA.room_date|date:'yy'}} </td>
         
               
    
     </tr>
     <tr style="height: 10px;">
-    <td class="tabbor"><b>RoomRate</b></td>
+    <td class="tabbor text-left"><b>RoomRate</b></td>
    
     <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roomrat" style="width:45px;" [(ngModel)]="planA.room_rate" ></td>
    
     </tr>
     <tr style="height: 10px;">
-    <td class="tabbor" ><b>Extra Adult Rate</b></td>
+    <td class="tabbor text-left" ><b>Extra Adult Rate</b></td>
     
     <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roomopen" style="width:30px;" [(ngModel)]="planA.room_open" ></td>
    
     </tr>
     <tr style="height: 10px;">
-    <td class="tabbor"><b>MinStay</b></td>
+    <td class="tabbor text-left"><b>MinStay</b></td>
     
     <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roommin" style="width:30px;" [(ngModel)]="planA.min_stay" > </td>
     
     </tr>
     <tr style="height: 10px;">
-    <td class="tabbor"><b>MaxStay</b></td>
+    <td class="tabbor text-left"><b>MaxStay</b></td>
    
     <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roommax" style="width:30px;" [(ngModel)]="planA.max_stay" > </td>
    
     </tr>
     <tr style="height: 10px;">
-    <td class="tabbor"><b>CloseArrival</b></td>
+    <td class="tabbor text-left"><b>CloseArrival</b></td>
     
     <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roomarr" style="width:30px;" [(ngModel)]="planA.close_arrival" ></td>
     
     </tr>
     <tr style="height: 10px;">
-    <td class="tabbor"><b>CloseDeparture</b></td>
+    <td class="tabbor text-left"><b>CloseDeparture</b></td>
     
     <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roomdep" style="width:30px;" [(ngModel)]="planA.close_departure" ></td>
     

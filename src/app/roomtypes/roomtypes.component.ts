@@ -432,7 +432,7 @@ planclick(index,stuff){
         
     if (resp1[0].Status == 'Success') {
         this.toasterService.success("Update Room Status");
-    
+        this.refreshroomtype();
     }
     else{
         alert("error")
