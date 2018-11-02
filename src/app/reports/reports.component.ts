@@ -44,11 +44,124 @@ public showline = [];
 public charts = [];
 public futurebook_data=[];
   ngOnInit() {
-    let statsParms={
-      "business_id":this.session.retrieve("business_id")
-    }
-    console.log("business id is came",this.session.retrieve("business_id"))
-    this.ReportsService.statistics(statsParms)
+    
+    
+      
+// dropdown lilst
+      this.ReportsService.yearreservation()
+      .subscribe((resp: any) => {
+        // if (resp.ServiceStatus == 'Success') {
+          this.getyear = resp.Returnvalue;
+          console.log("get year",this.getyear)
+      });
+
+// var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+// this.chart = this.AmCharts.makeChart( "chart20", {
+//   "type": "map",
+//   "theme": "light",
+//   "projection": "miller",
+
+//   "dataProvider": {
+//     "map": "worldLow",
+//     "getAreasFromMap": true
+//   },
+//   "areasSettings": {
+//     "autoZoom": true,
+//     "selectedColor": "#CC0000"
+//   },
+//   "smallMap": {},
+//   "export": {
+//     "enabled": true,
+//     "position": "bottom-right"
+//   }
+// } );
+
+    
+    
+      
+}
+public no_room;
+public rate_res={}
+onchangeobj(rate_res){
+  if(rate_res == "Number of Rooms"){
+   this.no_room = 1
+  }
+  else if (rate_res == "Nights"){
+    this.no_room = 2
+  }
+console.log("valueeee",this.no_room)
+}
+fetchrecord(event,start_date,end_date){
+  console.log("its coming to chart",event,start_date,end_date)
+  let statsParms = {
+    
+      "arrival_from":start_date,
+      "arrival_to":end_date
+  
+  }
+}
+GetallDetails(start_date,end_date){
+  this.ReportsService.yearreservation()
+    .subscribe((resp: any) => {
+      // if (resp.ServiceStatus == 'Success') {
+        this.getroomdetails = resp.Returnvalue;
+        // this.cancelcount = resp.cancelcount;
+        // this.modifycount = resp.Totalbookingcount;
+        console.log("pie chrt work",this.getroomdetails);
+        this.chartDatas=[];
+        for(var i=0;i<this.getroomdetails.length;i++){
+          this.chartDatas.push({
+             'title':this.getroomdetails[i].title,
+             'value':this.getroomdetails[i].value })
+        }
+        // this.getroomdetails=[];
+          // console.log("$$$$$$",this.chartDatas);
+        this.chart = this.AmCharts.makeChart('chart1', {
+          'type': 'pie',
+          'theme': 'light',
+          'hideCredits':true,
+          "titles": [{
+            "text": "Year view Reservation",
+            "bold": true,
+            "align":"center"
+            
+          }],
+          "marginTop": 25,
+          "legend": {
+            "horizontalGap": 10,
+            "maxColumns": 1,
+            "position": "right",
+            "marginRight": 80,
+            "autoMargins": false
+          },
+          'dataProvider':this.chartDatas,
+          'export': {
+            "enabled": true,
+            "menu": [],
+           
+          },
+          'titleField': 'title',
+          'valueField': 'value',
+          'labelRadius': 5,
+  
+          'radius': '40%',
+          'innerRadius': '60%',
+          'labelText': '[[title]]',
+         
+          
+        
+          
+        });
+         this.charts.push(this.chart)
+      });
+      
+  let statsParms={
+    "business_id":this.session.retrieve("business_id")
+  }
+  console.log("business id is came",this.session.retrieve("business_id"))
+  
+  this.ReportsService.statistics(statsParms)
     .subscribe((resp: any) => {
       if (resp.ServiceStatus == 'Success') {
         this.staticdetails=resp.Result;
@@ -174,117 +287,6 @@ this.chart = this.AmCharts.makeChart('chart10', {
 this.charts.push( this.chart );
 }
 });
-    this.ReportsService.yearreservation()
-    .subscribe((resp: any) => {
-      // if (resp.ServiceStatus == 'Success') {
-        this.getroomdetails = resp.Returnvalue;
-        // this.cancelcount = resp.cancelcount;
-        // this.modifycount = resp.Totalbookingcount;
-        console.log("pie chrt work",this.getroomdetails);
-        this.chartDatas=[];
-        for(var i=0;i<this.getroomdetails.length;i++){
-          this.chartDatas.push({
-             'title':this.getroomdetails[i].title,
-             'value':this.getroomdetails[i].value })
-        }
-        // this.getroomdetails=[];
-          // console.log("$$$$$$",this.chartDatas);
-        this.chart = this.AmCharts.makeChart('chart1', {
-          'type': 'pie',
-          'theme': 'light',
-          'hideCredits':true,
-          "titles": [{
-            "text": "Year view Reservation",
-            "bold": true,
-            "align":"center"
-            
-          }],
-          "marginTop": 25,
-          "legend": {
-            "horizontalGap": 10,
-            "maxColumns": 1,
-            "position": "right",
-            "marginRight": 80,
-            "autoMargins": false
-          },
-          'dataProvider':this.chartDatas,
-          'export': {
-            "enabled": true,
-            "menu": [],
-           
-          },
-          'titleField': 'title',
-          'valueField': 'value',
-          'labelRadius': 5,
-  
-          'radius': '40%',
-          'innerRadius': '60%',
-          'labelText': '[[title]]',
-         
-          
-        
-          
-        });
-         this.charts.push(this.chart)
-      });
-      
-      
-// dropdown lilst
-      this.ReportsService.yearreservation()
-      .subscribe((resp: any) => {
-        // if (resp.ServiceStatus == 'Success') {
-          this.getyear = resp.Returnvalue;
-          console.log("get year",this.getyear)
-      });
-
-// var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
-
-// this.chart = this.AmCharts.makeChart( "chart20", {
-//   "type": "map",
-//   "theme": "light",
-//   "projection": "miller",
-
-//   "dataProvider": {
-//     "map": "worldLow",
-//     "getAreasFromMap": true
-//   },
-//   "areasSettings": {
-//     "autoZoom": true,
-//     "selectedColor": "#CC0000"
-//   },
-//   "smallMap": {},
-//   "export": {
-//     "enabled": true,
-//     "position": "bottom-right"
-//   }
-// } );
-
-    
-    
-      
-}
-public no_room;
-public rate_res={}
-onchangeobj(rate_res){
-  if(rate_res == "Number of Rooms"){
-   this.no_room = 1
-  }
-  else if (rate_res == "Nights"){
-    this.no_room = 2
-  }
-console.log("valueeee",this.no_room)
-}
-fetchrecord(event,start_date,end_date){
-  console.log("its coming to chart",event,start_date,end_date)
-  let statsParms = {
-    
-      "arrival_from":start_date,
-      "arrival_to":end_date
-  
-  }
-}
-GetallDetails(start_date,end_date){
-  
   this.ReportsService.statisticsDetails(start_date,end_date)
     .subscribe((resp: any) => {
       // if (resp.ServiceStatus == 'Success') {

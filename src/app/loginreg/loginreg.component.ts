@@ -74,7 +74,8 @@ export class LoginregComponent implements OnInit {
           if (Response.ServiceStatus == 'Success') {
             this.session.store("business_id",logindet.businessid);
             this.session.store("username",Response.user_name);
-            if(this.session.retrieve("Session") == "loggedout"){
+            this.session.store("Session","loggingin");
+            if(this.session.retrieve("Session") != "loggedout"){
               this.route.navigate(['menu']);
             }
             

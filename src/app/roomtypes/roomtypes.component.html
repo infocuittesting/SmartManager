@@ -16,12 +16,15 @@
             data-toggle="dropdown">What does each color mean?
         </a> -->
 
-            <div class="row" style="margin-left: 729px;">
+            <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
                     <a class=" greencss fa fa-square-o" style="padding-right: 5px;"> <span>&nbsp;&nbsp;Open</span></a>
             
                     <a class=" redcss fa fa-square-o" style="padding-right: 5px;"> <span>&nbsp;&nbsp;Close</span></a>
             <a class=" yellowcss fa fa-square-o" style="padding-left: 7px;"> <span>&nbsp;&nbsp;Not Declared</span></a>
-    
+        </div>
         </div>
         
         
@@ -86,7 +89,7 @@
                 
                 </tr> 
                     <tr class="rows">
-                    <th class="tabborder" data-toggle="modal"  style="width:200px">Room To Sell</th>
+                    <th class="tabborder" data-toggle="modal"  style="max-width:300px">Room To Sell</th>
                         <td *ngFor="let var_avail of item.room_to_sell">
                                 <input type="text" maxlength="3" pattern="([0-9]|[0-9]|[0-9]{3})" style="padding:5px; width:35px;" [(ngModel)]="var_avail.available_count" >                                
                         </td>
@@ -94,7 +97,7 @@
                     </tr>
                     <tr class="rows sortable"  *ngFor="let rmplans of item.plans">
                         
-                            <th class="tabborder"  (click)="planclick(j,data1)" data-toggle="modal"  data-target="#myModal1" *ngFor="let data1 of rmplans| unique:'rate_plan' let j=index " >{{data1.rate_plan}}</th>
+                            <th class="tabborder" style="max-width:300px" (click)="planclick(j,data1)" data-toggle="modal"  data-target="#myModal1" *ngFor="let data1 of rmplans| unique:'rate_plan' let j=index " >{{data1.rate_plan}}</th>
                             <!-- <td class="tabborder" data-toggle="modal" data-target="#myModal1" *ngFor="let rmplan of item.plan_name"  (click)="planclick(j,list)">{{rmplan.name}}</td> -->
                             
                             <td *ngFor="let data of rmplans let j=index" (dblclick)="editfun(j,data)" [ngClass]="{'backgroundcolorgreenchange': data.room_open== '1', 'backgroundcoloryellowchange': data.room_open== 'NA','backgroundcolorredchange': data.room_open== '0'}" ></td>
