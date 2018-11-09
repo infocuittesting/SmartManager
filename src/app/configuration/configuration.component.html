@@ -48,7 +48,7 @@
   <div class="col-md-3"  *ngFor="let room of roomdetails " style="margin-bottom:5px;">
     <div class="card" (click)="viewdata(room)">
         <img class="card-img-top hovercss" alt="Card image"
-        src="../../assets/images/Standard Room.jpg"
+        [src]="room.upload_photos"
        style="width: 45%;margin-left: 62px; margin-top: 20px;height: 45%;border-radius: 50%;">
       <div class="card-body">
           <h6 style="text-align: center;">{{room.room_name|titlecase}}</h6>
@@ -179,7 +179,10 @@
   </div>
   <div class="row">
     <div class="col-md-3">
-      <input type="text" name="" id="" style="width: 230px; height: 2.4em;" class="form-control" [(ngModel)]="photo">
+      <div class="input-group">
+        <input type="text" name="" id=""  style="width: 9.0em; height: 2.4em;" [(ngModel)]="photo">
+        <span><button style="height: 2.4em;" data-toggle="modal" data-target="#imag"><i class="fa fa-ellipsis-h"></i></button></span>
+      </div>
     </div>
     <div class="col-md-3">
       <input type="text" name="" id="" style="width: 230px; height: 2.4em;" class="form-control" [(ngModel)]="minprice">
@@ -440,7 +443,10 @@
             </div>
             <div class="row">
               <div class="col-md-3">
-                <input type="text" name="" id="" style="width: 11.0em; height: 2.4em;" [(ngModel)]="plan.upload_photos">
+                <div class="input-group">
+                <input type="text" name="" id=""  style="width: 9.0em; height: 2.4em;" [(ngModel)]="plan.upload_photos">
+                <span><button style="height: 2.4em;" data-toggle="modal" data-target="#imag"><i class="fa fa-ellipsis-h"></i></button></span>
+              </div>
               </div>
               <div class="col-md-3">
                 <input type="text" name="" id="" style="width: 11.0em; height: 2.4em;" [(ngModel)]="plan.min_price">
@@ -463,6 +469,41 @@
   
             </div>
           </div>
+          
+        </div>
+      </div> 
+      <!-- Room Plan End --> 
+
+           <!-- Room plan start-->
+     <div class="modal fade" #imag id="imag" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content" style="width:167%;margin-left:-35%;" >
+            <div class="modal-header">
+              <h4 style="margin-left:40%;"> Choose Image</h4>
+              <button type="button" class="close" style="margin-right:5px;" data-dismiss="modal">&times;</button>
+            </div>
+           
+            <div class="modal-body">
+                <form #imageForm=ngForm (ngSubmit)="onSubmit(Caption,Image)" style=padding:30px>
+                    <div class="row">
+                        <label class="input-group-btn">
+                          <span class="btn btn-primary">
+                            Browse&hellip;
+                            <input style="display: none;" type="file" file="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+                          </span>
+                        </label>
+                      </div>
+                      <div class="row">
+                        <img [src]="imageUrl" style="width:300px;height:200px;">
+                      </div>
+                      <div class="row">
+                        <button style="position: absolute; right: 30px;" type="submit" class="btn btn-success btn-submit" [disabled]="Image.value=='' || !imageForm.valid" >Submit</button>
+                      </div>
+                  </form>
+          </div>
+       <div class="modal-footer"></div>
           
         </div>
       </div> 

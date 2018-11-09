@@ -27,10 +27,10 @@ export class ReportsComponent implements OnInit {
     public session: SessionStorageService, private datePipe: DatePipe) { }
 
     public now:any;
+    end_date:any;
     //end date
     public start_date:any = new Date().toJSON().split('T')[0];
-    public nndata= new Date();
-    public end_date= new Date(this.nndata.getFullYear(),this.nndata.getMonth() + 1, 1)
+   
  
   public chartDatas = [];
   public getroomdetails=[] ;
@@ -47,7 +47,8 @@ public charts = [];
 public futurebook_data=[];
   ngOnInit() {
     
-    
+    var nndata = new Date();
+     this.end_date = new Date(nndata.getFullYear(),nndata.getMonth() + 2).toJSON().split('T')[0];
       
 // dropdown lilst
       this.ReportsService.yearreservation()

@@ -253,4 +253,16 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
         console.log(JSON.stringify(body));
         return body;
       }
+    //   image Upload 
+    postFile(formData: any): Observable<object[]> {
+
+        // const headers = new Headers({ 'Content-Type': 'multipart/form-data' })
+        // const options = new RequestOptions({ headers: headers });
+        // let body = { "Image": fileToUpload };
+    
+        return this.http.post('https://ivrinfocuit.herokuapp.com/upload', formData)
+          .map(this.extractData)
+        //.catch(this.handleErrorObservable);
+      }
+    
     }

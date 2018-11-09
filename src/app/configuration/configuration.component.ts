@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -21,13 +21,14 @@ declare var $ :any;
   providers: [ConfigurationService,ToasterService]
 })
 export class ConfigurationComponent implements OnInit {
+  
   roomsize = [];
   bedding = [];
   beddingsize = [];
   roomamenities = [];
   extrabed = [];
   inclusion = [];
-  public plan = {};
+  public plan:any = {};
   i = 0;
 
   public date:any = new Date().toJSON().split('T')[0];
@@ -160,6 +161,37 @@ this.configurationService.cancellationpolicy()
 // console.log("get room details response",JSON.stringify(this.roomdetails));
 });
 }
+/**------------Image Upload --------- */
+
+imageUrl: string = "assets/images/uploadimage.jpg";
+fileToUpload: File = null;
+handleFileInput(file: FileList) {
+  this.fileToUpload = file.item(0);
+
+  //Show image preview
+  var reader = new FileReader();
+  reader.onload = (event: any) => {
+    this.imageUrl = event.target.result;
+  }
+  reader.readAsDataURL(this.fileToUpload);
+}
+public urlgenerated:any;
+public upload_photos:any;
+onSubmit(){
+  let formData = new FormData();
+  formData.append("Image",this.fileToUpload,this.fileToUpload.name)
+  formData.append("name","AKIAIKXAWCCPVHMIHQYA|586Q2iTxvYelRsL2EoHXNITVdZ8KBoMq2K8cHHXP")
+  this.configurationService.postFile(formData).subscribe(
+    (data:any) =>{
+      console.log("done",typeof(data));
+      this.plan.upload_photos=data.url;
+      this.photo=data.url;
+    }
+  )
+}
+
+// end the image
+
 //update
 configupdate;
 updateconfig(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,photo,minprice,smoke,rmid){
