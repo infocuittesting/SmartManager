@@ -180,7 +180,7 @@ public upload_photos:any;
 onSubmit(){
   let formData = new FormData();
   formData.append("Image",this.fileToUpload,this.fileToUpload.name)
-  formData.append("name","AKIAIKXAWCCPVHMIHQYA|586Q2iTxvYelRsL2EoHXNITVdZ8KBoMq2K8cHHXP")
+  formData.append("name","AKIAJHYIVCBG2UVXBPUQ|F+7a1YjBtaAiFoqz2h6BZ6EHupV9jQvTEuC90xeG")
   this.configurationService.postFile(formData).subscribe(
     (data:any) =>{
       console.log("done",typeof(data));
