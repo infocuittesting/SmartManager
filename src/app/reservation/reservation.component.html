@@ -60,7 +60,7 @@
         <!-- </div> -->
     </div>
     <div class="col-md-3">
-        <input type="number"  class="form-control" name="conf_num" id="conf_num" [(ngModel)]="conf_num" style="border: 1px solid gray; height: 2.4em; max-width: 12.2em; ">
+        <input type="text"  class="form-control" name="conf_num" id="conf_num" [(ngModel)]="conf_num" style="border: 1px solid gray; height: 2.4em; max-width: 12.2em; ">
     </div>
     <div class="col-mg-3">
         <button type="button" class="btn btn-warning" (click)="cleartab();ClearAll.reset()">Clear</button>
@@ -85,7 +85,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let detail of hello |filterdata: date :'customer_arrival_date'|filterdata: conf_num :'customer_confirmation_number'|filterdata: dep_date :'customer_depature_date';let i = index" (click)="selectMembersEdit(detail,i)"
+    <tr *ngFor="let detail of hello |filterdata:{ customer_confirmation_number :conf_num,customer_name:conf_num,customer_room_type:conf_num,
+    customer_adult:conf_num,customer_child:conf_num,channel:conf_num,customer_amount:conf_num
+    };let i = index" (click)="selectMembersEdit(detail,i)"
     [ngClass]="{'backGroundColor':i==selectindex}" (dblclick)="showMoreBut()">
       <td style="width:50px">{{i+1}}</td>
       <td style="width:150px">{{detail.customer_confirmation_number}}</td>

@@ -55,13 +55,13 @@ i{
     
 }
 .backgroundcolorgreenchange{
-    background-color: green;
+    background-color: lightgreen;
 }
 .backgroundcolorredchange{
-    background-color: red;
+    background-color: crimson;
 }
 .backgroundcoloryellowchange{
-    background-color: yellow;
+    background-color: lightyellow;
 }
 input[type]{
    width: 84%;
@@ -205,10 +205,10 @@ i{
     background-color: green;
 }
 .backgroundcolorredchange{
-    background-color: red;
+    background-color: crimson;
 }
 .backgroundcoloryellowchange{
-    background-color: yellow;
+    background-color: #FFFF33;
 }
 input[type]{
    width: 84%;
@@ -246,20 +246,20 @@ border-radius: 0px !important;
 
 .redcss.fa-square-o:before {
     content: "";
-    color: red;
-    background-color: red;
+    color: crimson;
+    background-color: crimson;
 }
 
 .yellowcss.fa-square-o:before {
     content: "";
-    color: yellow;
-    background-color: yellow;
+    color: #FFFF33;
+    background-color: #FFFF33;
 }
 
 .greencss.fa-square-o:before {
     content: "";
-    color: green;
-    background-color: green;
+    color:  green;
+    background-color:  green;
 }
 /* toggle button */
 .ui-switch.checked {

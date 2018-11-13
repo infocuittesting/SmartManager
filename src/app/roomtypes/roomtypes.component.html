@@ -85,19 +85,19 @@
                         </thead>
             <tbody >
                 <tr class="rows">
-                <th class="tabborder text-center" colspan="100%"> {{item.room_name}} </th>
+                <th class="tabborder text-center" colspan="100%"> {{item.room_name|titlecase}} </th>
                 
                 </tr> 
                     <tr class="rows">
                     <th class="tabborder" data-toggle="modal"  style="max-width:300px">Room To Sell</th>
-                        <td *ngFor="let var_avail of item.room_to_sell">
+                        <td *ngFor="let var_avail of item.room_to_sell;let i=index" (change)="editrmsell(i,var_avail)">
                                 <input type="text" maxlength="3" pattern="([0-9]|[0-9]|[0-9]{3})" style="padding:5px; width:35px;" [(ngModel)]="var_avail.available_count" >                                
                         </td>
                         
                     </tr>
                     <tr class="rows sortable"  *ngFor="let rmplans of item.plans">
                         
-                            <th class="tabborder" style="max-width:300px" (click)="planclick(j,data1)" data-toggle="modal"  data-target="#myModal1" *ngFor="let data1 of rmplans| unique:'rate_plan' let j=index " >{{data1.rate_plan}}</th>
+                            <th class="tabborder" style="max-width:300px" (click)="planclick(j,data1)" data-toggle="modal"  data-target="#myModal1" *ngFor="let data1 of rmplans| unique:'rate_plan' let j=index " >{{data1.rate_plan|titlecase}}</th>
                             <!-- <td class="tabborder" data-toggle="modal" data-target="#myModal1" *ngFor="let rmplan of item.plan_name"  (click)="planclick(j,list)">{{rmplan.name}}</td> -->
                             
                             <td *ngFor="let data of rmplans let j=index" (dblclick)="editfun(j,data)" [ngClass]="{'backgroundcolorgreenchange': data.room_open== '1', 'backgroundcoloryellowchange': data.room_open== 'NA','backgroundcolorredchange': data.room_open== '0'}" ></td>
@@ -110,40 +110,6 @@
             </table>
             </ng-container>
             
-        
-        <!-- <table>
-            <ng-container >
-            <thead>
-            <tr class="tabborder">
-            <th class="tabborder text-center" colspan="100%">Delux Room</th>
-    
-            </tr>
-        
-            </thead>
-            <tbody>
-                <tr class="rows">
-                <th class="tabborder">Room To sell</th>
-                <ng-container *ngFor="let grd3 of rm_sell2">
-                <td class="tabborder" style="padding: 5px;">
-                <input class="text-center" type="text" style="width:30px;" [(ngModel)]="grd3.available_count">
-                </td>
-                </ng-container>
-                </tr>
-                <tr class="rows">
-                    <th class="tabborder"data-toggle="modal" data-target="#myModal3" >Special Rate</th>
-                    <td class="tabborder" *ngFor="let grpl3 of newpll3 let j=index" (dblclick)="editfun2(j,grpl3)" [ngClass]="{'backgroundcolorgreenchange': grpl3.room_open== '1', 'backgroundcoloryellowchange': grpl3.room_open== 'NA','backgroundcolorredchange': grpl3.room_open== '0'}"></td>   
-                </tr>
-                <tr class="rows">
-                    <th class="tabborder"data-toggle="modal" data-target="#myModal5" >Hacker Rate</th>
-                    <td class="tabborder" *ngFor="let rm2pln2 of rm2pl2finl let j=index" (dblclick)="editfun5(j,rm2pln2)" [ngClass]="{'backgroundcolorgreenchange': rm2pln2.room_open== '1', 'backgroundcoloryellowchange': rm2pln2.room_open== 'NA','backgroundcolorredchange': rm2pln2.room_open== '0'}"></td>   
-                    </tr>
-                </tbody>
-            <br> 
-            </ng-container>
-            </table> -->
-
-
-
             <div class="row"  style="margin-bottom: 20px;">
             <div class="col-sm-10" ></div>
             <div class="col-sm-2">
@@ -632,7 +598,7 @@
     
     <!-- Modal Header -->
     <div class="modal-header">
-    <h4 class="modal-title">Plan Details</h4>
+    <h4 class="modal-title text-center">{{grid_plan_name|titlecase}}</h4>
     <button type="button" class="close" data-dismiss="modal">×</button>
     </div>
     <!-- Modal body -->
@@ -643,11 +609,11 @@
     
     </thead>
     <tbody class=" table  table-bordered "> 
-    <ng-container *ngFor="let roomdate of pop_grid let i=index">
-    <tr  style="height: 41px;">
+    <ng-container *ngFor="let roomdate of pop_up_value let i=index">
+    <tr  style="height: 41px;" >
     <td class="tabbor text-left"  ><b>RoomDate</b></td> 
     
-        <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"> {{planA.room_date|date:'d'}}/{{planA.room_date|date:'M'}}/{{planA.room_date|date:'yy'}} </td>
+        <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate">  {{planA.room_date|date:'MMM'}}<br>{{planA.room_date|date:'dd'}}<br>{{planA.room_date|date:'EEE'}}</td>
         
               
    
@@ -661,7 +627,7 @@
     <tr style="height: 10px;">
     <td class="tabbor text-left" ><b>Extra Adult Rate</b></td>
     
-    <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roomopen" style="width:30px;" [(ngModel)]="planA.room_open" ></td>
+    <td style="font-weight:600" class="tabborder" class="tabbor" *ngFor="let planA of roomdate"><input class="text-center" type="number" name="roomopen" style="width:30px;" [(ngModel)]="planA.extra_adult_rate" ></td>
    
     </tr>
     <tr style="height: 10px;">
@@ -704,319 +670,4 @@
     </div>
     <!-- -->
 
-    <!-- roomtype2 plan1 -->
-
-    <div class="modal fade" id="myModal2">
-    <div class="modal-dialog " style="width:100%; margin-left: 324px; margin-top: 89px;">
-    <div class="modal-content" style="width: 986px;" >
-    
-    <!-- Modal Header -->
-    <div class="modal-header">
-    <h4 class="modal-title">Hacker Rate</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    </div>
-    <!-- Modal body -->
-    <div class="modal-body">
-    <div class="container">
-    <table class="table table-bordered table-responsive">
-    <thead>
-    
-    </thead>
-    <tbody>
-    <tr style="height: 41px;">
-    <td class="tabbor"><b >RoomDate</b></td>
-    <ng-container *ngFor="let planB1 of pll2">
-    <td style="font-weight:700" class="tabborder"  class="tabbor"> {{planB1.room_date}}</td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>RoomRate</b></td>
-    <ng-container *ngFor="let planB2 of pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB2.room_rate" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>RoomOpen</b></td>
-    <ng-container *ngFor="let planB3 of pll2">
-    <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB3.room_open" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>MinStay</b></td>
-    <ng-container *ngFor="let planB4 of pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB4.min_stay" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>MaxStay</b></td>
-    <ng-container *ngFor="let planB5 of pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB5.max_stay" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>CloseArrival</b></td>
-    <ng-container *ngFor="let planB6 of pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB6.close_arrival" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>CloseDeparture</b></td>
-    <ng-container *ngFor="let planB7 of pll2">
-    <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB7.close_departure" ></td>
-    </ng-container>
-    </tr>
-    <!-- <tr style="height: 10px;">
-    <td><b>ExtraAdults</b></td>
-    <ng-container *ngFor="let planB8 of pll2">
-    <td style="font-weight:700" class="tabborder"> {{planB8.min_stay}}</td>
-    </ng-container>
-    </tr> -->
-    </tbody>
-    </table>
-    </div>
-    </div>
-    <!-- Modal footer -->
-    <div class="modal-footer" style="margin-top: -25px">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sendval(pll2)">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    </div>
-    
-    </div>
-    </div>
-    </div>
-
-    <!-- roomtype2 plan2 -->
-
-    <div class="modal fade" id="myModal5">
-    <div class="modal-dialog " style="width:100%; margin-left: 207px;">
-    <div class="modal-content" style="width: 986px;" >
-    
-    <!-- Modal Header -->
-    <div class="modal-header">
-    <h4 class="modal-title">Hacker Rate</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    </div>
-    <!-- Modal body -->
-    <div class="modal-body">
-    <div class="container">
-    <table class="table table-bordered">
-    <thead>
-    
-    </thead>
-    <tbody>
-    <tr style="height: 41px;">
-    <td class="tabbor"><b >RoomDate</b></td>
-    <ng-container *ngFor="let planB1 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"  class="tabbor"> {{planB1.room_date}}</td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>RoomRate</b></td>
-    <ng-container *ngFor="let planB2 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB2.room_rate" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>RoomOpen</b></td>
-    <ng-container *ngFor="let planB3 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB3.room_open" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>MinStay</b></td>
-    <ng-container *ngFor="let planB4 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB4.min_stay" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>MaxStay</b></td>
-    <ng-container *ngFor="let planB5 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB5.max_stay" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>CloseArrival</b></td>
-    <ng-container *ngFor="let planB6 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB6.close_arrival" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td><b>CloseDeparture</b></td>
-    <ng-container *ngFor="let planB7 of rm2pll2">
-    <td style="font-weight:700" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planB7.close_departure" ></td>
-    </ng-container>
-    </tr>
-    <!-- <tr style="height: 10px;">
-    <td><b>ExtraAdults</b></td>
-    <ng-container *ngFor="let planB8 of pll2">
-    <td style="font-weight:700" class="tabborder"> {{planB8.min_stay}}</td>
-    </ng-container>
-    </tr> -->
-    </tbody>
-    </table>
-    </div>
-    </div>
-    <!-- Modal footer -->
-    <div class="modal-footer" style="margin-top: -25px">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sendval(pll2)">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    </div>
-    
-    </div>
-    </div>
-    </div>
-
-
-    <!--Diwali rate -->
-
-    <div class="modal fade" id="myModal3">
-    <div class="modal-dialog " style="width:100%; margin-left: 324px; margin-top: 89px;">
-    <div class="modal-content" style="width: 986px;" >
-    
-    <!-- Modal Header -->
-    <div class="modal-header">
-    <h4 class="modal-title">Diwali Rate</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    </div>
-    <!-- Modal body -->
-    <div class="modal-body">
-    <div class="container">
-    <table class="table table-bordered table-responsive">
-    <thead>
-    
-    </thead>
-    <tbody>
-    <tr style="height: 41px;">
-    <td class="tabbor"><b >RoomDate</b></td>
-    <ng-container *ngFor="let planC1 of rm1pll3">
-    <td style="font-weight:600" class="tabborder" class="tabbor"> {{planC1.room_date}}</td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>RoomRate</b></td>
-    <ng-container *ngFor="let planC2 of rm1pll3">
-    <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC2.room_rate" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor" ><b>RoomOpen</b></td>
-    <ng-container *ngFor="let planC3 of rm1pll3">
-    <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC3.room_open" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>MinStay</b></td>
-    <ng-container *ngFor="let planC4 of rm1pll3">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC4.min_stay" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>MaxStay</b></td>
-    <ng-container *ngFor="let planC5 of rm1pll3">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC5.max_stay" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>CloseArrival</b></td>
-    <ng-container *ngFor="let planC6 of rm1pll3">
-    <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC6.close_arrival" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>Departure</b></td>
-    <ng-container *ngFor="let planC7 of rm1pll3">
-    <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planC7.close_departure" > </td>
-    </ng-container>
-    </tr>
-    </tbody>
-    </table>
-    </div>
-    </div>
-    <!-- Modal footer -->
-    <div class="modal-footer" style="margin-top: -25px">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sendval(rm1pll3)">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    </div>
-    
-    </div>
-    </div>
-    </div>
-
-
-    <!-- //standed rate -->
-
-
-
-    <div class="modal fade" id="myModal4">
-    <div class="modal-dialog " style="width:100%; margin-left: 324px; margin-top: 89px;">
-    <div class="modal-content" style="width: 986px;" >
-    
-    <!-- Modal Header -->
-    <div class="modal-header">
-    <h4 class="modal-title">Modal Heading</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    </div>
-    <!-- Modal body -->
-    <div class="modal-body">
-    <div class="container">
-    <table class="table table-bordered table-responsive">
-    <thead>
-    
-    </thead>
-    <tbody>
-    <tr style="height: 41px;">
-    <td class="tabbor"><b>RoomDate</b></td>
-    <ng-container *ngFor="let planD1 of pll4">
-    <td style="font-weight:600" class="tabborder"> {{planD1.room_date}}</td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>RoomRate</b></td>
-    <ng-container *ngFor="let planD2 of pll4">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD2.room_rate" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>RoomOpen</b></td>
-    <ng-container *ngFor="let planD3 of pll4">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD3.room_open" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>MinStay</b></td>
-    <ng-container *ngFor="let planD4 of pll4">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD4.min_stay" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>MaxStay</b></td>
-    <ng-container *ngFor="let planD5 of pll4">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD5.max_stay" ></td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>CloseArrival</b></td>
-    <ng-container *ngFor="let planD6 of pll4">
-    <td style="font-weight:600" class="tabborder"><input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD6.close_arrival" > </td>
-    </ng-container>
-    </tr>
-    <tr style="height: 10px;">
-    <td class="tabbor"><b>CloseDeparture</b></td>
-    <ng-container *ngFor="let planD7 of pll4">
-    <td style="font-weight:600" class="tabborder"> <input class="text-center" type="number" style="width:30px;" [(ngModel)]="planD7.close_departure" ></td>
-    </ng-container>
-    </tr>
-    </tbody>
-    </table>
-    </div>
-    </div>
-    <!-- Modal footer -->
-    <div class="modal-footer" style="margin-top: -25px">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sendval(pll4)">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-    </div>
-    
-    </div>
-    </div>
-    </div>
     

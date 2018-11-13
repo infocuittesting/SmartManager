@@ -273,6 +273,7 @@ public total_plans=[];
             // console.log("test plan111",plan)
             //if (plan.length == plan)
             var filteredArray = plan.filter(function(element) { return element.rate_plan == "NA" })
+            console.log("checking filtered arrayyyyyyyyyyy",filteredArray)
             if (plan.length != filteredArray.length){
                  this.total_plans.push(plan)
             }
@@ -291,7 +292,7 @@ public total_plans=[];
       }
         //  console.log("objcts",objects)
       this.gridget[i]['room_type'+j]['plan_name'] = objects
-       //   console.log("total plan",this.total_plans)
+      console.log("total plannnnnnnnnnnnnn",this.total_plans,this.total_plans.length)
       this.gridget[i]['room_type'+j]['plans'] = this.total_plans
 
       this.total_plans = [];
@@ -299,14 +300,17 @@ public total_plans=[];
       }
 
       console.log("newgrid",this.newgridget)
+    //   for(i in this.newgridget){
+    //       if(this.newgridget[i].plans.length == 0){
+    //         this.newgridget[i].plans.splice(i,1)
+    //       }
+    //   }
+
+    this.newgridget = this.newgridget.filter(
+        book => book.plans.length != 0)
+      console.log("newgrid",this.newgridget)
      
   });
-
-
-
- 
-
-  
 
    
 this.roomTypeService.selectroomtype()
@@ -357,6 +361,19 @@ this.setper = false
 
   }
 
+//   on changing values in room to sell
+public send_array_rmsell=[];
+  editrmsell(index,value){
+
+    console.log("index and values in room to sell",index,value)
+    value.available_count=Number(value.available_count)
+    if(Object.keys(value).length!=0)
+    {
+      this.send_array_rmsell.push(value)
+    }
+
+    console.log("final room sell array",this.send_array_rmsell)
+  }
 
   // for color change in grid screen and change values to 0 or 1
 
@@ -386,14 +403,17 @@ this.setper = false
   
     //   console.log("valuessssssssssondblclick",model)
     //   console.log("final model.room_open",model.room_open)
-    //   console.log("send array savebutton",this.send_array_savebutton)
+      console.log("send array savebutton",this.send_array_savebutton)
   }
 
 
 // on clicking plans in grid screen
+public pop_up_value=[]
 public pop_grid = [];
+public grid_plan_name:any
 planclick(index,stuff){
-    // console.log("indexxxxx st",index,stuff)
+    this.grid_plan_name=stuff.rate_plan
+    console.log("this.plan_name",this.grid_plan_name)
     // console.log("indexxxxx st",stuff.room_id)
     // console.log("indexxxxx st",stuff.rate_plan_id)
     // console.log("final",this.newgridget)
@@ -406,7 +426,17 @@ planclick(index,stuff){
             if(new_obj.room_id == stuff.room_id && new_obj.rate_plan_id == stuff.rate_plan_id){
                 if(this.pop_grid.length == 0){
                 this.pop_grid.push(new_plan[new_plan.indexOf(new_plan[j])])
-                // console.log("pop",this.pop_grid)
+                // for(var k in this.pop_grid){
+                //     console.log("this.pop_grid[k]",this.pop_grid[k])
+                //  if(this.pop_grid[k].room_open=="NA"){
+                //      this.pop_grid.splice(Number(k),1);
+                //  }    
+                // }
+
+                this.pop_up_value = [this.pop_grid[0].filter(
+                    book => book.room_open != "NA")]
+                    console.log("pop_up_value",this.pop_up_value)
+                    console.log("popgrid",this.pop_grid)
                 }
             }
         }
@@ -419,19 +449,41 @@ planclick(index,stuff){
 //save button in grid main screen
   public gridsavestatus:any=[];
   sendvalues(){
- 
- 
+    
+if(this.send_array_savebutton.length!=0){
+
     let body_send_values={
-    "records":this.send_array_savebutton 
-    }
-    console.log("bodyyyyyyyyy",body_send_values)
-    this.roomTypeService.getsavebutton(body_send_values)
+        "records":this.send_array_savebutton 
+        }
+        console.log("bodyyyyyyyyy",body_send_values)
+        this.roomTypeService.getsavebutton(body_send_values)
+        .subscribe((resp1: any) => {
+           // this.gridsavestatus = resp.Status;
+        console.log("responseeeeeeee",resp1)
+            
+        if (resp1[0].Status == 'Success') {
+            this.toasterService.success("Room Status updated successfully");
+            this.refreshroomtype();
+        }
+        else{
+            alert("error")
+        }
+       
+        });
+        this.send_array_savebutton =[];
+        
+}
+
+
+// room to sell update to service
+if(this.send_array_rmsell.length!=0){
+    this.roomTypeService.getsavebutton_rm_sell(this.send_array_rmsell)
     .subscribe((resp1: any) => {
        // this.gridsavestatus = resp.Status;
     console.log("responseeeeeeee",resp1)
         
     if (resp1[0].Status == 'Success') {
-        this.toasterService.success("Update Room Status");
+        this.toasterService.success("Room Status updated successfully");
         this.refreshroomtype();
     }
     else{
@@ -439,6 +491,9 @@ planclick(index,stuff){
     }
    
     });
+    this.send_array_rmsell=[];
+}
+
     }
 
 
@@ -507,128 +562,137 @@ this.parms = {
   //   console.log("onload initial arrayyyyyyyyyyyy",this.gridget)
     //console.log("grid dateeeeeee",this.griddate)
     this.grid_length = this.gridget.length
-  //   console.log("length",this.grid_length)
-    var plans = []
+    //   console.log("length",this.grid_length)
+      var plans = []
 // loop for dynamic data
-    for(var i in this.gridget){
-      
-      var j=Number(i)
-      j=j+1
+      for(var i in this.gridget){
+        
+        var j=Number(i)
+        j=j+1
 
-      // console.log("i",i,this.gridget[i]['room_type'+j])
-      // console.log("room_to_sell",this.gridget[i]['room_type'+j]['room_to_sell'])
+        // console.log("i",i,this.gridget[i]['room_type'+j])
+        // console.log("room_to_sell",this.gridget[i]['room_type'+j]['room_to_sell'])
 
 // loop for room_to_sell with date match
-      for (var k=0;k<this.griddate.length;k++){
-       
-        try{
-        if(this.griddate[k] == this.gridget[i]['room_type'+j]['room_to_sell'][k]['room_date'] ){
-              //pass     
-              //console.log("pass")
+        for (var k=0;k<this.griddate.length;k++){
+         
+          try{
+          if(this.griddate[k] == this.gridget[i]['room_type'+j]['room_to_sell'][k]['room_date'] ){
+                //pass     
+                //console.log("pass")
+          }
+          else{
+            //console.log("else")
+            this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
+          }
         }
-        else{
-          //console.log("else")
+        catch(e){
           this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
+          
         }
-      }
-      catch(e){
-        this.gridget[i]['room_type'+j]['room_to_sell'][k] = { business_id: "8991897773", room_date: this.griddate[k] , available_count: null}
-        
-      }
-     }
+       }
 
 // pushing values in newgrid array in respective position
-      this.newgridget.push(this.gridget[i]['room_type'+j])
-      
+        this.newgridget.push(this.gridget[i]['room_type'+j])
+        
 
 // seperating available plan names in plan name array 
 
-  //   console.log("plan",this.gridget[i]['room_type'+j]['plans'])
-    var plan_names = []
-    for(var a=0;a<this.gridget[i]['room_type'+j]['plans'].length;a++){
-       try{
-      
-        if((plan_names.find(x => x == Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])))
-        {
-           
+    //   console.log("plan",this.gridget[i]['room_type'+j]['plans'])
+      var plan_names = []
+      for(var a=0;a<this.gridget[i]['room_type'+j]['plans'].length;a++){
+         try{
+        
+          if((plan_names.find(x => x == Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])))
+          {
+             
+           }
+           else{
+           plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
+           }
          }
-         else{
-         plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
+         catch(e){
+          plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
          }
-       }
-       catch(e){
-        plan_names.push(Object.keys(this.gridget[i]['room_type'+j]['plans'][a])[0])
-       }
-    }
-  //   console.log("keysss",plan_names) 
+      }
+    //   console.log("keysss",plan_names) 
 
 // getting plan name in name_of_plan array if exist we won't push else push 
-    var plan=[];
-    var name_of_plan = [];
-    
-    for(var b in plan_names){
-      plan = this.gridget[i]['room_type'+j]['plans'].filter(
-          y => Object.keys(y)[0] === plan_names[b]);
-          // console.log("test plan",plan)
-          var c=Number(b)
-          c=c+1
-          for (var k=0;k<this.griddate.length;k++){
+      var plan=[];
+      var name_of_plan = [];
+      
+      for(var b in plan_names){
+        plan = this.gridget[i]['room_type'+j]['plans'].filter(
+            y => Object.keys(y)[0] === plan_names[b]);
+            // console.log("test plan",plan)
+            var c=Number(b)
+            c=c+1
+            for (var k=0;k<this.griddate.length;k++){
 
-              try{
-                  // checking whether room_open available for all room to sell dates(if room name not available set 'NA')
-                  if(this.griddate[k] == plan[k]['room_plan'+c]['room_date'] ){
-                         
-                      //   console.log("plan[k]['room_plan'+c]['room_date']",plan[k]['room_plan'+c]['rate_plan'])
-                        
-                        if (plan[k]['room_plan'+c]['rate_plan'] != undefined)
-                        {
+                try{
+                    // checking whether room_open available for all room to sell dates(if room name not available set 'NA')
+                    if(this.griddate[k] == plan[k]['room_plan'+c]['room_date'] ){
+                           
+                        //   console.log("plan[k]['room_plan'+c]['room_date']",plan[k]['room_plan'+c]['rate_plan'])
+                          
+                          if (plan[k]['room_plan'+c]['rate_plan'] != undefined)
+                          {
 
-                           if(name_of_plan.find(x => x == plan[k]['room_plan'+c]['rate_plan'])){
-                              
-                            }
-                           else{
-                              name_of_plan.push(plan[k]['room_plan'+c]['rate_plan'])
+                             if(name_of_plan.find(x => x == plan[k]['room_plan'+c]['rate_plan'])){
+                                
+                              }
+                             else{
+                                name_of_plan.push(plan[k]['room_plan'+c]['rate_plan'])
+                          }
                         }
-                      }
 // replacing key name with number for room_plan1 key issue  
-                      plan[k] = plan[k]['room_plan'+c]
+                        plan[k] = plan[k]['room_plan'+c]
+                    }
+                    else{
+                      
+                      plan[k] ={room_open: "NA",rate_plan:"NA"} 
+                    }
                   }
-                  else{
+                  catch(e){
+                    plan[k] = {room_open: "NA",rate_plan:"NA"} 
                     
-                    plan[k] ={room_open: "NA"} 
                   }
-                }
-                catch(e){
-                  plan[k] = {room_open: "NA"} 
-                  
-                }
-              
-          }
-          // console.log("test plan111",plan)
-          this.total_plans.push(plan)
-          plan=[];
-    }
- 
-  //   console.log("name_of_plan",name_of_plan)
-  var objects = [];
-  for (var d = 0; d < name_of_plan.length; d++) {
+                
+            }
+            // console.log("test plan111",plan)
+            //if (plan.length == plan)
+            var filteredArray = plan.filter(function(element) { return element.rate_plan == "NA" })
+            console.log("checking filtered arrayyyyyyyyyyy",filteredArray)
+            if (plan.length != filteredArray.length){
+                 this.total_plans.push(plan)
+            }
+            plan=[];
+      }
+   
+    //   console.log("name_of_plan",name_of_plan)
+    var objects = [];
+    for (var d = 0; d < name_of_plan.length; d++) {
 
-      // Create the object in the format you want
-      var obj = {"name" : name_of_plan[d]};
-  
-      // Add it to the array
-      objects.push(obj);
-    }
-       console.log("objcts",objects)
-    this.gridget[i]['room_type'+j]['plan_name'] = objects
-     //   console.log("total plan",this.total_plans)
-    this.gridget[i]['room_type'+j]['plans'] = this.total_plans
+        // Create the object in the format you want
+        var obj = {"name" : name_of_plan[d]};
+    
+        // Add it to the array
+        objects.push(obj);
+      }
+        //  console.log("objcts",objects)
+      this.gridget[i]['room_type'+j]['plan_name'] = objects
+        console.log("total plannnnnnnnnnnnnn",this.total_plans)
+      this.gridget[i]['room_type'+j]['plans'] = this.total_plans
 
-    this.total_plans = [];
-    name_of_plan = [];
-    }
+      this.total_plans = [];
+      name_of_plan = [];
+      }
 
-    console.log("newgrid",this.newgridget)
+      console.log("newgrid",this.newgridget)
+
+      this.newgridget = this.newgridget.filter(
+        book => book.plans.length != 0)
+      console.log("newgrid",this.newgridget)
  }
 
 });
@@ -638,9 +702,9 @@ this.parms = {
 //  after clicking save button in grid popups
  
 sendvalpopgrid(){
-    console.log("roomdate-111",this.pop_grid);
+    console.log("roomdate-111",this.pop_up_value);
     let body_send_values={
-        "records":this.pop_grid[0] 
+        "records":this.pop_up_value[0] 
         }
         console.log("bodyyyyyyyyy",body_send_values)
         this.roomTypeService.getsavebutton(body_send_values)

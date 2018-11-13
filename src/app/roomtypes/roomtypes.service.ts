@@ -102,6 +102,7 @@ daterangecount(params): Observable<object[]> {
     //.catch(this.handleErrorObservable);
   }
 
+ // send values of room open
   getsavebutton(body_send_values): Observable<object[]> {
     console.log("service came")
 
@@ -116,6 +117,22 @@ daterangecount(params): Observable<object[]> {
     //.catch(this.handleErrorObservable);
   }
  
+  // send values of room to sell
+  getsavebutton_rm_sell(send_array_savebutton): Observable<object[]> {
+    console.log("service came")
+
+    const headers = new Headers({ 'Content-Type': 'application/json' })
+    const options = new RequestOptions({ headers: headers });
+    let body={
+      "records":send_array_savebutton 
+    }
+    console.log("json banuuuuuu",body)
+    
+
+    return this.http.post('https://ivrinfocuit.herokuapp.com/room_to_sell_update',body, options)
+      .map(this.extractData)
+    //.catch(this.handleErrorObservable);
+  }
 
   getgrid(dateparms: any): Observable<object[]> {
     console.log("service is cam")
