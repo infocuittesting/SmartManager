@@ -49,7 +49,7 @@ public futurebook_data=[];
   ngOnInit() {
     
     var nndata = new Date();
-     this.end_date = new Date(nndata.getFullYear(),nndata.getMonth() + 2).toJSON().split('T')[0];
+     this.end_date = new Date(nndata.getFullYear(),nndata.getMonth() + 2,nndata.getDate()).toJSON().split('T')[0];
       
 // dropdown lilst
       this.ReportsService.yearreservation()
