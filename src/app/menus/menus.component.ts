@@ -15,7 +15,9 @@ import { MenusService } from './menus.service';
 })
 export class MenusComponent implements OnInit {
 
-  constructor(private menuservice:MenusService,private router: Router, private route: ActivatedRoute ,public session: SessionStorageService) { }
+  constructor(private menuservice:MenusService,private router: Router, private route: ActivatedRoute ,public session: SessionStorageService) { 
+   
+  }
 
   public dasharrowflag = true;
   public reservationarrowflag = false;
@@ -27,10 +29,17 @@ export class MenusComponent implements OnInit {
   public toolbar:any;
   public name:any=this.session.retrieve("username");
  
-
+  public interval:any;
   ngOnInit() {
+    // setTimeout(function(){
+    //   this.toolbardata();
+    // },10000)
+    this.interval=setInterval(() => this.toolbardata(),300000);
+    this.toolbardata();
     this.router.navigate(['dashboard'], { relativeTo: this.route });
+  }
 
+  toolbardata(){
     this.menuservice.dashBoardToolbar()
     .subscribe((resp:any) =>{
       if(resp.Return_code == "Success"){
@@ -120,4 +129,7 @@ export class MenusComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  ngOnDestroy(){
+    clearInterval(this.interval);
+  }
 }

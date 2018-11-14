@@ -28,6 +28,7 @@ export class ReportsComponent implements OnInit {
 
     public now:any;
     end_date:any;
+    rate_res="Number of Rooms"
     //end date
     public start_date:any = new Date().toJSON().split('T')[0];
    
@@ -85,7 +86,7 @@ public futurebook_data=[];
       
 }
 public no_room;
-public rate_res={}
+// public rate_res={}
 onchangeobj(rate_res){
   if(rate_res == "Number of Rooms"){
    this.no_room = 1
