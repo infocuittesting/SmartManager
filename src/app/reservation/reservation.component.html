@@ -14,7 +14,7 @@
     <font style="margin-left: -87px;"> Departure</font>
   </div>
   <div class="col-md-4">
-    <font style="margin-left: -178px;"> Search(Confirmation)</font>
+    <font style="margin-left: -178px;"> Search</font>
   </div>
 
 </div>  
@@ -30,7 +30,7 @@
       </div>
       </div> -->
     <div class="input-group">
-      <input type="date"  placeholder="YYYY-MM-DD" class="form-control" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " id="fromdate" name="fromdate" [(ngModel)]="date">
+      <input type="date"  placeholder="YYYY-MM-DD" class="form-control" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " id="fromdate" name="fromdate" [(ngModel)]="date" (change)="filterDatefrmList(date,dep_date)">
       <!-- <div class="input-group-append">
         <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
         style="border-radius: 0px;">
@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-3">
         <div class="input-group">
-            <input type="date"  placeholder="YYYY-MM-DD" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="dep_date" name="dep_date" [(ngModel)]="dep_date">
+            <input type="date"  placeholder="YYYY-MM-DD" style="border: 1px solid gray;padding-left:15px;max-width: 12em; " class="form-control" id="dep_date" name="dep_date" [(ngModel)]="dep_date" (change)="filterDatefrmList(date,dep_date)">
             <!-- <div class="input-group-append">
               <button class="btn btn-outline-secondary" (click)="g.toggle()" type="button"
               style="border-radius: 0px;">
@@ -86,8 +86,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let detail of hello |filterdata:{ customer_confirmation_number :conf_num,customer_name:conf_num,customer_room_type:conf_num,
-    customer_adult:conf_num,customer_child:conf_num,channel:conf_num,customer_amount:conf_num
-    };let i = index" (click)="selectMembersEdit(detail,i)"
+    customer_adult:conf_num,customer_child:conf_num,channel:conf_num,customer_amount:conf_num } ;let i = index" (click)="selectMembersEdit(detail,i)"
     [ngClass]="{'backGroundColor':i==selectindex}" (dblclick)="showMoreBut()">
       <td style="width:50px">{{i+1}}</td>
       <td style="width:150px">{{detail.customer_confirmation_number}}</td>

@@ -53,6 +53,7 @@ import { ReservationComponent } from './reservation/reservation.component';
 import { FilterdataPipe } from './filterdata.pipe';
 import { ToasterService } from './toaster.service';
 import { UniquePipe } from './unique.pipe';
+import { SortdatePipe } from './sortdate.pipe';
 
 export const appRoutes: Routes = [
   { path: 'appcom', component: AppComponent },
@@ -115,6 +116,7 @@ let socialloginproviders = {
     ReservationComponent,
     FilterdataPipe,
     UniquePipe,
+    SortdatePipe,
     
   ],
   imports: [

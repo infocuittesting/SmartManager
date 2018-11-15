@@ -25,7 +25,7 @@ export class ReservationComponent implements OnInit {
     //end date
     public date:any = new Date().toJSON().split('T')[0];
 
-    public dep_date:any=new Date().toJSON().split('T')[0];
+    // public dep_date:any=new Date().toJSON().split('T')[0];
       //show more
   showMoreBut(){
     this.showMore=true;
@@ -34,11 +34,28 @@ export class ReservationComponent implements OnInit {
       showlessBut(){
         this.showMore=false;
       }
+      filterDatefrmList(date,dept_date){
+        if(date!=null && dept_date!=null){
+          let selectedMembers = this.hello.filter(
+            m => new Date(m.customer_arrival_date) >= new Date(date) && new Date(m.customer_depature_date) <= new Date(dept_date)
+            );
+              console.log(selectedMembers);
+              this.hello = selectedMembers;
+        }else {
+          this.hello = this.hello;
+        }
+        
+      }
 
   NgbDateStruct = { year:  now.getFullYear(),month:now.getMonth() + 1,day: now.getDate() ,};
   arriv: NgbDateStruct = { year:  now.getFullYear(),month:now.getMonth() + 1,day: now.getDate()};
   depart: NgbDateStruct = {year:  now.getFullYear(),month:now.getMonth() + 1,day: now.getDate()};
   ngOnInit() {
+
+    // between dates arrival
+
+
+
    this.cleartab();
   //   this.ReservationService.reservationdetails()
   //   .subscribe((resp: any) => {
