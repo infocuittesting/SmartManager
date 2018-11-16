@@ -52,16 +52,8 @@ export class ReservationComponent implements OnInit {
   depart: NgbDateStruct = {year:  now.getFullYear(),month:now.getMonth() + 1,day: now.getDate()};
   ngOnInit() {
 
-    // between dates arrival
-
-
-
    this.cleartab();
-  //   this.ReservationService.reservationdetails()
-  //   .subscribe((resp: any) => {
-  //  this.hello=resp.result;
-  //  console.log("hello",this.hello)
-  //   });
+
   }
   cleartab(){
     

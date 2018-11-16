@@ -103,7 +103,7 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <input class="form-control" type="password" [(ngModel)]="login.password">
+            <input class="form-control" type="password" [(ngModel)]="login.password" (keyup.enter)="logindetails(login)">
           </div>
         </div>
   
@@ -149,6 +149,7 @@
             </label>
           </div>
         </div>
+        
       </div>
       <div class="col-sm-2"></div>
     </div>

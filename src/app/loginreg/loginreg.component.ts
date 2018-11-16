@@ -25,7 +25,9 @@ export class LoginregComponent implements OnInit {
     ,public session: SessionStorageService) { }
 //,public session: SessionStorageService
   ngOnInit() {
+
   }
+  
 
   login = [];
   regis = [];

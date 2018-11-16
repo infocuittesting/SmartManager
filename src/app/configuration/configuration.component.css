@@ -40,3 +40,7 @@ input[type=radio]{
     color: red;
     font-size: 10px;
 }
+
+.card{
+  max-height: 350px;
+}
