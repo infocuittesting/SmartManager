@@ -28,7 +28,11 @@ export class MenusComponent implements OnInit {
   public reportsarrowflag =false;
   public toolbar:any;
   public name:any=this.session.retrieve("username");
- 
+  public Reservation;
+  public cancel;
+  public modify;
+  public smscount;
+
   public interval:any;
   ngOnInit() {
     // setTimeout(function(){
@@ -44,6 +48,10 @@ export class MenusComponent implements OnInit {
     .subscribe((resp:any) =>{
       if(resp.Return_code == "Success"){
         this.toolbar = resp.Return_value;
+        this.Reservation=this.toolbar.reservation;
+        this.cancel=this.toolbar.cancel;
+        this.modify=this.toolbar.modify;
+        this.smscount=this.toolbar.Sms_count;
         console.log("2) Toolbar service -", this.toolbar);
       }
     });

@@ -163,6 +163,12 @@ public grid_length:any
 public j=0
 public total_plans=[];
  ngOnInit() {
+    this.gridtable();
+  }
+
+  //Grid table service
+gridtable(){
+    
     this.bs_id = this.session.retrieve("business_id")
     this.roomTypeService.getgriddef()
     .subscribe((resp: any) => {
@@ -359,7 +365,10 @@ this.setper = false
 
         });
 
-  }
+}
+
+
+  //end of grid table service
 
 //   on changing values in room to sell
 public send_array_rmsell=[];

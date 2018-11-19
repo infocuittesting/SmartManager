@@ -35,13 +35,25 @@ export class ReservationComponent implements OnInit {
         this.showMore=false;
       }
       filterDatefrmList(date,dept_date){
+
         if(date!=null && dept_date!=null){
           let selectedMembers = this.hello.filter(
             m => new Date(m.customer_arrival_date) >= new Date(date) && new Date(m.customer_depature_date) <= new Date(dept_date)
             );
               console.log(selectedMembers);
               this.hello = selectedMembers;
-        }else {
+        }
+        else if(date!=null && dept_date == null){
+          let selectedMembers = this.hello.filter(
+            k => new Date(k.customer_arrival_date) >= new Date(this.date)
+          );
+          this.hello = selectedMembers;
+        }
+        // else if(date == null && dept_date == null){
+        //   console.log(this.hello);
+        //   this.hello = this.hello;
+        // }
+        else {
           this.hello = this.hello;
         }
         
@@ -60,6 +72,10 @@ export class ReservationComponent implements OnInit {
     this.ReservationService.reservationdetails()
     .subscribe((resp: any) => {
    this.hello=resp.result;
+   let selectedMembers = this.hello.filter(
+    k => new Date(k.customer_arrival_date) >= new Date(this.date)
+  );
+  this.hello = selectedMembers;
    console.log("hello",this.hello)
     });
 
