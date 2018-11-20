@@ -1,3 +1,8 @@
+
+div,table
+{
+    font-size: 14px;
+}
 .fixtab tbody {
     display:block;
     height:380px;
@@ -8,6 +13,7 @@
     display:table;
     width:100%;
     table-layout:fixed;
+   
 }
 
 /* .backGroundColor{

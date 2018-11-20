@@ -13,6 +13,10 @@
      box-shadow:  0 0px 0px 0 blue,0 2px 10px 0 rgb(63, 63, 255)!important; 
     
 }   */
+div,table
+{
+    font-size: 14px;
+}
 td{
     width: 60px;
     text-align: center;
