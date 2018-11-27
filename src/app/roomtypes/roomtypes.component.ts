@@ -39,13 +39,7 @@ export class RoomtypesComponent implements OnInit {
  public todate3:any;
 
  getroomTypedetails=[];
- NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- //fromdate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- fromMinDate: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
-//  rangefrom: NgbDateStruct = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
- rangefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- restricefrom: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
- restricefromMin: NgbDateStruct = {day: now.getDate() , month:now.getMonth() + 1, year: now.getFullYear()};
+
  setper = true;
  selectrestr = [];
  public rateplan=[];
@@ -163,11 +157,7 @@ public grid_length:any
 public j=0
 public total_plans=[];
  ngOnInit() {
-    this.gridtable();
-  }
-
-  //Grid table service
-gridtable(){
+      //Grid table service
     
     this.bs_id = this.session.retrieve("business_id")
     this.roomTypeService.getgriddef()
@@ -365,7 +355,10 @@ this.setper = false
 
         });
 
-}
+
+
+  }
+
 
 
   //end of grid table service
