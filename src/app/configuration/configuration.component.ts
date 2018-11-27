@@ -387,9 +387,9 @@ this.configurationService.create_rate_planss(body)
     this.roomcheckedList = [];
 
   if (resp.ServiceStatus == 'Success') {
-    alert("resp.ServiceStatus "+resp.ServiceStatus);
-    this.conf_rate = {};
     
+    this.conf_rate = {};
+    this.toasterService.success("Rate Plan is Created");
   }
   
 
