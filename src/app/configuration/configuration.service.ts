@@ -111,8 +111,13 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
      |Room Size Select Start
      ------------------------------------------------------------------*/
     getRoom(): Observable<object[]> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
 
-        return this.http.get('https://ivrinfocuit.herokuapp.com/SelectRoomsizeConfiguration')
+        let body={
+            "business_id":this.session.retrieve("business_id").toString(),
+        }
+        return this.http.post('https://ivrinfocuit.herokuapp.com/SelectRoomsizeConfiguration',body,options)
             .map(this.extractData);
     }
     /**-----------------------------------------------------------
@@ -125,8 +130,13 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
     |Bedding Select Start
     ------------------------------------------------------------------*/
     getBedding(): Observable<object[]> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
 
-        return this.http.get('https://ivrinfocuit.herokuapp.com/SelectBeddingoptionsConfiguration')
+        let body={
+            "business_id":this.session.retrieve("business_id").toString(),
+        }
+        return this.http.post('https://ivrinfocuit.herokuapp.com/SelectBeddingoptionsConfiguration',body,options)
             .map(this.extractData);
     }
     /**-----------------------------------------------------------
@@ -139,8 +149,13 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
     |BeddingSize Select Start
     ------------------------------------------------------------------*/
     getBeddingSize(): Observable<object[]> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
 
-        return this.http.get('https://ivrinfocuit.herokuapp.com/SelectBedsizeConfiguration')
+        let body={
+            "business_id":this.session.retrieve("business_id").toString(),
+        }
+        return this.http.post('https://ivrinfocuit.herokuapp.com/SelectBedsizeConfiguration',body,options)
             .map(this.extractData);
     }
     /**-----------------------------------------------------------
@@ -151,8 +166,13 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
     |ExtraBed Select Start
     ------------------------------------------------------------------*/
     getExtraBed(): Observable<object[]> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
 
-        return this.http.get('https://ivrinfocuit.herokuapp.com/SelectExtrabed')
+        let body={
+            "business_id":this.session.retrieve("business_id").toString(),
+        }
+        return this.http.post('https://ivrinfocuit.herokuapp.com/SelectExtrabed',body,options)
             .map(this.extractData);
     }
     /**-----------------------------------------------------------
@@ -163,7 +183,13 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
     |RoomAmenities Select Start
     ------------------------------------------------------------------*/
     getRoomAmenities(): Observable<object[]> {
-        return this.http.get('https://ivrinfocuit.herokuapp.com/SelectRoomamenitieConfiguration')
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
+
+        let body={
+            "business_id":this.session.retrieve("business_id").toString(),
+        }
+        return this.http.post('https://ivrinfocuit.herokuapp.com/SelectRoomamenitieConfiguration',body,options)
             .map(this.extractData);
     }
     /**-----------------------------------------------------------
@@ -175,6 +201,10 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
     |Inclusion Select Start
     ------------------------------------------------------------------*/
     getInclusion(): Observable<object[]> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
+
+     
         return this.http.get('https://ivrinfocuit.herokuapp.com/SelectInclusionsConfiguration')
             .map(this.extractData);
     }
@@ -187,9 +217,9 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
         console.log("service is cam")
         const headers = new Headers({ 'Content-Type': 'application/json' })
         const options = new RequestOptions({ headers: headers });
-      
-    
-        return this.http.post('https://ivrinfocuit.herokuapp.com/select_room_types', options)
+        let body = { "business_id":this.session.retrieve("business_id") };
+        
+        return this.http.post('https://ivrinfocuit.herokuapp.com/select_room_types',body, options)
           .map(this.extractData)
         //.catch(this.handleErrorObservable);
       }
@@ -217,9 +247,11 @@ updateservice(room,rmsize,maxadult,maxchild,beding,bedsize,extrabeds,amenitie,ph
         console.log("service is cam")
         const headers = new Headers({ 'Content-Type': 'application/json' })
         const options = new RequestOptions({ headers: headers });
-      
+        let body={
+            "business_id":this.session.retrieve("business_id").toString(),
+        }
     
-        return this.http.post('https://ivrinfocuit.herokuapp.com/select_packages', options)
+        return this.http.post('https://ivrinfocuit.herokuapp.com/select_packages',body, options)
           .map(this.extractData)
         //.catch(this.handleErrorObservable);
       }

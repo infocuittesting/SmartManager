@@ -327,33 +327,33 @@ this.setper = false
     let roomParms={
       "business_id":this.session.retrieve("business_id")
     }
-      this.roomTypeService.roomtypeDetails(roomParms)
-        .subscribe((resp: any) => {
-          if (resp.ServiceStatus == 'Success') {
-           // this.getroomTypedetails=resp.Room_List;
+    //   this.roomTypeService.roomtypeDetails(roomParms)
+    //     .subscribe((resp: any) => {
+    //       if (resp.ServiceStatus == 'Success') {
+    //        // this.getroomTypedetails=resp.Room_List;
 
 
-            for(var i=0;i<resp.Room_List.length;i++){
-              this.getroomTypedetails.push({
-                "business_id":resp.Room_List[i].business_id,
-                "facilitie1":resp.Room_List[i].facilitie1,
-                "facilitie2":resp.Room_List[i].facilitie2,
-                "facilitie3":resp.Room_List[i].facilitie3,
-                "id":resp.Room_List[i].id,
-                "room_type":resp.Room_List[i].room_type,
-                "room_code":resp.Room_List[i].room_code,
-                "room_name":resp.Room_List[i].room_name,
-                "standard_rate":resp.Room_List[i].standard_rate,
-                "standard_rate_currency":resp.Room_List[i].standard_rate_currency,
-                "totel_room":resp.Room_List[i].totel_room,
-                "editFlag":false,
-                "srcfile":resp.Room_List[i].room_type==null ?"assets/images/Standard Room.jpg"  :"assets/images/"+resp.Room_List[i].room_type+".jpg"
-              });
+    //         for(var i=0;i<resp.Room_List.length;i++){
+    //           this.getroomTypedetails.push({
+    //             "business_id":resp.Room_List[i].business_id,
+    //             "facilitie1":resp.Room_List[i].facilitie1,
+    //             "facilitie2":resp.Room_List[i].facilitie2,
+    //             "facilitie3":resp.Room_List[i].facilitie3,
+    //             "id":resp.Room_List[i].id,
+    //             "room_type":resp.Room_List[i].room_type,
+    //             "room_code":resp.Room_List[i].room_code,
+    //             "room_name":resp.Room_List[i].room_name,
+    //             "standard_rate":resp.Room_List[i].standard_rate,
+    //             "standard_rate_currency":resp.Room_List[i].standard_rate_currency,
+    //             "totel_room":resp.Room_List[i].totel_room,
+    //             "editFlag":false,
+    //             "srcfile":resp.Room_List[i].room_type==null ?"assets/images/Standard Room.jpg"  :"assets/images/"+resp.Room_List[i].room_type+".jpg"
+    //           });
 
-       }
-          }
+    //    }
+    //       }
 
-        });
+    //     });
 
 
 

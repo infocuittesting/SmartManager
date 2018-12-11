@@ -12,16 +12,16 @@ export class RoomTypeService {
   ) { }
 
   //registration details
-  roomtypeDetails(roomparms: any): Observable<object[]> {
+  // roomtypeDetails(roomparms: any): Observable<object[]> {
 
-    const headers = new Headers({ 'Content-Type': 'application/json' })
-    const options = new RequestOptions({ headers: headers });
-    //let body = { "userKey": dashbrddata };
+  //   const headers = new Headers({ 'Content-Type': 'application/json' })
+  //   const options = new RequestOptions({ headers: headers });
+  //   //let body = { "userKey": dashbrddata };
 
-    return this.http.post('https://ivrinfocuit.herokuapp.com/RoomList', roomparms, options)
-      .map(this.extractData)
-    //.catch(this.handleErrorObservable);
-  }
+  //   return this.http.post('https://ivrinfocuit.herokuapp.com/RoomList', roomparms, options)
+  //     .map(this.extractData)
+  //   //.catch(this.handleErrorObservable);
+  // }
 
   //get date details
   // getdateDetails(dateparms: any): Observable<object[]> {
@@ -95,9 +95,9 @@ daterangecount(params): Observable<object[]> {
     console.log("service is cam")
     const headers = new Headers({ 'Content-Type': 'application/json' })
     const options = new RequestOptions({ headers: headers });
-  
+    let body = { "business_id":this.session.retrieve("business_id") };
 
-    return this.http.post('https://ivrinfocuit.herokuapp.com/select_room_types', options)
+    return this.http.post('https://ivrinfocuit.herokuapp.com/select_room_types',body, options)
       .map(this.extractData)
     //.catch(this.handleErrorObservable);
   }
