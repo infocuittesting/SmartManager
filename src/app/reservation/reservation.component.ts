@@ -16,7 +16,7 @@ const now = new Date();
 
 export class ReservationComponent implements OnInit {
   public hello:any = [];
-  public tabledata: any = [];
+  public tabledata: any = [];dep_date:any;conf_num:any;
   showMore = false;
   constructor(private ReservationService: ReservationService,
     private dateFormate: NgbDateCustomParserFormatter,
@@ -66,7 +66,16 @@ export class ReservationComponent implements OnInit {
   depart: NgbDateStruct = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
   ngOnInit() {
 
-    this.cleartab();
+    this.ReservationService.reservationdetails()
+    .subscribe((resp: any) => {
+      this.hello = resp.result;
+      let selectedMembers = this.hello.filter(
+        k => new Date(k.customer_arrival_date) >= new Date(this.date)
+      );
+      this.hello = selectedMembers;
+      this.sorttable()
+      console.log("hello", this.hello)
+    });
 
   }
   sorttable() {
@@ -81,8 +90,9 @@ export class ReservationComponent implements OnInit {
     return this.hello;
   }
   cleartab() {
-    this.hello="";
 
+    this.dep_date="";
+    this.conf_num="";
     this.ReservationService.reservationdetails()
       .subscribe((resp: any) => {
         this.hello = resp.result;
